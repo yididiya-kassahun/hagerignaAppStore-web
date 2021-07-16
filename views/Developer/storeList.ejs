@@ -105,100 +105,172 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-           <div class="row">
-             <div class="col-md-12">
-            <div class="card card-info card-outline">
-              <div class="card-header">
-                <h3 class="card-title">App Detail</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-              <form class="form-horizontal">
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">App Name</label>
-                    <div class="col-md-8">
-                      <input type="text" size="50" class="form-control" id="appname">
-                      <small for="appname">This is how your app appear on store it should be neat short and not
-                        include reptitive symbols, text, price or Emoji. 0/50
-                      </small>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-info card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">App Detail</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <form
+                    method="post"
+                    action="/app.storeList"
+                    class="form-horizontal"
+                  >
+                    <div class="form-group row">
+                      <label for="inputEmail3" class="col-sm-2 col-form-label"
+                        >App Name</label
+                      >
+                      <div class="col-md-8">
+                        <input
+                          type="text"
+                          name="appName"
+                          size="50"
+                          class="form-control"
+                          id="appname"
+                        />
+                        <small for="appname"
+                          >This is how your app appear on store it should be
+                          neat short and not include reptitive symbols, text,
+                          price or Emoji. 0/50
+                        </small>
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Short Description</label>
-                    <div class="col-md-8">
-                      <textarea type="text" class="form-control" rows="3" name="shortDescription" id="shortDescription"></textarea>
+                    <div class="form-group row">
+                      <label
+                        for="inputPassword3"
+                        class="col-sm-2 col-form-label"
+                        >Short Description</label
+                      >
+                      <div class="col-md-8">
+                        <textarea
+                          type="text"
+                          name="shortDescription"
+                          class="form-control"
+                          rows="3"
+                          id="shortDescription"
+                        ></textarea>
+                      </div>
                     </div>
-                  </div>
-                   <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Long Description</label>
-                    <div class="col-sm-8">
-                      <textarea type="text" class="form-control" rows="5" name="longDescription" id="longDescription"></textarea>
+                    <div class="form-group row">
+                      <label
+                        for="inputPassword3"
+                        class="col-sm-2 col-form-label"
+                        >Long Description</label
+                      >
+                      <div class="col-sm-8">
+                        <textarea
+                          type="text"
+                          name="longDescription"
+                          class="form-control"
+                          rows="5"
+                          id="longDescription"
+                        ></textarea>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <br><br>
-                 <h3>Graphics</h3>
-                 <hr>
-                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">App Icon</label>
-                    <div class="col-sm-8">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="customFile">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                      <small for="appname">Your app icon is shown in hagerigna appstore. <br>
-                        Transparent PNG or JPG <br>
-                        512 px by 512 px
-                      </small>
-                    </div>
-                  </div>
-                 </div>
 
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Feature Graphics</label>
-                    <div class="col-sm-8">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="customFile">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                      <small for="appname">This will help promote your app in hagerigna appstore. <br>
-                        Transparent PNG or JPG <br>
-                        1024 px by 500 px
-                      </small>
+                    <br /><br />
+                    <h3>Graphics</h3>
+                    <hr />
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">App Icon</label>
+                      <div class="col-sm-8">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            name="appIcon"
+                            class="form-control"
+                            id="customFile"
+                          />
+                          <label class="custom-file-label" for="customFile"
+                            >Choose file</label
+                          >
+                          <small for="appname"
+                            >Your app icon is shown in hagerigna appstore.
+                            <br />
+                            Transparent PNG or JPG <br />
+                            512 px by 512 px
+                          </small>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                 </div>
 
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Video URL</label>
-                    <div class="col-md-8">
-                      <input type="text" size="50" class="form-control" id="videoURL">
-                      <small for="videoURL">Short video Description of your app.
-                      </small>
+                    <!-- <div class="form-group row">
+                      <label class="col-sm-2 col-form-label"
+                        >Feature Graphics</label
+                      >
+                      <div class="col-sm-8">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            name="featureGraphics"
+                            class="custom-file-input"
+                            id="customFile"
+                          />
+                          <label class="custom-file-label" for="customFile"
+                            >Choose file</label
+                          >
+                          <small for="appname"
+                            >This will help promote your app in hagerigna
+                            appstore. <br />
+                            Transparent PNG or JPG <br />
+                            1024 px by 500 px
+                          </small>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Phone Screenshots</label>
-                    <div class="col-sm-8">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="customFile">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                      <small for="appname">Upload a phone Screenshots of the app
-                      </small>
+
+                    <div class="form-group row">
+                      <label for="inputEmail3" class="col-sm-2 col-form-label"
+                        >Video URL</label
+                      >
+                      <div class="col-md-8">
+                        <input
+                          type="text"
+                          name="videoURL"
+                          size="50"
+                          class="form-control"
+                          id="videoURL"
+                        />
+                        <small for="videoURL"
+                          >Short video Description of your app.
+                        </small>
+                      </div>
                     </div>
-                  </div>
-                 </div>
-                </form>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label"
+                        >Phone Screenshots</label
+                      >
+                      <div class="col-sm-8">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            name="phoneScreenshots"
+                            class="custom-file-input"
+                            id="customFile"
+                          />
+                          <label class="custom-file-label" for="customFile"
+                            >Choose file</label
+                          >
+                          <small for="appname"
+                            >Upload a phone Screenshots of the app
+                          </small>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="float-right">
+                      <button type="submit" class="btn btn-info">Create</button>
+                    </div>
+                  </form>
+                  <!-- /.card-footer -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer"></div>
                 <!-- /.card-footer -->
               </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <div class="float-right">
-                  <button type="submit" class="btn btn-info">Create</button>
-                </div>
-              </div>
-              <!-- /.card-footer -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
-          </div>
           </div>
         </div>
       </section>

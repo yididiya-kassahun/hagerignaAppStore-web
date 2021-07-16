@@ -11,4 +11,5 @@ router.get("/policies", developerController.devPolicy);
 router.get("/create.app", developerController.createAppPage);
 router.get("/store.listing", developerController.storeListing);
 router.get("/app.questionary", developerController.appQuestionary);
+router.post("/app.storeList",developerController.appStoreList);
 module.exports = router;

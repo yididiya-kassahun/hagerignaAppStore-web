@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
+const multer = require("multer");
 // -----| models
 const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
@@ -31,6 +32,7 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer().single('appIcon'));
 // join stylesheet with system root path
 app.use(express.static(path.join(__dirname, "public")));
 

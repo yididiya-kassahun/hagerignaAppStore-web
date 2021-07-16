@@ -1,13 +1,21 @@
 const getPolicy = require("../models/addPolicy");
 const appstorelist = require("../models/appStorelist");
-const createApp = require("../models/createApp");
+const createApps = require("../models/createApp");
 const path = require("path");
 
 exports.developerDashboard = (req, res, next) => {
-  res.render("Developer/devDashboard", {
-    pageTitle: "main Dashboard",
-    path: "dashboard",
-  });
+  createApps
+    .findAll()
+    .then((createdApps) => {
+      res.render("Developer/devDashboard", {
+        pageTitle: "main Dashboard",
+        appsList: createdApps,
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.createAppPage = (req, res, next) => {
   res.render("Developer/createApp", {
@@ -28,13 +36,13 @@ exports.createApp = (req, res, next) => {
   const isApporGame = req.body.ApporGame;
   const isFreeorPaid = req.body.free_paid;
 
-  createApp
+  createApps
     .create({
       appName: appName,
       appIcon: "images",
       defaultLanguage: defaultLanguage,
       isApporGame: isApporGame,
-      isFreeorPaid: isFreeorPaid,
+      isPaidorFree: isFreeorPaid,
       developerID: 3,
     })
     .then((result) => {

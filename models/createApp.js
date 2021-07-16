@@ -23,7 +23,7 @@ const createApp = sequelize.define("createApp", {
     allowNull: false,
     required: true,
   },
-  isFreeorGame: {
+  isApporGame: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,

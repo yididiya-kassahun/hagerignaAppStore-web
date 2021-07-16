@@ -1,5 +1,6 @@
 const getPolicy = require("../models/addPolicy");
 const appstorelist = require("../models/appStorelist");
+const createApp = require("../models/createApp");
 const path = require("path");
 
 exports.developerDashboard = (req, res, next) => {
@@ -19,6 +20,29 @@ exports.storeListing = (req, res, next) => {
     pageTitle: "main app store listing Page",
     path: "dashboard",
   });
+};
+
+exports.createApp = (req, res, next) => {
+  const appName = req.body.AppName;
+  const defaultLanguage = req.body.defaultLanguage;
+  const isApporGame = req.body.ApporGame;
+  const isFreeorPaid = req.body.free_paid;
+
+  createApp
+    .create({
+      appName: appName,
+      appIcon: "images",
+      defaultLanguage: defaultLanguage,
+      isApporGame: isApporGame,
+      isFreeorPaid: isFreeorPaid,
+      developerID: 3,
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.appStoreList = (req, res, next) => {
   const appName = req.body.appName;

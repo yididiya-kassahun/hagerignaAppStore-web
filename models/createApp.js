@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
 
-const storeList = sequelize.define("appstorelist", {
-  id: {
+const createApp = sequelize.define("createApp", {
+  appID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -13,40 +13,37 @@ const storeList = sequelize.define("appstorelist", {
     allowNull: false,
     required: true,
   },
-  shortDescription: {
+  appIcon: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  longDescription: {
+  defaultLanguage: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  appIconURL: {
+  isFreeorGame: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  featureGraphicsURL: {
+  isPaidorFree: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  videoURL: {
+  appStatus: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
+    defaultValue: "Draft",
   },
-  phoneScreeenshootURL: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    required: true,
-  },
-  appID: {
+  downloads: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
+    defaultValue: 0,
   },
   developerID: {
     type: Sequelize.INTEGER,
@@ -55,4 +52,4 @@ const storeList = sequelize.define("appstorelist", {
   },
 });
 
-module.exports = storeList;
+module.exports = createApp;

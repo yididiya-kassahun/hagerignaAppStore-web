@@ -17,11 +17,13 @@ const developer = sequelize.define("developer", {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
+    unique: true,
   },
   phoneNumber: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
+    unique: true,
   },
   companyName: {
     type: Sequelize.STRING,
@@ -37,7 +39,12 @@ const developer = sequelize.define("developer", {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
-    },
+  },
+  role: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+  },
   password: {
     type: Sequelize.STRING,
     required: true,

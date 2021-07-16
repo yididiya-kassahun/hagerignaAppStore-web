@@ -12,7 +12,22 @@ const role = sequelize.define("role", {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
-  }
+  },
 });
+
+// role.sync().then(() => {
+//   role.create({
+//     roleName: "admin",
+//   });
+//   role.create({
+//     roleName: "reviewer",
+//   });
+//   role.create({
+//     roleName: "developer",
+//   });
+//   role.create({
+//     roleName: "user",
+//   });
+// });
 
 module.exports = role;

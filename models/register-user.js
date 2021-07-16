@@ -17,6 +17,7 @@ const user = sequelize.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
+    unique: true,
   },
   city: {
     type: Sequelize.STRING,
@@ -29,6 +30,11 @@ const user = sequelize.define("user", {
     required: true,
   },
   age: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+  },
+  role: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,

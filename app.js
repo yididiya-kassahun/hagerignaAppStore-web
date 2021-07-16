@@ -12,6 +12,7 @@ const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const registerDeveloper = require("./models/register-developer");
 const registerReviewer = require("./models/register-reviewer");
+const createApp = require("./models/createApp");
 const roles = require("./models/roles");
 //------| routes
 const adminRoute = require("./routes/admin");
@@ -56,7 +57,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // join stylesheet with system root path
 
 app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array('uploadedImage',3)
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array(
+    "uploadedImage",
+    3
+  )
 );
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -70,7 +74,7 @@ app.use(authRoute);
 
 // Using sequelizer for ORM database - mysql
 sequelize
-  //.sync({ force: true }) //override the existing table
+ // .sync({ force: true }) //override the existing table
   .sync()
   .then((result) => {
     app.listen(3000);

@@ -17,15 +17,13 @@ const reviewer = sequelize.define("reviewer", {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
+    unique: true,
   },
   phoneNumber: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
-  },
-  password: {
-    type: Sequelize.STRING,
-    required: true,
+    unique: true,
   },
   role: {
     type: Sequelize.INTEGER,
@@ -35,7 +33,11 @@ const reviewer = sequelize.define("reviewer", {
   isPermit: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue:false
+    defaultValue: false,
+  },
+  password: {
+    type: Sequelize.STRING,
+    required: true,
   },
 });
 

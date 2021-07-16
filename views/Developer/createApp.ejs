@@ -115,41 +115,45 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form class="form-horizontal">
+              <form action="/create.app" method="POST" class="form-horizontal">
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">App Name</label>
                     <div class="col-md-8">
-                      <input type="text" size="50" class="form-control" id="appname">
+                      <input type="text" size="50" name="AppName" class="form-control" id="appname">
                       <small for="appname">This is how your app appear on store it should be neat short and not
                         include reptitive symbols, text, price or Emoji. 0/50
                       </small>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Default Language</label>
+                    <label for="lang" class="col-sm-2 col-form-label">Default Language</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="inputPassword3">
+                      <input type="text" name="defaultLanguage" class="form-control" id="lang">
                     </div>
                   </div>
                    <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">App or Game</label>
+                    <label for="ApporGame" class="col-sm-2 col-form-label">App or Game</label>
                     <div class="col-sm-5">
-                      <label for="rad1">App</label> <input type="radio" class="col-sm-2" id="rad1">
-                       <label for="rad2">Game</label><input type="radio" class="col-sm-2" id="rad2">
-                    </div>
+                      <fieldset class="form-control" id="group-1">
+                      <label for="app">App</label> <input type="radio" name="ApporGame" class="col-sm-2" id="app">
+                       <label for="game">Game</label><input type="radio" name="ApporGame" class="col-sm-2" id="game">
+                      </fieldset>
+                      </div>
                   </div>
                    <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Free or Paid</label>
+                    <label for="free_paid" class="col-sm-2 col-form-label">Free or Paid</label>
                      <div class="col-sm-5">
-                      <label for="rad11">Free</label> <input type="radio" class="col-sm-2" id="rad11">
-                       <label for="rad22">Paid</label><input type="radio" class="col-sm-2" id="rad22">
-                    </div>
+                       <fieldset class="form-control" id="group-2">
+                      <label for="free">Free</label> <input type="radio" name="free_paid" class="col-sm-2" id="free">
+                       <label for="paid">Paid</label><input type="radio" name="free_paid" class="col-sm-2" id="paid">
+                       </fieldset>
+                      </div>
                   </div>
                   <br><br>
                   <h3>Declaration</h3>
                   <hr>
-                   <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Developer program policies</label>
+                   <div class="row">
+                    <label for="policies" class="col-sm-2 col-form-label">Developer program policies</label>
                      <div class="col-sm-5 row">
                      <input type="checkbox" class="row" id="policies"> <p>Confrim that your app meets the Developer
                        program and policies. please read the developer program policies. if your app store listing is eligible 
@@ -157,23 +161,24 @@
                      </p>
                     </div>
                   </div>
-                      <div class="form-group row">
-                    <label for="law" class="col-sm-2 col-form-label">Ethiopian Tax Regulation</label>
+                      <div class="row">
+                    <label for="Regulation" class="col-sm-2 col-form-label">Ethiopian Tax Regulation</label>
                      <div class="col-sm-5 row">
-                     <input type="checkbox" id="policies"> <p>Confrim that your app meets the Developer
+                     <input type="checkbox" id="Regulation"> <p>Confrim that your app meets the Developer
                        program and policies. please read the developer program policies. if your app store listing is eligible 
                        to appear on playstore you can contact review team.
                      </p>
                     </div>
                   </div>
+                  <div class="float-right">
+                  <button type="submit" class="btn btn-info">Create</button>
+                </div>
                 </form>
                 <!-- /.card-footer -->
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <div class="float-right">
-                  <button type="submit" class="btn btn-info">Create</button>
-                </div>
+                
               </div>
               <!-- /.card-footer -->
             </div>

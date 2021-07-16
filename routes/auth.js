@@ -11,4 +11,5 @@ router.get("/register.Reviewer", authController.reviewerRegisterPage);
 router.post("/signup.developer", authController.developerSignUp);
 router.post("/signup.reviewer", authController.reviewerSignup);
 router.post("/signup.user", authController.userSignup);
+
 module.exports = router;

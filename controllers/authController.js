@@ -34,18 +34,26 @@ exports.developerSignUp = (req, res, next) => {
   const developerType = req.body.developerType;
   const password = req.body.password;
 
-  developer
-    .create({
-      fullName: fullName,
-      Email: email,
-      phoneNumber: phoneNumber,
-      companyName: companyName,
-      city: city,
-      developerType: developerType,
-      password: password,
-    })
-    .then((result) => {
-      console.log(result);
+  roles
+    .findAll({ where: { roleName: "developer" } })
+    .then((role) => {
+      developer
+        .create({
+          fullName: fullName,
+          Email: email,
+          phoneNumber: phoneNumber,
+          companyName: companyName,
+          city: city,
+          developerType: developerType,
+          role: role[0].id,
+          password: password,
+        })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -79,7 +87,6 @@ exports.reviewerSignup = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
-  
 };
 
 exports.userSignup = (req, res, next) => {
@@ -89,18 +96,25 @@ exports.userSignup = (req, res, next) => {
   const jobType = req.body.userJobType;
   const age = req.body.userAge;
   const password = req.body.password;
-
-  user
-    .create({
-      fullName: fullName,
-      email: email,
-      city: city,
-      jobType: jobType,
-      age: age,
-      password: password,
-    })
-    .then((result) => {
-      console.log(result);
+  roles
+    .findAll({ where: { roleName: "user" } })
+    .then((role) => {
+      user
+        .create({
+          fullName: fullName,
+          email: email,
+          city: city,
+          jobType: jobType,
+          age: age,
+          role: role[0].id,
+          password: password,
+        })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -115,3 +129,11 @@ exports.loginPage = (req, res, next) => {
     path: "login",
   });
 };
+
+exports.rolePage = (req, res, next) => {
+  res.render("Auth/roles", {
+    pageTitle: "Login Page",
+    path: "login",
+  });
+};
+

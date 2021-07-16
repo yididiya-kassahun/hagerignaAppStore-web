@@ -92,7 +92,7 @@
           <%- include('includes/topData.ejs') %>
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h4>Super Admin Dashboard</h4>
+              <h4>Reviewers List Dashboard</h4>
               <hr />
             </div>
           </div>
@@ -141,11 +141,13 @@
                         </tr>
                       </thead>
                       <tbody>
+                         <% if(reviewers.length > 0) { %> <% for(let reviewer of
+                      reviewers ) { %>
                         <tr>
-                          <td>1.</td>
-                          <td>Desta Tarekegn</td>
-                          <td>desta@gmail.com</td>
-                          <td>0923442524</td>
+                          <td><%= reviewer.id %></td>
+                          <td><%= reviewer.fullName %></td>
+                          <td><%= reviewer.Email %></td>
+                          <td><%= reviewer.phoneNumber %></td>
                           <td>
                             <div class="custom-control custom-switch">
                               <input
@@ -162,48 +164,7 @@
                           <td><button class="btn btn-primary">Assign Role</td>
                             <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
                         </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>Desta Tarekegn</td>
-                          <td>desta@gmail.com</td>
-                          <td>0923442524</td>
-                          <td>
-                            <div class="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                id="customSwitch1"
-                              />
-                              <label
-                                class="custom-control-label"
-                                for="customSwitch1"
-                              ></label>
-                            </div>
-                          </td>
-                           <td><button class="btn btn-primary">Assign Role</td>
-                            <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
-                        </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>Desta Tarekegn</td>
-                          <td>desta@gmail.com</td>
-                          <td>0923442524</td>
-                          <td>
-                            <div class="custom-control custom-switch">
-                              <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                id="customSwitch1"
-                              />
-                              <label
-                                class="custom-control-label"
-                                for="customSwitch1"
-                              ></label>
-                            </div>
-                          </td>
-                           <td><button class="btn btn-primary">Assign Role</td>
-                            <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
-                        </tr>
+                         <% } %> <% } %>
                       </tbody>
                     </table>
                   </div>

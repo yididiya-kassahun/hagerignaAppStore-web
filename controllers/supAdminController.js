@@ -1,3 +1,8 @@
+const addPolicy = require("../models/addPolicy");
+const getDevelopers = require("../models/register-developer");
+const reviewer = require("../models/register-reviewer");
+const user = require("../models/register-user");
+
 exports.adminDashboard = (req, res, next) => {
   res.render("SupAdmin/supAdminDashboard", {
     pageTitle: "main Dashboard",
@@ -6,28 +11,93 @@ exports.adminDashboard = (req, res, next) => {
 };
 
 exports.developersListPage = (req, res, next) => {
-  res.render("SupAdmin/developers", {
-    pageTitle: "DEvelopers Dashboard",
-    path: "dashboard",
-  });
+  getDevelopers
+    .findAll()
+    .then((developerLists) => {
+      res.render("SupAdmin/developers", {
+        developers: developerLists,
+        pageTitle: "DEvelopers Dashboard",
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
+
 exports.reviewerList = (req, res, next) => {
-  res.render("SupAdmin/reviewers", {
-    pageTitle: "Reviewers page",
-    path: "dashboard",
-  });
-}; ;
+  reviewer
+    .findAll()
+    .then((reviewerList) => {
+      res.render("SupAdmin/reviewers", {
+        reviewers: reviewerList,
+        pageTitle: "Reviewer Dashboard",
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 exports.ordinaryUsersPage = (req, res, next) => {
-  res.render("SupAdmin/usersListPage", {
-    pageTitle: "Users List page",
-    path: "dashboard",
-  });
+  user
+    .findAll()
+    .then((userList) => {
+      res.render("SupAdmin/usersListPage", {
+        users: userList,
+        pageTitle: "User Dashboard",
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
+// exports.policyPage = (req, res, next) => {
+//   res.render("SupAdmin/policyPage", {
+//     pageTitle: "Policy & Regulation page",
+//     path: "dashboard",
+//   });
+// };
+
+exports.addPolicies = (req, res, next) => {
+  const Title = req.body.title;
+  const Content = req.body.content;
+
+  addPolicy
+    .create({
+      policyTitle: Title,
+      policyContent: Content,
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.policyPage = (req, res, next) => {
-  res.render("SupAdmin/policyPage", {
-    pageTitle: "Policy & Regulation page",
+  addPolicy
+    .findAll()
+    .then((policies) => {
+      res.render("SupAdmin/policyPage", {
+        policyList: policies,
+        pageTitle: "Add Policy Page",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.appQuestionary = (req, res, next) => {
+  res.render("SupAdmin/appQuestionary", {
+    pageTitle: "main Dashboard",
     path: "dashboard",
   });
 };
 
-
+exports.coutUsers = (req, res, next) => {};
+exports.coutDevelopers = (req, res, next) => {};
+exports.coutReviewers = (req, res, next) => {};

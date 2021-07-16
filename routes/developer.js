@@ -6,7 +6,9 @@ const developerController = require("../controllers/developerController");
 const router = express.Router();
 
 router.get("/developer", developerController.developerDashboard);
-router.get("/create.app", developerController.createAppPage);
 router.get("/report", developerController.reportPage);
 router.get("/policies", developerController.devPolicy);
+router.get("/create.app", developerController.createAppPage);
+router.get("/store.listing", developerController.storeListing);
+router.get("/app.questionary", developerController.appQuestionary);
 module.exports = router;

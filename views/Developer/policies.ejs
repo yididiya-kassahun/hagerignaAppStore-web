@@ -108,11 +108,12 @@
           <div class="row">
             <div class="col-12">
               <!-- Default box -->
+                <% if(policyList.length > 0) { %> <% for(let policy of
+                      policyList ) { %>
               <div class="card card-warning card-outline">
-               
                   <div class="card-header">
                     <h4 class="card-title w-100" style="color: rgb(0, 0, 238);">
-                      1. Lorem ipsum dolor sit amet
+                     <%= policy.policyTitle %>
                     </h4>
                   </div>
                 </a>
@@ -122,51 +123,13 @@
                   data-parent="#accordion"
                 >
                   <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
+                   <%= policy.policyContent %>
                   </div>
                 </div>
               </div>
+                 <% } %> <% } %>
               <!-- /.card -->
-              <div class="card card-warning card-outline">
-              
-                  <div class="card-header">
-                    <h4 class="card-title w-100" style="color: rgb(39, 39, 252);">
-                      2. Lorem ipsum dolor sit amet
-                    </h4>
-                  </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
-                  </div>
-                </div>
-              </div>
-              <!-- policy 3 -->
-              <div class="card card-warning card-outline">
             
-                  <div class="card-header">
-                    <h4 class="card-title w-100" style="color: rgb(39, 39, 252);">
-                      3. Lorem ipsum dolor sit amet
-                    </h4>
-                  </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

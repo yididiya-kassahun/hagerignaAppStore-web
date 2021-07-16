@@ -112,12 +112,13 @@
               <button class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
                 Add New Policy | Legal Regulation</button
               ><br /><br />
-              <div class="card card-primary card-outline">
+        <% if(policyList.length > 0) { %> <% for(let policy of policyList ) { %>
+              <div class="card card-primary card-outline" style="margin-top: 10px;">
                   <div class="card-header">
                     <h4 class="card-title w-100" style="color: rgb(17, 0, 255);">
-                      1. Lorem ipsum dolor sit amet
+                     <%= policy.policyTitle %>
                     </h4>
-                  </div>
+                    </div>
                 </a>
                 <div
                   id="collapseOne"
@@ -125,49 +126,15 @@
                   data-parent="#accordion"
                 >
                   <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
+                   <%= policy.policyContent %>
                   </div>
                 </div>
               </div>
+          <button class="btn btn-danger">Delete</button>
+          <br>
+                <% } %> <% } %>
               <!-- /.card -->
-              <div class="card card-primary card-outline">
-                  <div class="card-header">
-                    <h4 class="card-title w-100" style="color: rgb(17, 0, 255);">
-                      2. Lorem ipsum dolor sit amet
-                    </h4>
-                  </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
-                  </div>
-                </div>
-              </div>
-              <!-- policy 3 -->
-              <div class="card card-primary card-outline">
-                  <div class="card-header">
-                    <h4 class="card-title w-100" style="color: rgb(17, 0, 255);">
-                      3. Lorem ipsum dolor sit amet
-                    </h4>
-                  </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor.
-                  </div>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -187,13 +154,16 @@
               </button>
             </div>
             <div class="modal-body">
-              <textarea id="summernote" rows="12">
+              <form action="/admin.addPolicy" method="POST">
+              <input type="text" class="form-control" placeholder="Enter a title" name="title"><br>
+              <textarea id="summernote" class="form-control" name="content" rows="12">
                 Place <em>some</em> <u>text</u> <strong>here</strong>
               </textarea>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save & Send</button>
+              <button type="submit" class="btn btn-primary">Save & Send</button>
             </div>
+            </form>
           <!-- /.modal-content -->
         </div>
           </div>
@@ -209,10 +179,10 @@
     $('#summernote').summernote()
 
       // CodeMirror
-    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-      mode: "htmlmixed",
-      theme: "monokai"
-    });
+    // CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+    //   mode: "htmlmixed",
+    //   theme: "monokai"
+    // });
 })
 </script>
 </body>

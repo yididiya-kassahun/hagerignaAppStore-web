@@ -1,0 +1,210 @@
+<%-include('includes/head.ejs') %>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+            ><i class="fas fa-bars"></i
+          ></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Navbar Search -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-widget="navbar-search"
+            href="#"
+            role="button"
+          >
+            <i class="fas fa-search"></i>
+          </a>
+          <div class="navbar-search-block">
+            <form class="form-inline">
+              <div class="input-group input-group-sm">
+                <input
+                  class="form-control form-control-navbar"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button
+                    class="btn btn-navbar"
+                    type="button"
+                    data-widget="navbar-search"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-widget="control-sidebar"
+            data-slide="true"
+            href="#"
+            role="button"
+          >
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <a href="#" class="brand-link">
+        <span class="brand-text font-weight-light">Developer</span>
+      </a>
+
+      <!-- Sidebar -->
+      <%- include('includes/sidenav.ejs') %>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h3>Main Store Listing Dashboard</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+           <div class="row">
+             <div class="col-md-12">
+            <div class="card card-info card-outline">
+              <div class="card-header">
+                <h3 class="card-title">App Detail</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              <form class="form-horizontal">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">App Name</label>
+                    <div class="col-md-8">
+                      <input type="text" size="50" class="form-control" id="appname">
+                      <small for="appname">This is how your app appear on store it should be neat short and not
+                        include reptitive symbols, text, price or Emoji. 0/50
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Short Description</label>
+                    <div class="col-md-8">
+                      <textarea type="text" class="form-control" rows="3" name="shortDescription" id="shortDescription"></textarea>
+                    </div>
+                  </div>
+                   <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Long Description</label>
+                    <div class="col-sm-8">
+                      <textarea type="text" class="form-control" rows="5" name="longDescription" id="longDescription"></textarea>
+                    </div>
+                  </div>
+                  
+                  <br><br>
+                 <h3>Graphics</h3>
+                 <hr>
+                 <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">App Icon</label>
+                    <div class="col-sm-8">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                      <small for="appname">Your app icon is shown in hagerigna appstore. <br>
+                        Transparent PNG or JPG <br>
+                        512 px by 512 px
+                      </small>
+                    </div>
+                  </div>
+                 </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Feature Graphics</label>
+                    <div class="col-sm-8">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                      <small for="appname">This will help promote your app in hagerigna appstore. <br>
+                        Transparent PNG or JPG <br>
+                        1024 px by 500 px
+                      </small>
+                    </div>
+                  </div>
+                 </div>
+
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Video URL</label>
+                    <div class="col-md-8">
+                      <input type="text" size="50" class="form-control" id="videoURL">
+                      <small for="videoURL">Short video Description of your app.
+                      </small>
+                    </div>
+                  </div>
+                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Phone Screenshots</label>
+                    <div class="col-sm-8">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                      <small for="appname">Upload a phone Screenshots of the app
+                      </small>
+                    </div>
+                  </div>
+                 </div>
+                </form>
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <div class="float-right">
+                  <button type="submit" class="btn btn-info">Create</button>
+                </div>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('includes/footer.ejs') %>
+  </div>
+</body>

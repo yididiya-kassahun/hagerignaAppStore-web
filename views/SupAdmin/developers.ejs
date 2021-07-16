@@ -125,14 +125,17 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <% if(developers.length > 0) { %> <% for(let developer of
+                      developers ) { %>
+
                       <tr>
                         <td>1</td>
-                        <td>Desta Tarekegn</td>
-                        <td>desta@gmail.com</td>
-                        <td>0923442524</td>
-                        <td>VR Flundation</td>
-                        <td>Bahir Dar</td>
-                        <td>AR Developer</td>
+                        <td><%= developer.fullName %></td>
+                        <td><%= developer.Email %></td>
+                        <td><%= developer.phoneNumber %></td>
+                        <td><%= developer.companyName %></td>
+                        <td><%= developer.city %></td>
+                        <td><%= developer.developerType %></td>
                         <td>10</td>
                         <td>
                           <button class="btn btn-danger">
@@ -140,36 +143,7 @@
                           </button>
                         </td>
                       </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Ayele Lakew</td>
-                        <td>ayele@gmail.com</td>
-                        <td>0934553322</td>
-                        <td>VR Flundation</td>
-                        <td>Hawassa</td>
-                        <td>AR Developer</td>
-                        <td>6</td>
-                        <td>
-                          <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Dejene Leta</td>
-                        <td>dejene@gmail.com</td>
-                        <td>0934224242</td>
-                        <td>AR Ltd</td>
-                        <td>Addis Ababa Dar</td>
-                        <td>AR Developer</td>
-                        <td>2</td>
-                        <td>
-                          <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </td>
-                      </tr>
+                      <% } %> <% } %>
                     </tbody>
                   </table>
                 </div>

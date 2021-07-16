@@ -18,6 +18,11 @@ const addPolicy = sequelize.define("addPolicy", {
     allowNull: false,
     required: true,
   },
+  adminID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+  },
 });
 
 module.exports = addPolicy;

@@ -1,42 +1,53 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
 
-const reviewer = sequelize.define("reviewer", {
+const storeList = sequelize.define("appstorelist", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  fullName: {
+  appName: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  Email: {
+  shortDescription: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  phoneNumber: {
+  longDescription: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  appIconURL: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  featureGraphicsURL: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  videoURL: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  phoneScreeenshootURL: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  developerID: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
-  },
-  password: {
-    type: Sequelize.STRING,
-    required: true,
-  },
-  role: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
-  isPermit: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue:false
   },
 });
 
-module.exports = reviewer;
+module.exports = storeList;

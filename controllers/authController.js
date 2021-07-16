@@ -1,6 +1,7 @@
 const developer = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
 const user = require("../models/register-user");
+const roles = require("../models/roles");
 const bcrypt = require("bcryptjs");
 // **************  Registration Pages ******************
 
@@ -18,10 +19,10 @@ exports.developerRegisterPage = (req, res, next) => {
 };
 
 exports.reviewerRegisterPage = (req, res, next) => {
-   res.render("Auth/register-reviewer", {
-     pageTitle: "Reviewer Register Page",
-     path: "Register",
-   });
+  res.render("Auth/register-reviewer", {
+    pageTitle: "Reviewer Register Page",
+    path: "Register",
+  });
 };
 
 exports.developerSignUp = (req, res, next) => {
@@ -56,20 +57,29 @@ exports.reviewerSignup = (req, res, next) => {
   const email = req.body.email;
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
-
-  reviewer
-    .create({
-      fullName: fullName,
-      Email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-    })
-    .then((result) => {
-      console.log(result);
+  // fetch ID from roles table where rolename = 'reviewer'
+  roles
+    .findAll({ where: { roleName: "reviewer" } })
+    .then((role) => {
+      reviewer
+        .create({
+          fullName: fullName,
+          Email: email,
+          phoneNumber: phoneNumber,
+          password: password,
+          role: role[0].id,
+        })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
     });
+  
 };
 
 exports.userSignup = (req, res, next) => {
@@ -87,7 +97,7 @@ exports.userSignup = (req, res, next) => {
       city: city,
       jobType: jobType,
       age: age,
-      password:password
+      password: password,
     })
     .then((result) => {
       console.log(result);

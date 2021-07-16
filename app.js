@@ -12,6 +12,7 @@ const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const registerDeveloper = require("./models/register-developer");
 const registerReviewer = require("./models/register-reviewer");
+const roles = require("./models/roles");
 //------| routes
 const adminRoute = require("./routes/admin");
 const userRoute = require("./routes/user");
@@ -27,13 +28,37 @@ const store = new MysqlStore({
   password: "",
   database: "hagerignaDB",
 });
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }, // add developer ID for Uniqueness of uploaded image
+});
 // Setup View template engine
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer().single('appIcon'));
 // join stylesheet with system root path
+
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array('uploadedImage',3)
+);
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set Routing
@@ -49,7 +74,7 @@ sequelize
   .sync()
   .then((result) => {
     app.listen(3000);
-  //  return User;
+    //  return User;
   })
   .catch((err) => {
     console.log(err);

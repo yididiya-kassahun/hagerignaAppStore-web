@@ -68,6 +68,7 @@ exports.addPolicies = (req, res, next) => {
     .create({
       policyTitle: Title,
       policyContent: Content,
+      adminID:1
     })
     .then((result) => {
       console.log(result);

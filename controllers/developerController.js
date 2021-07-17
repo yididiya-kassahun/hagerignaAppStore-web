@@ -1,7 +1,7 @@
 const getPolicy = require("../models/addPolicy");
 const appstorelist = require("../models/appStorelist");
 const createApps = require("../models/createApp");
-const path = require("path");
+const questionary = require("../models/addQuestionary");
 
 exports.developerDashboard = (req, res, next) => {
   createApps
@@ -93,10 +93,17 @@ exports.appStoreList = (req, res, next) => {
     });
 };
 exports.appQuestionary = (req, res, next) => {
-  res.render("Developer/questionaries", {
-    pageTitle: "Questionaries",
-    path: "dashboard",
-  });
+  questionary
+    .findAll()
+    .then(questionList => {
+       res.render("Developer/questionaries", {
+         pageTitle: "Questionaries",
+         questions: questionList,
+         path: "dashboard",
+       });
+    })
+    .catch((err) => {});
+ 
 };
 exports.devPolicy = (req, res, next) => {
   getPolicy

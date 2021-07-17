@@ -102,20 +102,20 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="row" style="margin-bottom: 10px;margin-left: 10px;">
-            <!-- <small class="row">Send Registration Link to New Reviewer Via Email Address</small> -->
-           <form action="/send.email" method="POST">
+          <!-- <small class="row">Send Registration Link to New Reviewer Via Email Address</small> -->
+          <form action="/send.email" method="POST">
+            <div class="row" style="margin-bottom: 10px;margin-left: 10px;">
             <input
               type="email"
               name="reviewerEmail"
-              class="col-md-5 row"
+              class="form-control col-md-5 row"
               placeholder="Enter Reviewer Email"
             />
             <button type="submit" class="btn btn-primary" style="margin-left: 5px">
               Send
             </button>
+            </div>
            </form>
-          </div>
 
           <div class="row">
             <div class="col-12">

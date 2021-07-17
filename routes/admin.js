@@ -10,6 +10,7 @@ router.get("/reviewerList", supAdminController.reviewerList);
 router.get("/developersList", supAdminController.developersListPage);
 router.get("/ordinaryUsers", supAdminController.ordinaryUsersPage);
 router.get("/admin.policy", supAdminController.policyPage);
-router.get("/app.questionary", supAdminController.appQuestionary);
+router.get("/admin.questionary", supAdminController.questionaryPage);
 router.post("/admin.addPolicy", supAdminController.addPolicies);
+router.post("/admin.addQuestionary", supAdminController.addQuestionary);
 module.exports = router;

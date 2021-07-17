@@ -1,4 +1,5 @@
 const addPolicy = require("../models/addPolicy");
+const appQuestionary = require("../models/addQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
 const user = require("../models/register-user");
@@ -68,7 +69,7 @@ exports.addPolicies = (req, res, next) => {
     .create({
       policyTitle: Title,
       policyContent: Content,
-      adminID:1
+      adminID: 1,
     })
     .then((result) => {
       console.log(result);
@@ -92,11 +93,32 @@ exports.policyPage = (req, res, next) => {
     });
 };
 
-exports.appQuestionary = (req, res, next) => {
-  res.render("SupAdmin/appQuestionary", {
-    pageTitle: "main Dashboard",
-    path: "dashboard",
-  });
+exports.questionaryPage = (req, res, next) => {
+  appQuestionary
+    .findAll()
+    .then((questionary) => {
+      res.render("SupAdmin/addQuestionary", {
+        pageTitle: "main Dashboard",
+        questionaries: questionary,
+        path: "dashboard",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+exports.addQuestionary = (req, res, next) => {
+  const questionary = req.body.questionary;
+
+  appQuestionary
+    .create({
+      question: questionary,
+      adminID: 1,
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.coutUsers = (req, res, next) => {};

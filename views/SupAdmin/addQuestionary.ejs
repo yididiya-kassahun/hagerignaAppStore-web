@@ -112,11 +112,11 @@
               <button class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
                 Add New Questionary</button
               ><br /><br />
-       
+        <% if(questionaries.length > 0) { %> <% for(let appQuestion of questionaries ) { %>
               <div class="card card-primary card-outline" style="margin-top: 10px;">
                   <div class="card-header">
                     <h5 class="card-title w-100">
-                  card card-primary card-outline afn fnkanfkda dfandkfnadf adnfkdnfkdf dfnkdfn
+                        <%= appQuestion.question %>
                     </h5>
                     </div>
                 </a>
@@ -126,10 +126,10 @@
                   data-parent="#accordion"
                 >
                 </div>
-              </div>
+              </div> 
           <button class="btn btn-danger">Delete</button>
           <br>
-             
+             <% } %><% } %>
             </div>
           </div>
         </div>
@@ -149,8 +149,8 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="/admin.addPolicy" method="POST">
-              <input type="text" class="form-control" placeholder="Enter here ..." name="title"><br>
+              <form action="/admin.addQuestionary" method="POST">
+              <input type="text" class="form-control" placeholder="Enter here ..." name="questionary"><br>
             
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

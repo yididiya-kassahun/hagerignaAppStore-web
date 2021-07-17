@@ -1,9 +1,20 @@
+const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
 const addPolicy = require("../models/addPolicy");
 const appQuestionary = require("../models/addQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
 const user = require("../models/register-user");
 
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: "",
+    },
+  })
+);
 exports.adminDashboard = (req, res, next) => {
   res.render("SupAdmin/supAdminDashboard", {
     pageTitle: "main Dashboard",
@@ -119,6 +130,17 @@ exports.addQuestionary = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.sendRegistrationEmail = (req, res, next) => {
+  const reviewerEmail = req.body.reviewerEmail;
+  res.redirect("/reviewerList");
+ return transporter.sendMail({
+    to: reviewerEmail,
+    from: "yidu.kassahun.me@gmail.com",
+    subject: 'Hagerigna AppStore',
+    html: '<h1>Registration Link</h1>'
+  });
 };
 
 exports.coutUsers = (req, res, next) => {};

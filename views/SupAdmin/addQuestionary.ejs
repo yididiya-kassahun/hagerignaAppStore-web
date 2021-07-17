@@ -15,9 +15,6 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Home</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
       </ul>
 
       <!-- Right navbar links -->
@@ -112,24 +109,18 @@
               <button class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
                 Add New Questionary</button
               ><br /><br />
-        <% if(questionaries.length > 0) { %> <% for(let appQuestion of questionaries ) { %>
               <div class="card card-primary card-outline" style="margin-top: 10px;">
                   <div class="card-header">
+        <% if(questionaries.length > 0) { %> <% for(let appQuestion of questionaries ) { %>
                     <h5 class="card-title w-100">
                        <%= appQuestion.id %>. <%= appQuestion.question %>
+                  <a class="btn btn-danger float-right"><i class="fa fa-trash"></i></a>
                     </h5>
-                    </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                </div>
-              </div> 
-          <button class="btn btn-danger">Delete</button>
-          <br>
-             <% } %><% } %>
+                    <br>
+                    <hr>
+                    <% } %><% } %>
+                  </div>
+                </div> 
             </div>
           </div>
         </div>

@@ -111,8 +111,8 @@
                       questions ) { %>
                        <h4><%= question.id %>. <%= question.question %></h4> 
                         <fieldset id="group-1">
-                          <label class="col-sm-1" for="yes">Yes </label><input type="radio" value="yes" name="YesorNo" id="yes">
-                          <label class="col-sm-1" for="no">No </label> <input type="radio" value="no" name="YesorNo" id="no">
+                          <label class="col-sm-1" for="yes">Yes </label><input type="radio" value="yes" name="<%= question.question %>" id="yes">
+                          <label class="col-sm-1" for="no">No </label> <input type="radio" value="no" name="<%= question.question %>" id="no">
                         </fieldset>    
                         <hr>   
               <% } %><% } %>

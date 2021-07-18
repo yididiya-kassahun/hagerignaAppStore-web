@@ -2,6 +2,7 @@ const getPolicy = require("../models/addPolicy");
 const appstorelist = require("../models/appStorelist");
 const createApps = require("../models/createApp");
 const questionary = require("../models/addQuestionary");
+var moment = require("moment");
 
 exports.developerDashboard = (req, res, next) => {
   createApps
@@ -10,7 +11,8 @@ exports.developerDashboard = (req, res, next) => {
       res.render("Developer/devDashboard", {
         pageTitle: "main Dashboard",
         appsList: createdApps,
-        path: "dashboard",
+        path: req.baseUrl,
+        moment: moment,
       });
     })
     .catch((err) => {
@@ -35,11 +37,11 @@ exports.createApp = (req, res, next) => {
   const defaultLanguage = req.body.defaultLanguage;
   const isApporGame = req.body.ApporGame;
   const isFreeorPaid = req.body.free_paid;
-
+  
   createApps
     .create({
       appName: appName,
-      appIcon: "images",
+      appIcon: "defaultAppIcon.png",
       defaultLanguage: defaultLanguage,
       isApporGame: isApporGame,
       isPaidorFree: isFreeorPaid,
@@ -95,15 +97,16 @@ exports.appStoreList = (req, res, next) => {
 exports.appQuestionary = (req, res, next) => {
   questionary
     .findAll()
-    .then(questionList => {
-       res.render("Developer/questionaries", {
-         pageTitle: "Questionaries",
-         questions: questionList,
-         path: "dashboard",
-       });
+    .then((questionList) => {
+      res.render("Developer/questionaries", {
+        pageTitle: "Questionaries",
+        questions: questionList,
+        path: "dashboard",
+      });
     })
-    .catch((err) => {});
- 
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.devPolicy = (req, res, next) => {
   getPolicy
@@ -117,6 +120,12 @@ exports.devPolicy = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+exports.apkDetailPage = (req, res, next) => {
+  res.render("Developer/apkDetail", {
+    pageTitle: "APK Detail Page",
+    path: "dashboard",
+  });
 };
 exports.reportPage = (req, res, next) => {
   res.render("Developer/generalReport", {

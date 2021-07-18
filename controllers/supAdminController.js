@@ -135,11 +135,11 @@ exports.addQuestionary = (req, res, next) => {
 exports.sendRegistrationEmail = (req, res, next) => {
   const reviewerEmail = req.body.reviewerEmail;
   res.redirect("/reviewerList");
- return transporter.sendMail({
+  return transporter.sendMail({
     to: reviewerEmail,
     from: "yidu.kassahun.me@gmail.com",
-    subject: 'Hagerigna AppStore',
-    html: '<h1>Registration Link</h1>'
+    subject: "Hagerigna AppStore",
+    html: "<h1>Registration Link : http://localhost:3000/register.reviewer </h1>",
   });
 };
 

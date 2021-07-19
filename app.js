@@ -14,6 +14,7 @@ const addQuestionary = require("./models/addQuestionary");
 const registerDeveloper = require("./models/register-developer");
 const registerReviewer = require("./models/register-reviewer");
 const createApp = require("./models/createApp");
+const apkFileDetail = require("./models/apkDetail");
 const roles = require("./models/roles");
 //------| routes
 const adminRoute = require("./routes/admin");

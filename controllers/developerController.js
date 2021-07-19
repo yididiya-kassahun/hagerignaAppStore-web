@@ -1,6 +1,7 @@
 const getPolicy = require("../models/addPolicy");
-const appstorelist = require("../models/appStorelist");
 const createApps = require("../models/createApp");
+const appstorelist = require("../models/appStorelist");
+const apkDetail = require("../models/apkDetail");
 const questionary = require("../models/addQuestionary");
 
 var moment = require("moment");
@@ -42,6 +43,53 @@ exports.storeListing = (req, res, next) => {
       console.log(err);
     });
 };
+exports.appQuestionary = (req, res, next) => {
+  questionary
+    .findAll()
+    .then((questionList) => {
+      res.render("Developer/questionaries", {
+        pageTitle: "Questionaries",
+        questions: questionList,
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.devPolicy = (req, res, next) => {
+  getPolicy
+    .findAll()
+    .then((policies) => {
+      res.render("Developer/policies", {
+        policyList: policies,
+        pageTitle: "Get Policy Page",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.apkDetailPage = (req, res, next) => {
+  createApps
+    .findAll()
+    .then((createdApps) => {
+      res.render("Developer/apkDetail", {
+        pageTitle: "App APK Detail Page",
+        Apps: createdApps,
+        path: req.baseUrl,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.reportPage = (req, res, next) => {
+  res.render("Developer/generalReport", {
+    pageTitle: "Policy Page",
+    path: "dashboard",
+  });
+};
 
 exports.createApp = (req, res, next) => {
   const appName = req.body.AppName;
@@ -59,7 +107,7 @@ exports.createApp = (req, res, next) => {
       developerID: 3,
     })
     .then((result) => {
-      res.status(204).redirect();
+      res.redirect("/store.listing");
       console.log(result);
     })
     .catch((err) => {
@@ -104,56 +152,33 @@ exports.appStoreList = (req, res, next) => {
     })
     .then((result) => {
       console.log(result);
-      res.redirect("/developer");
+      res.redirect("/apk.detail");
     })
     .catch((err) => {
       console.log(err);
     });
 };
-exports.appQuestionary = (req, res, next) => {
-  questionary
-    .findAll()
-    .then((questionList) => {
-      res.render("Developer/questionaries", {
-        pageTitle: "Questionaries",
-        questions: questionList,
-        path: "dashboard",
-      });
+exports.apkFileDetail = (req, res, next) => {
+  const appID = req.body.App_ID;
+  const apkFile = req.body.apkFile;
+  const packageName = req.body.packageName;
+  const appVersion = req.body.appVersion;
+  const api = req.body.api;
+
+  apkDetail
+    .create({
+      apkFile: apkFile,
+      packageName: packageName,
+      appVersion: appVersion,
+      API_Req: api,
+      appID: appID,
+      developerID: 3,
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/app.questionary");
     })
     .catch((err) => {
       console.log(err);
     });
-};
-exports.devPolicy = (req, res, next) => {
-  getPolicy
-    .findAll()
-    .then((policies) => {
-      res.render("Developer/policies", {
-        policyList: policies,
-        pageTitle: "Get Policy Page",
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-exports.apkDetailPage = (req, res, next) => {
-   createApps
-     .findAll()
-     .then((createdApps) => {
-       res.render("Developer/apkDetail", {
-         pageTitle: "App APK Detail Page",
-         Apps: createdApps,
-         path: req.baseUrl,
-       });
-     })
-     .catch((err) => {
-       console.log(err);
-     });
-};
-exports.reportPage = (req, res, next) => {
-  res.render("Developer/generalReport", {
-    pageTitle: "Policy Page",
-    path: "dashboard",
-  });
 };

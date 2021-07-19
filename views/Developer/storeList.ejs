@@ -104,18 +104,42 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div class="card card-info card-outline">
-                <div class="card-header">
-                  <h3 class="card-title">App Detail</h3>
+              <form
+                method="post"
+                action="/app.storeList"
+                class="form-horizontal"
+                enctype="multipart/form-data"
+              >
+                <div class="form-group row" style="margin-left: 900px">
+                  <h5>Select App</h5>
+                  <div class="col-md-7">
+                    <select
+                      class="form-control select2"
+                      style="width: 100%"
+                      name="Application"
+                    >
+                      <% if(Apps.length > 0) { %> <% for(let App of Apps ) { %>
+                      <option value="<%= App.appID %>">
+                        <div>
+                          <img
+                            src="<%= path %><%= App.appIcon %>"
+                            width="5px"
+                            height="5px"
+                          />
+                        </div>
+                        <%= App.appName %>
+                      </option>
+                      <% } %><% } %>
+                    </select>
+                  </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <form
-                    method="post"
-                    action="/app.storeList"
-                    class="form-horizontal"
-                    enctype="multipart/form-data"
-                  >
+                <br />
+                <div class="card card-info card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">App Detail</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
                     <div class="form-group row">
                       <label for="inputEmail3" class="col-sm-2 col-form-label"
                         >App Name</label
@@ -123,7 +147,7 @@
                       <div class="col-md-8">
                         <input
                           type="text"
-                          name="appName"
+                          name="formAppName"
                           size="50"
                           class="form-control"
                           id="appname"
@@ -270,14 +294,14 @@
                       |
                       <button class="btn btn-primary">Next</button>
                     </div>
-                  </form>
+                    <!-- /.card-footer -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer"></div>
                   <!-- /.card-footer -->
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer"></div>
-                <!-- /.card-footer -->
-              </div>
-              <!-- /.card -->
+                <!-- /.card -->
+              </form>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ const getPolicy = require("../models/addPolicy");
 const appstorelist = require("../models/appStorelist");
 const createApps = require("../models/createApp");
 const questionary = require("../models/addQuestionary");
+
 var moment = require("moment");
 
 exports.developerDashboard = (req, res, next) => {
@@ -20,16 +21,26 @@ exports.developerDashboard = (req, res, next) => {
     });
 };
 exports.createAppPage = (req, res, next) => {
+  // roles.findAll({ where: { roleName: "developer" } });
+
   res.render("Developer/createApp", {
     pageTitle: "Create App Page",
     path: "dashboard",
   });
 };
 exports.storeListing = (req, res, next) => {
-  res.render("Developer/storeList", {
-    pageTitle: "main app store listing Page",
-    path: "dashboard",
-  });
+  createApps
+    .findAll()
+    .then((createdApps) => {
+      res.render("Developer/storeList", {
+        pageTitle: "main app store listing Page",
+        Apps: createdApps,
+        path: req.baseUrl,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.createApp = (req, res, next) => {
@@ -37,7 +48,7 @@ exports.createApp = (req, res, next) => {
   const defaultLanguage = req.body.defaultLanguage;
   const isApporGame = req.body.ApporGame;
   const isFreeorPaid = req.body.free_paid;
-  
+
   createApps
     .create({
       appName: appName,
@@ -48,6 +59,7 @@ exports.createApp = (req, res, next) => {
       developerID: 3,
     })
     .then((result) => {
+      res.status(204).redirect();
       console.log(result);
     })
     .catch((err) => {
@@ -55,11 +67,14 @@ exports.createApp = (req, res, next) => {
     });
 };
 exports.appStoreList = (req, res, next) => {
-  const appName = req.body.appName;
+  const AppID = req.body.Application;
+  const appName = req.body.formAppName;
   const shortDescription = req.body.shortDescription;
   const longDescription = req.body.longDescription;
   const files = req.files;
   const videoURL = req.body.videoURL;
+
+  //console.log("Here is the Application " + AppID);
   // const featureGraphics = req.file;
   // const phoneScreeenshoots = req.file;
 
@@ -75,7 +90,6 @@ exports.appStoreList = (req, res, next) => {
   const appIconURL = files[0].path;
   const featureGraphicsURL = files[1].path;
   const phoneScreeenshootURL = files[2].path;
-
   appstorelist
     .create({
       appName: appName,
@@ -85,10 +99,12 @@ exports.appStoreList = (req, res, next) => {
       featureGraphicsURL: featureGraphicsURL,
       videoURL: videoURL,
       phoneScreeenshootURL: phoneScreeenshootURL,
+      appID: AppID,
       developerID: 2,
     })
     .then((result) => {
       console.log(result);
+      res.redirect("/developer");
     })
     .catch((err) => {
       console.log(err);
@@ -122,10 +138,18 @@ exports.devPolicy = (req, res, next) => {
     });
 };
 exports.apkDetailPage = (req, res, next) => {
-  res.render("Developer/apkDetail", {
-    pageTitle: "APK Detail Page",
-    path: "dashboard",
-  });
+   createApps
+     .findAll()
+     .then((createdApps) => {
+       res.render("Developer/apkDetail", {
+         pageTitle: "App APK Detail Page",
+         Apps: createdApps,
+         path: req.baseUrl,
+       });
+     })
+     .catch((err) => {
+       console.log(err);
+     });
 };
 exports.reportPage = (req, res, next) => {
   res.render("Developer/generalReport", {

@@ -12,6 +12,7 @@ router.get("/ordinaryUsers", supAdminController.ordinaryUsersPage);
 router.get("/admin.policy", supAdminController.policyPage);
 router.get("/admin.questionary", supAdminController.questionaryPage);
 router.post("/admin.addPolicy", supAdminController.addPolicies);
+router.post("/deletePolicy/:policyID",supAdminController.deletePolicy);
 router.post("/admin.addQuestionary", supAdminController.addQuestionary);
 router.post("/send.email", supAdminController.sendRegistrationEmail);
 module.exports = router;

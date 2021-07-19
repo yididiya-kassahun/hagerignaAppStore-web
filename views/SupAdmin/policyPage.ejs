@@ -130,8 +130,13 @@
                   </div>
                 </div>
               </div>
-          <button class="btn btn-danger">Delete</button>
-          <br>
+              <div class="row col-sm-4">
+              <button class="btn btn-info"> Edit </button> |  
+              <form action="/deletePolicy/<%= policy.id %>" method="POST">
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+              </div>
+                 <hr>
                 <% } %> <% } %>
               <!-- /.card -->
              

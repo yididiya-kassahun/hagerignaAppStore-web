@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 
-const addPolicy = require("../models/addPolicy");
+const Policy = require("../models/addPolicy");
 const appQuestionary = require("../models/addQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
@@ -76,14 +76,14 @@ exports.addPolicies = (req, res, next) => {
   const Title = req.body.title;
   const Content = req.body.content;
 
-  addPolicy
-    .create({
-      policyTitle: Title,
-      policyContent: Content,
-      adminID: 1,
-    })
+  Policy.create({
+    policyTitle: Title,
+    policyContent: Content,
+    adminID: 1,
+  })
     .then((result) => {
       console.log(result);
+      res.redirect("/admin.policy");
     })
     .catch((err) => {
       console.log(err);
@@ -91,8 +91,7 @@ exports.addPolicies = (req, res, next) => {
 };
 
 exports.policyPage = (req, res, next) => {
-  addPolicy
-    .findAll()
+  Policy.findAll()
     .then((policies) => {
       res.render("SupAdmin/policyPage", {
         policyList: policies,
@@ -103,7 +102,21 @@ exports.policyPage = (req, res, next) => {
       console.log(err);
     });
 };
-
+exports.deletePolicy = (req, res, next) => {
+  const policyID = req.params.policyID;
+  Policy.findByPk(policyID)
+    .then((policy) => {
+      policy.destroy();
+    })
+    .then(result => {
+      console.log('Policy Deleted Successfully!');
+      res.redirect('/admin.policy');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log(policyID);
+};
 exports.questionaryPage = (req, res, next) => {
   appQuestionary
     .findAll()

@@ -16,4 +16,5 @@ router.get("/app.questionary", developerController.appQuestionary);
 router.post("/create.app", developerController.createApp);
 router.post("/app.storeList", developerController.appStoreList);
 router.post("/upload.apk",developerController.apkFileDetail);
+router.post("/post.questionary",developerController.postQuestionary);
 module.exports = router;

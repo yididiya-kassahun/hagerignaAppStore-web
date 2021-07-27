@@ -11,6 +11,7 @@ const multer = require("multer");
 const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const addQuestionary = require("./models/addQuestionary");
+const answeredQuestionary = require("./models/answeredQuestionary");
 const registerDeveloper = require("./models/register-developer");
 const registerReviewer = require("./models/register-reviewer");
 const createApp = require("./models/createApp");
@@ -77,7 +78,7 @@ app.use(authRoute);
 
 // Using sequelizer for ORM database - mysql
 sequelize
-  //.sync({ force: true }) //override the existing table
+ // .sync({ force: true }) //override the existing table
   .sync()
   .then((result) => {
     app.listen(3000);

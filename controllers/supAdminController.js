@@ -4,6 +4,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 
 const Policy = require("../models/addPolicy");
 const appQuestionary = require("../models/addQuestionary");
+const answeredQuestionary = require("../models/answeredQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
 const user = require("../models/register-user");
@@ -108,9 +109,9 @@ exports.deletePolicy = (req, res, next) => {
     .then((policy) => {
       policy.destroy();
     })
-    .then(result => {
-      console.log('Policy Deleted Successfully!');
-      res.redirect('/admin.policy');
+    .then((result) => {
+      console.log("Policy Deleted Successfully!");
+      res.redirect("/admin.policy");
     })
     .catch((err) => {
       console.log(err);
@@ -138,7 +139,8 @@ exports.addQuestionary = (req, res, next) => {
       adminID: 1,
     })
     .then((result) => {
-      console.log(result);
+      console.log(result.question);
+      res.redirect("/admin.questionary");
     })
     .catch((err) => {
       console.log(err);

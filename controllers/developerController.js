@@ -3,6 +3,7 @@ const createApps = require("../models/createApp");
 const appstorelist = require("../models/appStorelist");
 const apkDetail = require("../models/apkDetail");
 const questionary = require("../models/addQuestionary");
+const answeredQuestionary = require("../models/answeredQuestionary");
 
 var moment = require("moment");
 
@@ -43,15 +44,26 @@ exports.storeListing = (req, res, next) => {
       console.log(err);
     });
 };
+
 exports.appQuestionary = (req, res, next) => {
-  questionary
+  createApps
     .findAll()
-    .then((questionList) => {
-      res.render("Developer/questionaries", {
-        pageTitle: "Questionaries",
-        questions: questionList,
-        path: "dashboard",
-      });
+    .then((createdApps) => {
+      // Join Two table in normal query then send it to the front end
+      questionary
+        .findAll()
+        .then((questionList) => {
+          res.render("Developer/questionaries", {
+            pageTitle: "Questionaries",
+            questions: questionList,
+            //storedQuestions: storedQ,
+            Apps: createdApps,
+            path: req.baseUrl,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -181,4 +193,35 @@ exports.apkFileDetail = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.postQuestionary = (req, res, next) => {
+  const appID = req.body.AppID;
+  const questionID = req.body.questionID;
+  const repliedAnswer = req.body.yesORno;
+
+  questionary
+    .findAll()
+    .then((result) => {
+      console.log(result.length);
+      for (let i = 0; i < result.length; i++) {
+        answeredQuestionary
+          .create({
+            appID: appID,
+            questionID: questionID[i],
+            yesOrno: repliedAnswer[i],
+            developerID: 3,
+          })
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    })
+    .catch((err) => {});
+
+  console.log("=====================" + repliedAnswer);
+  res.redirect("/app.questionary");
 };

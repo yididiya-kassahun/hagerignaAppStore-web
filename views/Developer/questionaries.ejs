@@ -104,38 +104,56 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div
-                class="card card-primary card-outline"
-                style="margin-top: 10px"
-              >
-                <div class="card-header">
-                  <div class="card-body w-100">
-                    <% if(questions.length > 0) { %> <% for(let question of
-                    questions ) { %>
-                    <h4><%= question.id %>. <%= question.question %></h4>
-                    <fieldset id="group-1">
-                      <label class="col-sm-1" for="yes">Yes </label
-                      ><input
-                        type="radio"
-                        value="yes"
-                        name="<%= question.question %>"
-                        id="yes"
-                      />
-                      <label class="col-sm-1" for="no">No </label>
-                      <input
-                        type="radio"
-                        value="no"
-                        name="<%= question.question %>"
-                        id="no"
-                      />
-                    </fieldset>
-                    <hr />
-                    <% } %><% } %>
+              <form action="/post.questionary" method="POST">
+                <div class="form-group row" style="margin-left: 900px">
+                  <h5>Select App</h5>
+                  <div class="col-md-7">
+                    <select
+                      class="form-control select2"
+                      style="width: 100%"
+                      name="AppID"
+                    >
+                      <% if(Apps.length > 0) { %> <% for(let App of Apps ) { %>
+                      <option value="<%= App.appID %>">
+                        <%= App.appName %>
+                      </option>
+                      <% } %><% } %>
+                    </select>
                   </div>
-                  <button type="submit" class="btn btn-default">Submit</button>
                 </div>
-              </div>
-              <button class="btn btn-primary float-right">Release and Roll out Application</button>
+                <div
+                  class="card card-primary card-outline"
+                  style="margin-top: 10px"
+                >
+                  <div class="card-header">
+                    <div class="card-body w-100">
+                      <% if(questions.length > 0) { %> <% for(let question of
+                      questions ) { %>
+                      <h4><%= question.id %>. <%= question.question %></h4>
+                       <input type="hidden" value="<%= question.id %>" name="questionID" class="form-control">
+                      <div class="col-md-12">
+                        <select
+                          class="form-control select2"
+                          style="width: 100%"
+                          name="yesORno"
+                        >
+                          <option value="1">Yes, I Agree</option>
+                          <option value="0"> No, i didn't Agree</option>
+                        </select>
+                      </div>
+
+                      <hr />
+                      <% } %> <% } %>
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+                <button class="btn btn-primary float-right">
+                  Release and Roll out Application
+                </button>
+              </form>
             </div>
           </div>
           <div class="form-group row">

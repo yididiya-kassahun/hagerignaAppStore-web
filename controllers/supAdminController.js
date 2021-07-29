@@ -147,6 +147,21 @@ exports.addQuestionary = (req, res, next) => {
     });
 };
 
+exports.deleteQuestionary = (req, res, next) => {
+  const questionID = req.params.questionID;
+  appQuestionary
+    .findByPk(questionID)
+    .then((questionary) => {
+      questionary.destroy();
+    })
+    .then((result) => {
+      console.log("Questionary Deleted Successfully!");
+      res.redirect("/admin.questionary");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 exports.sendRegistrationEmail = (req, res, next) => {
   const reviewerEmail = req.body.reviewerEmail;
   res.redirect("/reviewerList");

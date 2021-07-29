@@ -106,21 +106,36 @@
           <div class="row">
             <div class="col-12">
               <!-- Default box -->
-              <button class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
+              <button
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#modal-lg"
+              >
                 Add New Questionary</button
               ><br /><br />
-              <div class="card card-primary card-outline" style="margin-top: 10px;">
-                  <div class="card-header">
-        <% if(questionaries.length > 0) { %> <% for(let appQuestion of questionaries ) { %>
-                    <h5 class="card-title w-100">
-                       <%= appQuestion.id %>. <%= appQuestion.question %>
-                  <a class="btn btn-danger float-right"><i class="fa fa-trash"></i></a>
-                    </h5>
-                    <br>
-                    <hr>
-                    <% } %><% } %>
-                  </div>
-                </div> 
+              <div
+                class="card card-primary card-outline"
+                style="margin-top: 10px"
+              >
+                <div class="card-header">
+                  <% if(questionaries.length > 0) { %> <% for(let appQuestion of
+                  questionaries ) { %>
+                  <h5 class="card-title w-100">
+                    <%= appQuestion.id %>. <%= appQuestion.question %>
+                    <form
+                      action="/deleteQuestions/<%= appQuestion.id %>"
+                      method="POST"
+                    >
+                      <button type="submit" class="btn btn-danger float-right">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  </h5>
+                  <br />
+                  <hr />
+                  <% } %><% } %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -128,45 +143,51 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-     <!-- /.modal -->
+    <!-- /.modal -->
 
-      <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h6 class="modal-title">Add Questionary</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="/admin.addQuestionary" method="POST">
-              <input type="text" class="form-control" placeholder="Enter here ..." name="questionary"><br>
-            
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save & Send</button>
-            </div>
+    <div class="modal fade" id="modal-lg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title">Add Questionary</h6>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/admin.addQuestionary" method="POST">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter here ..."
+                name="questionary"
+              /><br />
+
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save & Send
+                </button>
+              </div>
             </form>
-          <!-- /.modal-content -->
-        </div>
+            <!-- /.modal-content -->
           </div>
         </div>
-        <!-- /.modal-dialog -->
       </div>
-      <!-- /.modal -->
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <%- include('includes/footer.ejs') %>
   </div>
-<script>
-  $(function () {
-    // Summernote
-    $('#summernote').summernote()
-
-      // CodeMirror
-    // CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-    //   mode: "htmlmixed",
-    //   theme: "monokai"
-    // });
-})
-</script>
 </body>

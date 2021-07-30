@@ -18,6 +18,7 @@ const createApp = require("./models/createApp");
 const apkFileDetail = require("./models/apkDetail");
 const defaultLanguage = require("./models/defaultLanguage");
 const collectedEmail = require("./models/collectedEmail");
+const androidAPI = require("./models/AndroidAPI");
 const roles = require("./models/roles");
 //------| routes
 const adminRoute = require("./routes/admin");

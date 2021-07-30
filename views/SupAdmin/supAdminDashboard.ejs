@@ -222,37 +222,19 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>John Mckeever</td>
-                            <td>49</td>
-                            <td class="text-right py-0 align-middle">
-                              <div class="btn-group btn-group-sm">
-                                <a href="#" class="btn btn-info"
-                                  ><i class="fas fa-eye"></i
-                                ></a>
-                                <a href="#" class="btn btn-danger"
-                                  ><i class="fas fa-trash"></i
-                                ></a>
-                              </div>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>2</td>
-                            <td>Belay dagne</td>
-                            <td>28</td>
-                            <td class="text-right py-0 align-middle">
-                              <div class="btn-group btn-group-sm">
-                                <a href="#" class="btn btn-info"
-                                  ><i class="fas fa-eye"></i
-                                ></a>
-                                <a href="#" class="btn btn-danger"
-                                  ><i class="fas fa-trash"></i
-                                ></a>
-                              </div>
-                            </td>
-                          </tr>
+                          <td>1</td>
+                          <td>John Alex</td>
+                          <td>20</td>
+                          <td class="text-right py-0 align-middle">
+                            <div class="btn-group btn-group-sm">
+                              <a href="#" class="btn btn-info"
+                                ><i class="fas fa-eye"></i
+                              ></a>
+                              <a href="#" class="btn btn-danger"
+                                ><i class="fas fa-trash"></i
+                              ></a>
+                            </div>
+                          </td>
                         </tbody>
                       </table>
                     </div>
@@ -264,15 +246,15 @@
                   <div class="card card-primary">
                     <div class="card-header">
                       <h3 class="card-title">Android API Versions</h3>
-
+                      <!-- <button href="" class="btn btn-default" style="float:left"> Add </button> -->
                       <div class="card-tools">
                         <button
+                          data-toggle="modal"
+                          data-target="#modal-lg"
                           type="button"
                           class="btn btn-tool"
-                          data-card-widget="collapse"
-                          title="Collapse"
                         >
-                          <i class="fas fa-minus"></i>
+                          <i class="fas fa-plus"></i>
                         </button>
                       </div>
                     </div>
@@ -287,37 +269,22 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <% if(androidAPIs.length > 0) { %> <% for(let
+                          androidAPI of androidAPIs ) { %>
                           <tr>
-                            <td>1</td>
-                            <td>John@gmail.com</td>
-                            <td>not sent</td>
+                            <td><%= androidAPI.id %></td>
+                            <td><%= androidAPI.codeName %></td>
+                            <td><%= androidAPI.version %></td>
+                            <td><%= androidAPI.API_Level %></td>
                             <td class="text-right py-0 align-middle">
                               <div class="btn-group btn-group-sm">
-                                <a href="#" class="btn btn-info"
-                                  ><i class="fas fa-eye"></i
-                                ></a>
                                 <a href="#" class="btn btn-danger"
                                   ><i class="fas fa-trash"></i
                                 ></a>
                               </div>
                             </td>
                           </tr>
-
-                          <tr>
-                            <td>2</td>
-                            <td>Belay@yahoo.com</td>
-                            <td>sent</td>
-                            <td class="text-right py-0 align-middle">
-                              <div class="btn-group btn-group-sm">
-                                <a href="#" class="btn btn-info"
-                                  ><i class="fas fa-eye"></i
-                                ></a>
-                                <a href="#" class="btn btn-danger"
-                                  ><i class="fas fa-trash"></i
-                                ></a>
-                              </div>
-                            </td>
-                          </tr>
+                          <% } %><% } %>
                         </tbody>
                       </table>
                     </div>
@@ -334,9 +301,68 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <%- include('includes/footer.ejs') %>
-  </div>
 
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modal-lg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title">Add Questionary</h6>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/admin.addAndroidAPI" method="POST">
+              <label for="codeName">Enter a Code Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Code Name"
+                name="codeName"
+              />
+              <br />
+              <label for="version">Enter a Version</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Version"
+                name="version"
+              />
+              <br />
+              <label for="apiLevel">Enter an API Level</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="API Level"
+                name="apiLevel"
+              /><br />
+
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </form>
+            <!-- /.modal-content -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <%- include('includes/footer.ejs') %>
   <script>
     $(function () {
       /* ChartJS

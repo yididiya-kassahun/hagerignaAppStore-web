@@ -16,5 +16,6 @@ router.post("/deletePolicy/:policyID", supAdminController.deletePolicy);
 router.post("/deleteQuestions/:questionID", supAdminController.deleteQuestionary);
 router.post("/deleteEmail/:emailID",supAdminController.deleteEmail);
 router.post("/admin.addQuestionary", supAdminController.addQuestionary);
+router.post("/admin.addAndroidAPI", supAdminController.addAndroidAPI);
 router.post("/send.email", supAdminController.sendRegistrationEmail);
 module.exports = router;

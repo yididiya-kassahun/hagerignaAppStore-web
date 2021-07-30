@@ -8,6 +8,7 @@ const answeredQuestionary = require("../models/answeredQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
 const collectedEmail = require("../models/collectedEmail");
+const androidAPI = require("../models/AndroidAPI");
 const user = require("../models/register-user");
 
 const transporter = nodemailer.createTransport(
@@ -18,10 +19,18 @@ const transporter = nodemailer.createTransport(
   })
 );
 exports.adminDashboard = (req, res, next) => {
-  res.render("SupAdmin/supAdminDashboard", {
-    pageTitle: "main Dashboard",
-    path: "dashboard",
-  });
+  androidAPI
+    .findAll()
+    .then((result) => {
+      res.render("SupAdmin/supAdminDashboard", {
+        androidAPIs: result,
+        pageTitle: "main Dashboard",
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.developersListPage = (req, res, next) => {
@@ -203,6 +212,27 @@ exports.deleteEmail = (req, res, next) => {
       fetchedEmail.destroy();
       console.log("email deleted Successfully");
       res.redirect("/reviewerList");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.addAndroidAPI = (req, res, next) => {
+  const codeName = req.body.codeName;
+  const version = req.body.version;
+  const apiLevel = req.body.apiLevel;
+
+  androidAPI
+    .create({
+      codeName: codeName,
+      version: version,
+      API_Level: apiLevel,
+      adminID: 1,
+    })
+    .then((result) => {
+      console.log("Android API Successfully added");
+      res.redirect("/admin");
     })
     .catch((err) => {
       console.log(err);

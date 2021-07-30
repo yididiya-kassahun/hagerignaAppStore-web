@@ -40,6 +40,6 @@ const defaultLanguage = sequelize.define("defaultLanguage", {
 //   defaultLanguage.create({
 //     language: "Sheka",
 //   });
-//});
+// });
 
 module.exports = defaultLanguage;

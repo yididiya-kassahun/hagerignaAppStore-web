@@ -14,6 +14,7 @@ router.get("/store.listing", developerController.storeListing);
 router.get("/app.questionary", developerController.appQuestionary);
 //router.get("/create.app/:appID", developerController.appDetailss);
 router.post("/create.app", developerController.createApp);
+router.post("/deleteApp/:appID", developerController.deleteApp);
 router.post("/app.storeList", developerController.appStoreList);
 router.post("/upload.apk",developerController.apkFileDetail);
 router.post("/post.questionary",developerController.postQuestionary);

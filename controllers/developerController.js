@@ -4,6 +4,7 @@ const appstorelist = require("../models/appStorelist");
 const apkDetail = require("../models/apkDetail");
 const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
+const defaultLanguage = require("../models/defaultLanguage");
 
 var moment = require("moment");
 
@@ -23,12 +24,18 @@ exports.developerDashboard = (req, res, next) => {
     });
 };
 exports.createAppPage = (req, res, next) => {
-  // roles.findAll({ where: { roleName: "developer" } });
-
-  res.render("Developer/createApp", {
-    pageTitle: "Create App Page",
-    path: "dashboard",
-  });
+  defaultLanguage
+    .findAll()
+    .then((language) => {
+      res.render("Developer/createApp", {
+        pageTitle: "Create App Page",
+        languages: language,
+        path: "dashboard",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.storeListing = (req, res, next) => {
   createApps
@@ -45,6 +52,21 @@ exports.storeListing = (req, res, next) => {
     });
 };
 
+exports.deleteApp = (req, res, next) => {
+  const deleteAppID = req.params.appID;
+  createApps
+    .findByPk(deleteAppID)
+    .then((deleteAppID) => {
+      deleteAppID.destroy();
+    })
+    .then((result) => {
+      console.log("Created App Deleted Successfully!");
+      res.redirect("/developer");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 exports.appQuestionary = (req, res, next) => {
   createApps
     .findAll()
@@ -105,7 +127,7 @@ exports.reportPage = (req, res, next) => {
 
 exports.createApp = (req, res, next) => {
   const appName = req.body.AppName;
-  const defaultLanguage = req.body.defaultLanguage;
+  const defaultLanguage = req.body.Language;
   const isApporGame = req.body.ApporGame;
   const isFreeorPaid = req.body.free_paid;
 

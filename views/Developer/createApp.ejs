@@ -106,7 +106,7 @@
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">App Name</label>
                     <div class="col-md-8">
-                      <input type="text" size="50" name="AppName" class="form-control" id="appname">
+                      <input type="text" size="50" max="50" name="AppName" class="form-control" id="appname" required>
                       <small for="appname">This is how your app appear on store it should be neat short and not
                         include reptitive symbols, text, price or Emoji. 0/50
                       </small>
@@ -115,7 +115,15 @@
                   <div class="form-group row">
                     <label for="lang" class="col-sm-2 col-form-label">Default Language</label>
                     <div class="col-md-8">
-                      <input type="text" name="defaultLanguage" class="form-control" id="lang">
+                        <select
+                          class="form-control select2"
+                          style="width: 100%"
+                          name="Language"
+                        >
+                      <% if(languages.length > 0) { %> <% for(let language of languages ) { %>
+                          <option value="<%= language.language %>"><%= language.language %></option>
+                        <% } %><% } %>
+                        </select>
                     </div>
                   </div>
                    <div class="form-group row">
@@ -159,7 +167,7 @@
                   </div>
                   <div class="float-right">
                   <button type="submit" class="btn btn-info">Create</button> | 
-                  <button class="btn btn-primary">Next</button>
+                  <!-- <button class="btn btn-primary">Next</button> -->
                 </div>
                 </form>
                 <!-- /.card-footer -->

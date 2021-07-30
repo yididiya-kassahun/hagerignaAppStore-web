@@ -7,6 +7,7 @@ const appQuestionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const getDevelopers = require("../models/register-developer");
 const reviewer = require("../models/register-reviewer");
+const collectedEmail = require("../models/collectedEmail");
 const user = require("../models/register-user");
 
 const transporter = nodemailer.createTransport(
@@ -42,11 +43,19 @@ exports.reviewerList = (req, res, next) => {
   reviewer
     .findAll()
     .then((reviewerList) => {
-      res.render("SupAdmin/reviewers", {
-        reviewers: reviewerList,
-        pageTitle: "Reviewer Dashboard",
-        path: "dashboard",
-      });
+      collectedEmail
+        .findAll()
+        .then((emails) => {
+          res.render("SupAdmin/reviewers", {
+            reviewers: reviewerList,
+            emails: emails,
+            pageTitle: "Reviewer Dashboard",
+            path: "dashboard",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -164,13 +173,40 @@ exports.deleteQuestionary = (req, res, next) => {
 };
 exports.sendRegistrationEmail = (req, res, next) => {
   const reviewerEmail = req.body.reviewerEmail;
-  res.redirect("/reviewerList");
-  return transporter.sendMail({
-    to: reviewerEmail,
-    from: "yidu.kassahun.me@gmail.com",
-    subject: "Hagerigna AppStore",
-    html: "<h1>Registration Link : http://localhost:3000/register.reviewer </h1>",
-  });
+
+  collectedEmail
+    .create({
+      email: reviewerEmail,
+      status: "sent",
+      adminID: 2,
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/reviewerList");
+      return transporter.sendMail({
+        to: result.email,
+        from: "yidu.kassahun.me@gmail.com",
+        subject: "Hagerigna AppStore",
+        html: "<h1>Registration Link : http://localhost:3000/register.reviewer </h1>",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.deleteEmail = (req, res, next) => {
+  const emailID = req.params.emailID;
+
+  collectedEmail
+    .findByPk(emailID)
+    .then((fetchedEmail) => {
+      fetchedEmail.destroy();
+      console.log("email deleted Successfully");
+      res.redirect("/reviewerList");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.coutUsers = (req, res, next) => {};

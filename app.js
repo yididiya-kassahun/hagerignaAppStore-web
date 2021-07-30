@@ -16,6 +16,8 @@ const registerDeveloper = require("./models/register-developer");
 const registerReviewer = require("./models/register-reviewer");
 const createApp = require("./models/createApp");
 const apkFileDetail = require("./models/apkDetail");
+const defaultLanguage = require("./models/defaultLanguage");
+const collectedEmail = require("./models/collectedEmail");
 const roles = require("./models/roles");
 //------| routes
 const adminRoute = require("./routes/admin");
@@ -78,7 +80,7 @@ app.use(authRoute);
 
 // Using sequelizer for ORM database - mysql
 sequelize
- // .sync({ force: true }) //override the existing table
+  //.sync({ force: true }) //override the existing table
   .sync()
   .then((result) => {
     app.listen(3000);

@@ -225,9 +225,11 @@
                             %>
                           </td>
                           <td>
-                            <button class="btn btn-danger">
-                              <i class="fa fa-trash"></i>
+                           <form action="/deleteApp/<%= app.appID %>" method="POST">
+                            <button type="submit" class="btn btn-danger">
+                               <i class="fa fa-trash"></i>
                             </button>
+                            </form>
                           </td>
                         </tr>
                         <% } %> <% } %>

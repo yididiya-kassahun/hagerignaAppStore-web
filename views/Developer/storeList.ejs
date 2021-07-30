@@ -141,14 +141,14 @@
                   <!-- /.card-header -->
                   <div class="card-body">
                     <div class="form-group row">
-                      <label for="inputEmail3" class="col-sm-2 col-form-label"
+                      <label for="Application" class="col-sm-2 col-form-label"
                         >App Name</label
                       >
                       <div class="col-md-8">
                         <select
                           class="form-control select2"
                           style="width: 100%"
-                          name="Application"
+                          name="appName"
                         >
                           <% if(Apps.length > 0) { %> <% for(let App of Apps ) {
                           %>
@@ -173,8 +173,10 @@
                           rows="3"
                           id="shortDescription"
                         ></textarea>
-                         <small for="appname">Here write precise short description of your app maximum word allowed is 200.
-                      </small>
+                        <small for="appname"
+                          >Here write precise short description of your app
+                          maximum word allowed is 200.
+                        </small>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -191,8 +193,10 @@
                           rows="5"
                           id="longDescription"
                         ></textarea>
-                          <small for="appname">Here write full description of your app maximum word allowed is 200.
-                      </small>
+                        <small for="appname"
+                          >Here write full description of your app maximum word
+                          allowed is 200.
+                        </small>
                       </div>
                     </div>
 
@@ -296,7 +300,6 @@
                     <div class="float-right">
                       <button type="submit" class="btn btn-info">Create</button>
                       |
-                      <button class="btn btn-primary">Next</button>
                     </div>
                     <!-- /.card-footer -->
                   </div>

@@ -5,6 +5,7 @@ const apkDetail = require("../models/apkDetail");
 const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
+const androidAPI = require("../models/AndroidAPI");
 
 var moment = require("moment");
 
@@ -44,6 +45,7 @@ exports.storeListing = (req, res, next) => {
       res.render("Developer/storeList", {
         pageTitle: "main app store listing Page",
         Apps: createdApps,
+        androidAPIs: androidAPI,
         path: req.baseUrl,
       });
     })
@@ -108,11 +110,19 @@ exports.apkDetailPage = (req, res, next) => {
   createApps
     .findAll()
     .then((createdApps) => {
-      res.render("Developer/apkDetail", {
-        pageTitle: "App APK Detail Page",
-        Apps: createdApps,
-        path: req.baseUrl,
-      });
+      androidAPI
+        .findAll()
+        .then((androidAPI) => {
+          res.render("Developer/apkDetail", {
+            pageTitle: "App APK Detail Page",
+            Apps: createdApps,
+            androidAPIs:androidAPI,
+            path: req.baseUrl,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -150,7 +160,7 @@ exports.createApp = (req, res, next) => {
 };
 exports.appStoreList = (req, res, next) => {
   const AppID = req.body.Application;
-  const appName = req.body.formAppName;
+  const appName = req.body.appName;
   const shortDescription = req.body.shortDescription;
   const longDescription = req.body.longDescription;
   const files = req.files;

@@ -103,113 +103,121 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-             <div class="col-md-12">
-            <form action="/upload.apk" method="POST">
-              <div class="form-group row" style="margin-left: 900px">
-                <h5>Select App</h5>
-                <div class="col-md-7">
-                  <select
-                    class="form-control select2"
-                    style="width: 100%"
-                    name="App_ID"
-                  >
-                    <% if(Apps.length > 0) { %> <% for(let App of Apps ) { %>
-                    <option value="<%= App.appID %>">
-                      <%= App.appName %>
-                    </option>
-                    <% } %><% } %>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="card card-info card-outline">
-                  <div class="card-header">
-                    <h3 class="card-title">App APK Detail</h3>
+            <div class="col-md-12">
+              <form action="/upload.apk" method="POST">
+                <div class="form-group row" style="margin-left: 900px">
+                  <h5>Select App</h5>
+                  <div class="col-md-7">
+                    <select
+                      class="form-control select2"
+                      style="width: 100%"
+                      name="App_ID"
+                    >
+                      <% if(Apps.length > 0) { %> <% for(let App of Apps ) { %>
+                      <option value="<%= App.appID %>">
+                        <%= App.appName %>
+                      </option>
+                      <% } %><% } %>
+                    </select>
                   </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="form-group row">
-                      <label for="my-awesome-dropzone" class="col-sm-2 col-form-label"
-                        >Upload APK File</label
-                      >
-                      <div class="col-md-8">
-                        <input
-                          type="file"
-                          name="apkFile"
-                          class="form-control dropzone"
-                          id="my-awesome-dropzone"
-                        />
-                        <small for="appname"
-                          >This is your app package name on store it should be
-                          unique.
-                        </small>
+                </div>
+                <div class="col-md-12">
+                  <div class="card card-info card-outline">
+                    <div class="card-header">
+                      <h3 class="card-title">App APK Detail</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label
+                          for="my-awesome-dropzone"
+                          class="col-sm-2 col-form-label"
+                          >Upload APK File</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            type="file"
+                            name="apkFile"
+                            class="form-control dropzone"
+                            id="my-awesome-dropzone"
+                          />
+                          <small for="appname"
+                            >This is your app package name on store it should be
+                            unique.
+                          </small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="packageName" class="col-sm-2 col-form-label"
-                        >Enter Package Name</label
-                      >
-                      <div class="col-md-8">
-                        <input
-                          type="text"
-                          name="packageName"
-                          size="50"
-                          class="form-control"
-                          id="packageName"
-                        />
-                        <small for="packageName"
-                          >This is your app package name on store it should be
-                          unique.
-                        </small>
+                      <div class="form-group row">
+                        <label for="packageName" class="col-sm-2 col-form-label"
+                          >Enter Package Name</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            type="text"
+                            name="packageName"
+                            size="50"
+                            class="form-control"
+                            id="packageName"
+                          />
+                          <small for="packageName"
+                            >This is your app package name on store it should be
+                            unique.
+                          </small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="appVersion" class="col-sm-2 col-form-label"
-                        >App Version</label
-                      >
-                      <div class="col-md-8">
-                        <input
-                          type="text"
-                          name="appVersion"
-                          size="50"
-                          class="form-control"
-                          id="appVersion"
-                          placeholder="V1.0"
-                        />
+                      <div class="form-group row">
+                        <label for="appVersion" class="col-sm-2 col-form-label"
+                          >App Version</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            type="text"
+                            name="appVersion"
+                            size="50"
+                            class="form-control"
+                            id="appVersion"
+                            placeholder="V1.0"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="api" class="col-sm-2 col-form-label"
-                        >App API Requirement</label
-                      >
-                      <div class="col-md-8">
-                        <input
-                          type="text"
-                          name="api"
-                          size="50"
-                          class="form-control"
-                          id="api"
-                        />
+                      <div class="form-group row">
+                        <label for="api" class="col-sm-2 col-form-label"
+                          >App API Requirement</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select2"
+                            style="width: 100%"
+                            name="Language"
+                          >
+                            <% if(androidAPIs.length > 0) { %> <% for(let
+                            androidAPI of androidAPIs ) { %>
+                            <option value="<%= androidAPI.codeName %>">
+                              <%= androidAPI.codeName %> <%=
+                              androidAPI.API_Level %>
+                            </option>
+                            <% } %><% } %>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <div class="float-right">
-                      <button type="submit" class="btn btn-info">Create</button>
-                      |
-                      <button class="btn btn-primary">
-                        Next
-                      </button>
-                    </div>
+                      <div class="float-right">
+                        <button type="submit" class="btn btn-info">
+                          Create
+                        </button>
+                        |
+                        <button class="btn btn-primary">Next</button>
+                      </div>
 
+                      <!-- /.card-footer -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer"></div>
                     <!-- /.card-footer -->
                   </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer"></div>
-                  <!-- /.card-footer -->
+                  <!-- /.card -->
                 </div>
-                <!-- /.card -->
-              </div>
-            </form>
-          </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>

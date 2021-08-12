@@ -144,7 +144,7 @@
                           </tr>
                         </thead>
                         <tbody>
-        <% if(emails.length > 0) { %> <% for(let email of emails ) { %>
+                   <% if(emails.length > 0) { %> <% for(let email of emails ) { %>
 
                           <tr>
                             <td><%= email.id %></td>
@@ -153,10 +153,10 @@
                             <td class="text-right py-0 align-middle">
                               <div class="btn-group btn-group-sm">
                          <form action="/deleteEmail/<%= email.id %>" method="POST">
-                      <button type="submit" class="btn btn-danger float-right">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </form>
+                         <button type="submit" class="btn btn-danger float-right">
+                                 <i class="fa fa-trash"></i>
+                         </button>
+                         </form>
                               </div>
                             </td>
                           </tr>

@@ -17,5 +17,6 @@ router.post("/create.app", developerController.createApp);
 router.post("/deleteApp/:appID", developerController.deleteApp);
 router.post("/app.storeList", developerController.appStoreList);
 router.post("/upload.apk",developerController.apkFileDetail);
-router.post("/post.questionary",developerController.postQuestionary);
+router.post("/post.questionary", developerController.postQuestionary);
+router.post("/rolloutApp",developerController.rolloutApp);
 module.exports = router;

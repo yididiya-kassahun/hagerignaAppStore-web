@@ -116,7 +116,7 @@ exports.apkDetailPage = (req, res, next) => {
           res.render("Developer/apkDetail", {
             pageTitle: "App APK Detail Page",
             Apps: createdApps,
-            androidAPIs:androidAPI,
+            androidAPIs: androidAPI,
             path: req.baseUrl,
           });
         })
@@ -165,19 +165,6 @@ exports.appStoreList = (req, res, next) => {
   const longDescription = req.body.longDescription;
   const files = req.files;
   const videoURL = req.body.videoURL;
-
-  //console.log("Here is the Application " + AppID);
-  // const featureGraphics = req.file;
-  // const phoneScreeenshoots = req.file;
-
-  // if (!appIcon) {
-  //   console.log("not called");
-  //   return res.status(422).render("Developer/storeList", {
-  //     pageTitle: "main app store listing page",
-  //     path: "/Developer/storeList",
-  //     errorMessage: "Attached file is not correct",
-  //   });
-  // }
 
   const appIconURL = files[0].path;
   const featureGraphicsURL = files[1].path;
@@ -235,25 +222,47 @@ exports.postQuestionary = (req, res, next) => {
   questionary
     .findAll()
     .then((result) => {
-      console.log(result.length);
+      //  console.log(result.length);
       for (let i = 0; i < result.length; i++) {
-        answeredQuestionary
-          .create({
-            appID: appID,
-            questionID: questionID[i],
-            yesOrno: repliedAnswer[i],
-            developerID: 3,
-          })
-          .then((result) => {
-            console.log(result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        return answeredQuestionary.create({
+          appID: appID,
+          questionID: questionID[i],
+          yesOrno: repliedAnswer[i],
+          developerID: 3,
+        });
       }
     })
-    .catch((err) => {});
+    .then((answer) => {
+      //  console.log(answer.appID);
+      createApps
+        .findOne({ where: { appID: answer.appID } })
+        .then((createAppID) => {
+          if (createAppID) {
+            console.log("succeed");
+            appstorelist
+              .findOne({ where: { appID: createAppID.appID } })
+              .then((appList) => {
+                if (appList) {
+                  console.log("succeed app store list");
+                } else {
+                  console.log("succeed app store failed");
+                }
+              });
+          } else {
+            console.log("failed");
+          }
+        })
+        .catch((err) => {});
+      res.redirect("/app.questionary");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  // .catch((err) => {});
+  //  res.redirect("/app.questionary");
+};
 
-  console.log("=====================" + repliedAnswer);
-  res.redirect("/app.questionary");
+exports.rolloutApp = (req, res, next) => {
+  //const appID = req.body.appID;
+  console.log("============= clicked");
 };

@@ -86,7 +86,7 @@ exports.reviewerSignup = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-    });
+    }); 
 };
 
 exports.userSignup = (req, res, next) => {
@@ -98,7 +98,7 @@ exports.userSignup = (req, res, next) => {
   const password = req.body.password;
   roles
     .findAll({ where: { roleName: "user" } })
-    .then((role) => {
+    .then((role) => {             
       user
         .create({
           fullName: fullName,

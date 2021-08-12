@@ -7,7 +7,7 @@ const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
 const multer = require("multer");
-// -----| models
+// -----| models 
 const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const addQuestionary = require("./models/addQuestionary");

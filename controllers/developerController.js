@@ -244,6 +244,15 @@ exports.postQuestionary = (req, res, next) => {
               .then((appList) => {
                 if (appList) {
                   console.log("succeed app store list");
+                  apkDetail
+                    .findOne({ where: { appID: appList.appID } })
+                    .then((apkList) => {
+                      if (apkList) {
+                        console.log("success apk file");
+                      } else {
+                        console.log("failed apk file");
+                      }
+                    });
                 } else {
                   console.log("succeed app store failed");
                 }

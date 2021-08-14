@@ -208,33 +208,37 @@ exports.apkFileDetail = (req, res, next) => {
   if (!allowedExtension.includes(extensionName)) {
     console.log("Invalid extension name");
     return res.redirect("/apk.detail");
-  } else { 
-    const apkPath = path.join("public/uploads/apks/", apkFileURL.name);
-    console.log("============" + apkPath);
+  } else {
+    if (req.files.apkFile.size > 1024 * 1024) {
+      const apkPath = path.join("public/uploads/apks/", apkFileURL.name);
+      console.log("============" + apkPath);
 
-    apkFileURL.mv(apkPath, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log("success! file moved ");
-    });
-
-    apkDetail
-      .create({
-        apkFile: apkPath,
-        packageName: packageName,
-        appVersion: appVersion,
-        API_Req: api,
-        appID: appID,
-        developerID: 3,
-      })
-      .then((result) => {
-        console.log(result);
-        res.redirect("/app.questionary");
-      })
-      .catch((err) => {
-        console.log(err);
+      apkFileURL.mv(apkPath, (err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("success! file moved ");
       });
+
+      apkDetail
+        .create({
+          apkFile: apkPath,
+          packageName: packageName,
+          appVersion: appVersion,
+          API_Req: api,
+          appID: appID,
+          developerID: 3,
+        })
+        .then((result) => {
+          console.log(result);
+          res.redirect("/app.questionary");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("APK is below minimum size !!!!");
+    }
   }
 };
 

@@ -104,7 +104,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <form action="/upload.apk" method="POST">
+              <form
+                action="/upload.apk"
+                method="POST"
+                enctype="multipart/form-data"
+              >
                 <div class="form-group row" style="margin-left: 900px">
                   <h5>Select App</h5>
                   <div class="col-md-7">
@@ -138,13 +142,13 @@
                           <input
                             type="file"
                             name="apkFile"
+                            accept="application/*"
                             class="form-control dropzone"
                             id="my-awesome-dropzone"
                           />
                           <small for="appname"
-                            >This is your app package name on store it should be
-                            unique.
-                          </small>
+                            >upload your apk file here.
+                          </small> 
                         </div>
                       </div>
                       <div class="form-group row">
@@ -188,7 +192,7 @@
                           <select
                             class="form-control select2"
                             style="width: 100%"
-                            name="Language"
+                            name="api"
                           >
                             <% if(androidAPIs.length > 0) { %> <% for(let
                             androidAPI of androidAPIs ) { %>

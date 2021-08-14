@@ -6,6 +6,7 @@ const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
+const path = require("path");
 
 var moment = require("moment");
 
@@ -191,27 +192,50 @@ exports.appStoreList = (req, res, next) => {
 };
 exports.apkFileDetail = (req, res, next) => {
   const appID = req.body.App_ID;
-  const apkFile = req.body.apkFile;
+  const apkFileURL = req.files.apkFile;
   const packageName = req.body.packageName;
   const appVersion = req.body.appVersion;
   const api = req.body.api;
 
-  apkDetail
-    .create({
-      apkFile: apkFile,
-      packageName: packageName,
-      appVersion: appVersion,
-      API_Req: api,
-      appID: appID,
-      developerID: 3,
-    })
-    .then((result) => {
-      console.log(result);
-      res.redirect("/app.questionary");
-    })
-    .catch((err) => {
-      console.log(err);
+  if (!apkFileURL) {
+    const error = new Error("please upload valid apk file");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
+  const extensionName = path.extname(apkFileURL.name); // fetch the file extension
+  const allowedExtension = [".apk"];
+
+  if (!allowedExtension.includes(extensionName)) {
+    console.log("Invalid extension name");
+    return res.redirect("/apk.detail");
+  } else { 
+    const apkPath = path.join("public/uploads/apks/", apkFileURL.name);
+    console.log("============" + apkPath);
+
+    apkFileURL.mv(apkPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
     });
+
+    apkDetail
+      .create({
+        apkFile: apkPath,
+        packageName: packageName,
+        appVersion: appVersion,
+        API_Req: api,
+        appID: appID,
+        developerID: 3,
+      })
+      .then((result) => {
+        console.log(result);
+        res.redirect("/app.questionary");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 exports.postQuestionary = (req, res, next) => {
@@ -238,7 +262,7 @@ exports.postQuestionary = (req, res, next) => {
         .findOne({ where: { appID: answer.appID } })
         .then((createAppID) => {
           if (createAppID) {
-            console.log("succeed");
+            // console.log("succeed");
             appstorelist
               .findOne({ where: { appID: createAppID.appID } })
               .then((appList) => {

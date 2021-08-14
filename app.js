@@ -7,7 +7,8 @@ const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
 const multer = require("multer");
-// -----| models 
+const fileUpload = require("express-fileupload");
+// -----| models
 const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const addQuestionary = require("./models/addQuestionary");
@@ -44,6 +45,15 @@ const fileStorage = multer.diskStorage({
     cb(null, file.originalname);
   }, // add developer ID for Uniqueness of uploaded image
 });
+const apkfileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/apks");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }, // add developer ID for Uniqueness of uploaded image
+});
+
 // Setup View template engine
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -59,19 +69,32 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+
+// const apkFileFilter = (req, file, cb) => {
+//   if (file.mimetype === "application/vnd.android.package-archieve") {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
+
 app.use(bodyParser.urlencoded({ extended: false }));
 // join stylesheet with system root path
-
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array(
-    "uploadedImage",
-    3
-  )
-);
+// app.use(
+//   multer({ storage: apkfileStorage, fileFilter: apkFileFilter }).single("apkFile")
+// );
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/img")));
 
+app.use(fileUpload({ useTempFiles: true, tempFileDir: "/public/uploads/apks/" }));
+
+// app.use(
+//   multer({ storage: fileStorage, fileFilter: fileFilter }).array(
+//     "uploadedImage",
+//     3
+//   )
+// );
 // Set Routing
 app.use(adminRoute);
 app.use(userRoute);

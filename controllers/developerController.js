@@ -13,19 +13,18 @@ const fs = require("fs");
 var moment = require("moment");
 
 exports.developerDashboard = (req, res, next) => {
-  createApps
-    .findAll()
-    .then((createdApps) => {
-      res.render("Developer/devDashboard", {
+  createApps.findAll().then((createdApps) => {
+    res
+      .render("Developer/devDashboard", {
         pageTitle: "main Dashboard",
         appsList: createdApps,
         path: req.baseUrl,
         moment: moment,
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
 };
 exports.createAppPage = (req, res, next) => {
   defaultLanguage
@@ -61,8 +60,25 @@ exports.deleteApp = (req, res, next) => {
   const deleteAppID = req.params.appID;
   createApps
     .findByPk(deleteAppID)
-    .then((deleteAppID) => {
-      deleteAppID.destroy();
+    .then((deleteApp) => {
+      appstorelist
+        .findOne({ where: { appID: deleteAppID } })
+        .then((deleteAppStorList) => {
+          deleteAppStorList.destroy();
+          apkDetail
+            .findOne({ where: { appID: deleteAppID } })
+            .then((deleteAPK) => {
+              deleteAPK.destroy();
+              console.log("App Deleted Successfully!!!!");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      deleteApp.destroy();
     })
     .then((result) => {
       console.log("Created App Deleted Successfully!");
@@ -211,7 +227,7 @@ exports.appStoreList = (req, res, next) => {
         } else {
           console.log("Failed Unsupported Image width and height");
           fs.unlinkSync(appIconPath);
-          res.redirect("/store.listing");
+          //  res.redirect("/store.listing");
         }
       });
     });
@@ -335,10 +351,12 @@ exports.postQuestionary = (req, res, next) => {
       }
     })
     .then((answer) => {
-      //  console.log(answer.appID);
+      // -------------| Check if all forms are submitted
       createApps
         .findOne({ where: { appID: answer.appID } })
         .then((createAppID) => {
+          createAppID.appStatus = "on Review";
+          createAppID.save();
           if (createAppID) {
             appstorelist
               .findOne({ where: { appID: createAppID.appID } })
@@ -350,6 +368,16 @@ exports.postQuestionary = (req, res, next) => {
                     .then((apkList) => {
                       if (apkList) {
                         console.log("success apk file");
+                        // ************* set isPublished true
+                        createApps
+                          .findByPk(answer.appID)
+                          .then((updatedApp) => {
+                            updatedApp.isPublished = true;
+                            updatedApp.save();
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
                       } else {
                         console.log("failed apk file");
                       }

@@ -226,9 +226,15 @@
                           </td>
                           <td>
                            <form action="/deleteApp/<%= app.appID %>" method="POST">
-                            <button type="submit" class="btn btn-danger">
+                            <% if(app.isPublished === true) {%>
+                            <button type="submit" class="btn btn-danger" disabled>
                                <i class="fa fa-trash"></i>
                             </button>
+                            <% } else{ %>
+                             <button type="submit" class="btn btn-danger">
+                             <i class="fa fa-trash"></i>
+                            </button>
+                            <% } %>
                             </form>
                           </td>
                         </tr>

@@ -45,6 +45,12 @@ const createApp = sequelize.define("createApp", {
     required: true,
     defaultValue: 0,
   },
+  isPublished: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    required: true,
+    defaultValue: false,
+  },
   developerID: {
     type: Sequelize.INTEGER,
     allowNull: false,

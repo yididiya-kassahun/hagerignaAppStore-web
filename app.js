@@ -37,57 +37,26 @@ const store = new MysqlStore({
   database: "hagerignaDB",
 });
 
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }, // add developer ID for Uniqueness of uploaded image
-});
-const apkfileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads/apks");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }, // add developer ID for Uniqueness of uploaded image
-});
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/uploads/images");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   }, // add developer ID for Uniqueness of uploaded image
+// });
 
-// Setup View template engine
-app.set("view engine", "ejs");
-app.set("views", "views");
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-// const apkFileFilter = (req, file, cb) => {
-//   if (file.mimetype === "application/vnd.android.package-archieve") {
+// const fileFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype === "image/png" ||
+//     file.mimetype === "image/jpg" ||
+//     file.mimetype === "image/jpeg"
+//   ) {
 //     cb(null, true);
 //   } else {
 //     cb(null, false);
 //   }
 // };
-
-app.use(bodyParser.urlencoded({ extended: false }));
-// join stylesheet with system root path
-// app.use(
-//   multer({ storage: apkfileStorage, fileFilter: apkFileFilter }).single("apkFile")
-// );
-
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "public/img")));
-
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "/public/uploads/apks/" }));
 
 // app.use(
 //   multer({ storage: fileStorage, fileFilter: fileFilter }).array(
@@ -95,7 +64,20 @@ app.use(fileUpload({ useTempFiles: true, tempFileDir: "/public/uploads/apks/" })
 //     3
 //   )
 // );
-// Set Routing
+
+// Setup View template engine
+app.set("view engine", "ejs");
+app.set("views", "views");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+// join stylesheet with system root path
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/img")));
+
+app.use(fileUpload());
+
+//-----| Set Routing
 app.use(adminRoute);
 app.use(userRoute);
 app.use(devRoute);

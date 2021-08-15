@@ -6,7 +6,9 @@ const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
+const sizeOf = require("image-size");
 const path = require("path");
+const fs = require("fs");
 
 var moment = require("moment");
 
@@ -164,32 +166,104 @@ exports.appStoreList = (req, res, next) => {
   const appName = req.body.appName;
   const shortDescription = req.body.shortDescription;
   const longDescription = req.body.longDescription;
-  const files = req.files;
   const videoURL = req.body.videoURL;
 
-  const appIconURL = files[0].path;
-  const featureGraphicsURL = files[1].path;
-  const phoneScreeenshootURL = files[2].path;
-  appstorelist
-    .create({
-      appName: appName,
-      shortDescription: shortDescription,
-      longDescription: longDescription,
-      appIconURL: appIconURL,
-      featureGraphicsURL: featureGraphicsURL,
-      videoURL: videoURL,
-      phoneScreeenshootURL: phoneScreeenshootURL,
-      appID: AppID,
-      developerID: 2,
-    })
-    .then((result) => {
-      console.log(result);
-      res.redirect("/apk.detail");
-    })
-    .catch((err) => {
-      console.log(err);
+  const appIcon = req.files.appIcon;
+  const featureGraphics = req.files.appFeatureGraphics;
+  const phoneScreeenshoot = req.files.phoneScreeenshoots;
+
+  const extensionName1 = path.extname(appIcon.name); // fetch the file extension
+  const extensionName2 = path.extname(featureGraphics.name); // fetch the file extension
+  const extensionName3 = path.extname(phoneScreeenshoot.name); // fetch the file extension
+  const allowedExtension = [".png", "jpg", "jpeg"];
+
+  if (
+    !allowedExtension.includes(extensionName1) &&
+    !allowedExtension.includes(extensionName2) &&
+    !allowedExtension.includes(extensionName3)
+  ) {
+    console.log("Invalid extension name");
+    return res.redirect("/store.listing");
+  } else {
+    const appIconPath = path.join("public/uploads/images/", appIcon.name);
+    const featureGraphicsPath = path.join(
+      "public/uploads/images/",
+      featureGraphics.name
+    );
+    const phoneScreeenshootPath = path.join(
+      "public/uploads/images/",
+      phoneScreeenshoot.name
+    );
+
+    appIcon.mv(appIconPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+
+      // **************** Check Uploaded Image Width and Height
+      sizeOf(appIconPath, function (err, dimensions) {
+        if (dimensions.width == 512 && dimensions.height == 512) {
+          console.log(
+            "Success image dimension Here" + dimensions.width,
+            dimensions.height
+          );
+        } else {
+          console.log("Failed Unsupported Image width and height");
+          fs.unlinkSync(appIconPath);
+          res.redirect("/store.listing");
+        }
+      });
     });
+
+    featureGraphics.mv(featureGraphicsPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+      // **************** Check Uploaded Image Width and Height
+      sizeOf(featureGraphicsPath, function (err, dimensions) {
+        if (dimensions.width == 1024 && dimensions.height == 500) {
+          console.log(
+            "Success image dimension Here" + dimensions.width,
+            dimensions.height
+          );
+        } else {
+          console.log("Failed Unsupported Image width and height");
+          fs.unlinkSync(featureGraphicsPath);
+          res.redirect("/store.listing");
+        }
+      });
+    });
+    phoneScreeenshoot.mv(phoneScreeenshootPath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+    });
+
+    appstorelist
+      .create({
+        appName: appName,
+        shortDescription: shortDescription,
+        longDescription: longDescription,
+        appIconURL: appIconPath,
+        featureGraphicsURL: featureGraphicsPath,
+        videoURL: videoURL,
+        phoneScreeenshootURL: phoneScreeenshootPath,
+        appID: AppID,
+        developerID: 2,
+      })
+      .then((result) => {
+        console.log(result);
+        res.redirect("/apk.detail");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
+
 exports.apkFileDetail = (req, res, next) => {
   const appID = req.body.App_ID;
   const apkFileURL = req.files.apkFile;
@@ -209,6 +283,7 @@ exports.apkFileDetail = (req, res, next) => {
     console.log("Invalid extension name");
     return res.redirect("/apk.detail");
   } else {
+    // ********* check if apk size is below 1 MB ***********
     if (req.files.apkFile.size > 1024 * 1024) {
       const apkPath = path.join("public/uploads/apks/", apkFileURL.name);
       console.log("============" + apkPath);
@@ -237,7 +312,7 @@ exports.apkFileDetail = (req, res, next) => {
           console.log(err);
         });
     } else {
-      console.log("APK is below minimum size !!!!");
+      console.log("Upload Failed APK is below minimum size !!!!");
     }
   }
 };
@@ -250,7 +325,6 @@ exports.postQuestionary = (req, res, next) => {
   questionary
     .findAll()
     .then((result) => {
-      //  console.log(result.length);
       for (let i = 0; i < result.length; i++) {
         return answeredQuestionary.create({
           appID: appID,
@@ -266,7 +340,6 @@ exports.postQuestionary = (req, res, next) => {
         .findOne({ where: { appID: answer.appID } })
         .then((createAppID) => {
           if (createAppID) {
-            // console.log("succeed");
             appstorelist
               .findOne({ where: { appID: createAppID.appID } })
               .then((appList) => {

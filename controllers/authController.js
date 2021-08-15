@@ -19,9 +19,11 @@ exports.developerRegisterPage = (req, res, next) => {
 };
 
 exports.reviewerRegisterPage = (req, res, next) => {
-  res.render("Auth/register-reviewer", {
+  //console.log("Email Address ===== " + emailAddress);
+ return res.render("Auth/register-reviewer", {
     pageTitle: "Reviewer Register Page",
     path: "Register",
+    email:req.params.email
   });
 };
 
@@ -66,6 +68,7 @@ exports.reviewerSignup = (req, res, next) => {
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
   // fetch ID from roles table where rolename = 'reviewer'
+  console.log("reviewer email =======" + email);
   roles
     .findAll({ where: { roleName: "reviewer" } })
     .then((role) => {
@@ -79,6 +82,7 @@ exports.reviewerSignup = (req, res, next) => {
         })
         .then((result) => {
           console.log(result);
+          res.redirect("/login");
         })
         .catch((err) => {
           console.log(err);
@@ -86,7 +90,7 @@ exports.reviewerSignup = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-    }); 
+    });
 };
 
 exports.userSignup = (req, res, next) => {
@@ -98,7 +102,7 @@ exports.userSignup = (req, res, next) => {
   const password = req.body.password;
   roles
     .findAll({ where: { roleName: "user" } })
-    .then((role) => {             
+    .then((role) => {
       user
         .create({
           fullName: fullName,
@@ -136,4 +140,3 @@ exports.rolePage = (req, res, next) => {
     path: "login",
   });
 };
-

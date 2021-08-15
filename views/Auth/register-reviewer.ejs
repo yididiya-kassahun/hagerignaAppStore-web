@@ -11,14 +11,14 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
     />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
     <!-- icheck bootstrap -->
     <link
       rel="stylesheet"
-      href="plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+      href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
     />
     <!-- Theme style -->
-    <link rel="stylesheet" href="css/adminlte.min.css" />
+    <link rel="stylesheet" href="/css/adminlte.min.css" />
   </head>
   <body class="hold-transition register-page">
     <div class="register-box">
@@ -32,7 +32,12 @@
 
           <form action="/signup.reviewer" method="post">
             <div class="input-group mb-3">
-              <input type="text" name="fullName" class="form-control" placeholder="Full name" />
+              <input
+                type="text"
+                name="fullName"
+                class="form-control"
+                placeholder="Full name"
+              />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -40,14 +45,20 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="email" name="email" class="form-control" placeholder="Email" />
-              <div class="input-group-append">
+              <input
+                type="hidden"
+                name="email"
+                value="<%= email %>"
+                class="form-control"
+                placeholder="<%= email %>"
+              />
+              <!-- <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
                 </div>
               </div>
-            </div>
-             <div class="input-group mb-3">
+            </div> -->
+            <div class="input-group mb-3">
               <input
                 type="number"
                 class="form-control"
@@ -117,9 +128,7 @@
             </a>
           </div>
 
-          <a href="#" class="text-center"
-            >I already have a account</a
-          >
+          <a href="#" class="text-center">I already have a account</a>
         </div>
         <!-- /.form-box -->
       </div>

@@ -196,7 +196,7 @@ exports.sendRegistrationEmail = (req, res, next) => {
         to: result.email,
         from: "yidu.kassahun.me@gmail.com",
         subject: "Hagerigna AppStore",
-        html: "<h1>Registration Link : http://localhost:3000/register.reviewer </h1>",
+        html: "<h1>Registration Link : http://localhost:3000/register.reviewer/"+result.email+"</h1>",
       });
     })
     .catch((err) => {

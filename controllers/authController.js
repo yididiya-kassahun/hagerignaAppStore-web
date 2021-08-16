@@ -20,10 +20,10 @@ exports.developerRegisterPage = (req, res, next) => {
 
 exports.reviewerRegisterPage = (req, res, next) => {
   //console.log("Email Address ===== " + emailAddress);
- return res.render("Auth/register-reviewer", {
+  return res.render("Auth/register-reviewer", {
     pageTitle: "Reviewer Register Page",
     path: "Register",
-    email:req.params.email
+    email: req.params.email,
   });
 };
 
@@ -69,6 +69,17 @@ exports.reviewerSignup = (req, res, next) => {
   const password = req.body.password;
   // fetch ID from roles table where rolename = 'reviewer'
   console.log("reviewer email =======" + email);
+  roles
+    .create({
+      name: 'yididiya',
+      age : 24
+    })
+    .then(result => {
+      
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   roles
     .findAll({ where: { roleName: "reviewer" } })
     .then((role) => {

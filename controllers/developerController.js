@@ -13,17 +13,28 @@ const fs = require("fs");
 var moment = require("moment");
 
 exports.developerDashboard = (req, res, next) => {
-  createApps.findAll().then((createdApps) => {
-    res
-      .render("Developer/devDashboard", {
+  createApps
+    .findAll()
+    .then((createdApps) => {
+      res.render("Developer/devDashboard", {
         pageTitle: "main Dashboard",
         appsList: createdApps,
         path: req.baseUrl,
         moment: moment,
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.appDetailPage = (req, res, next) => {
+  const applicationID = req.params.appID;
+
+  res.render("Developer/applicationDetail", {
+    pageTitle: "Application Dashboard",
+    path: "dashboard",
+    applicationID: applicationID,
   });
 };
 exports.createAppPage = (req, res, next) => {

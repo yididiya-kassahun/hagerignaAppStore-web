@@ -12,6 +12,7 @@ router.get("/create.app", developerController.createAppPage);
 router.get("/apk.detail", developerController.apkDetailPage);
 router.get("/store.listing", developerController.storeListing);
 router.get("/app.questionary", developerController.appQuestionary);
+router.get("/app.detail/:appID", developerController.appDetailPage);
 //router.get("/create.app/:appID", developerController.appDetailss);
 router.post("/create.app", developerController.createApp);
 router.post("/deleteApp/:appID", developerController.deleteApp);

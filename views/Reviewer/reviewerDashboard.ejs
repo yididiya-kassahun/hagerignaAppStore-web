@@ -15,9 +15,6 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Home</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
       </ul>
 
       <!-- Right navbar links -->
@@ -94,7 +91,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Reviewer Dashboard</h1>
+              <h5>Reviewer Dashboard</h5>
             </div>
           </div>
           <div class="row" style="margin-left: 20%">
@@ -151,47 +148,25 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>1.</td>
+                          <% if(allApps.length > 0) { %> <% for(let app of
+                          allApps ) { %>
+                          <td><></td>
                           <td>
                             <img
-                              src="img/app2.png"
+                              src="<%= app.appIcon %>"
                               width="50px"
                               height="50px"
                             />
-                            AR Park
+                            <%= app.appName %>
                           </td>
-                          <td>on Review</td>
-                          <td>12-03-2021 GC</td>
-                          <td><button class="btn btn-info">Review</button></td>
-                        </tr>
-                        <tr>
-                          <td>2.</td>
+                          <td><%= app.appStatus %></td>
                           <td>
-                            <img
-                              src="img/app3.png"
-                              width="50px"
-                              height="50px"
-                            />
-                            Classroom AR
+                            <%= moment(app.createdAt).format('Do MMMM, YYYY');
+                            %>
                           </td>
-                          <td>on Review</td>
-                          <td>15-03-2021 GC</td>
-                          <td><button class="btn btn-info">Review</button></td>
+                          <td><a href="/reviewApp/<%= app.appID %>" class="btn btn-info">Review</a></td>
                         </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>
-                            <img
-                              src="img/app5.png"
-                              width="50px"
-                              height="50px"
-                            />
-                            Fidel App
-                          </td>
-                          <td>On Review</td>
-                          <td>11-03-2021 GC</td>
-                          <td><button class="btn btn-info">Review</button></td>
-                        </tr>
+                        <% } %><% } %>
                       </tbody>
                     </table>
                   </div>

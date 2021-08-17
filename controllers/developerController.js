@@ -30,12 +30,17 @@ exports.developerDashboard = (req, res, next) => {
 
 exports.appDetailPage = (req, res, next) => {
   const applicationID = req.params.appID;
-
-  res.render("Developer/applicationDetail", {
-    pageTitle: "Application Dashboard",
-    path: "dashboard",
-    applicationID: applicationID,
-  });
+  
+  appstorelist
+    .findOne({ where: { appID: applicationID } })
+    .then(appDetailData => {     
+      res.render("Developer/applicationDetail", {
+        pageTitle: "Application Dashboard",
+        path: "dashboard",
+        appData: appDetailData,
+      });
+    })
+    .catch(err => { console.log(err); })
 };
 exports.createAppPage = (req, res, next) => {
   defaultLanguage
@@ -212,13 +217,13 @@ exports.appStoreList = (req, res, next) => {
     console.log("Invalid extension name");
     return res.redirect("/store.listing");
   } else {
-    const appIconPath = path.join("public/uploads/images/", appIcon.name);
+    const appIconPath = path.join("/uploads/images/", appIcon.name);
     const featureGraphicsPath = path.join(
-      "public/uploads/images/",
+      "/uploads/images/",
       featureGraphics.name
     );
     const phoneScreeenshootPath = path.join(
-      "public/uploads/images/",
+      "/uploads/images/",
       phoneScreeenshoot.name
     );
 
@@ -383,6 +388,7 @@ exports.postQuestionary = (req, res, next) => {
                         createApps
                           .findByPk(answer.appID)
                           .then((updatedApp) => {
+                            updatedApp.appIcon = appList.appIconURL;
                             updatedApp.isPublished = true;
                             updatedApp.save();
                           })

@@ -100,7 +100,7 @@
             <div class="card col-md-8" style="margin-left: 200px">
               <div class="card-widget widget-user embed-responsive-item">
                 <img
-                  src="/images/cover_banner.jpg"
+                  src="<%= appData.featureGraphicsURL %>"
                   class="card-img"
                   alt="feature graphics"
                   width="100%"
@@ -114,10 +114,10 @@
                     id="image-circle"
                     width="100px"
                     height="100px"
-                    src="/img/app1.png"
+                    src="<%= appData.appIconURL %>"
                     alt="User Avatar"
                 /></span>
-                <h5 style="text-align: center">classroom AR</h5>
+                <h5 style="text-align: center"><%= appData.appName %></h5>
                 <hr />
                 <h6>
                   Before we get started on number one, we'll need some Sequelize
@@ -280,39 +280,6 @@
           type: "line",
           data: lineChartData,
           options: lineChartOptions,
-        });
-
-        //-------------
-        //- DONUT CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var donutChartCanvas = $("#donutChart").get(0).getContext("2d");
-        var donutData = {
-          labels: ["Chrome", "IE", "FireFox", "Safari", "Opera", "Navigator"],
-          datasets: [
-            {
-              data: [700, 500, 400, 600, 300, 100],
-              backgroundColor: [
-                "#f56954",
-                "#00a65a",
-                "#f39c12",
-                "#00c0ef",
-                "#3c8dbc",
-                "#d2d6de",
-              ],
-            },
-          ],
-        };
-        var donutOptions = {
-          maintainAspectRatio: false,
-          responsive: true,
-        };
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        new Chart(donutChartCanvas, {
-          type: "doughnut",
-          data: donutData,
-          options: donutOptions,
         });
 
         //-------------

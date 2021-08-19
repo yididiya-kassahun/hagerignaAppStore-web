@@ -164,7 +164,13 @@
                             <%= moment(app.createdAt).format('Do MMMM, YYYY');
                             %>
                           </td>
-                          <td><a href="/reviewApp/<%= app.appID %>" class="btn btn-info">Review</a></td>
+                          <td>
+                            <a
+                              href="/reviewApp/<%= app.appID %>"
+                              class="btn btn-info"
+                              >Review</a
+                            >
+                          </td>
                         </tr>
                         <% } %><% } %>
                       </tbody>

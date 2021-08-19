@@ -51,6 +51,12 @@ const createApp = sequelize.define("createApp", {
     required: true,
     defaultValue: false,
   },
+  reviewerID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+    defaultValue: 0,
+  },
   developerID: {
     type: Sequelize.INTEGER,
     allowNull: false,

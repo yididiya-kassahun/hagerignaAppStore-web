@@ -74,7 +74,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/img")));
-app.use(express.static(path.join(__dirname, "public/uploads")));
+app.use(express.static(path.join(__dirname, "public/uploads/")));
+//app.use(express.static(path.join(__dirname, "public/uploads/images")));
 
 app.use(fileUpload());
 

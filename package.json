@@ -10,6 +10,7 @@
   "author": "yididiya",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "bcryptjs": "^2.4.3",
     "csurf": "^1.11.0",
     "dropzone": "^5.9.2",

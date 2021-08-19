@@ -30,17 +30,19 @@ exports.developerDashboard = (req, res, next) => {
 
 exports.appDetailPage = (req, res, next) => {
   const applicationID = req.params.appID;
-  
+
   appstorelist
     .findOne({ where: { appID: applicationID } })
-    .then(appDetailData => {     
+    .then((appDetailData) => {
       res.render("Developer/applicationDetail", {
         pageTitle: "Application Dashboard",
         path: "dashboard",
         appData: appDetailData,
       });
     })
-    .catch(err => { console.log(err); })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.createAppPage = (req, res, next) => {
   defaultLanguage
@@ -217,12 +219,21 @@ exports.appStoreList = (req, res, next) => {
     console.log("Invalid extension name");
     return res.redirect("/store.listing");
   } else {
-    const appIconPath = path.join("/uploads/images/", appIcon.name);
+    const appIconPath = path.join("public/uploads/images/", appIcon.name);
+    const appIconPath2 = path.join("/uploads/images/", appIcon.name);
     const featureGraphicsPath = path.join(
+      "public/uploads/images/",
+      featureGraphics.name
+    );
+    const featureGraphicsPath2 = path.join(
       "/uploads/images/",
       featureGraphics.name
     );
     const phoneScreeenshootPath = path.join(
+      "public/uploads/images/",
+      phoneScreeenshoot.name
+    );
+    const phoneScreeenshootPath2 = path.join(
       "/uploads/images/",
       phoneScreeenshoot.name
     );
@@ -243,7 +254,7 @@ exports.appStoreList = (req, res, next) => {
         } else {
           console.log("Failed Unsupported Image width and height");
           fs.unlinkSync(appIconPath);
-          //  res.redirect("/store.listing");
+          res.redirect("/developer");
         }
       });
     });
@@ -267,22 +278,22 @@ exports.appStoreList = (req, res, next) => {
         }
       });
     });
+
     phoneScreeenshoot.mv(phoneScreeenshootPath, (err) => {
       if (err) {
         console.log(err);
       }
       console.log("success! file moved ");
     });
-
     appstorelist
       .create({
         appName: appName,
         shortDescription: shortDescription,
         longDescription: longDescription,
-        appIconURL: appIconPath,
-        featureGraphicsURL: featureGraphicsPath,
+        appIconURL: appIconPath2,
+        featureGraphicsURL: featureGraphicsPath2,
         videoURL: videoURL,
-        phoneScreeenshootURL: phoneScreeenshootPath,
+        phoneScreeenshootURL: phoneScreeenshootPath2,
         appID: AppID,
         developerID: 2,
       })
@@ -371,7 +382,7 @@ exports.postQuestionary = (req, res, next) => {
       createApps
         .findOne({ where: { appID: answer.appID } })
         .then((createAppID) => {
-          createAppID.appStatus = "on Review";
+          createAppID.appStatus = "Roll out";
           createAppID.save();
           if (createAppID) {
             appstorelist

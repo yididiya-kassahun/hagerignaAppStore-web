@@ -433,7 +433,9 @@ exports.postQuestionary = (req, res, next) => {
   //  res.redirect("/app.questionary");
 };
 
-exports.rolloutApp = (req, res, next) => {
-  //const appID = req.body.appID;
-  console.log("============= clicked");
+exports.developerProfile = (req, res, next) => {
+     res.render("Developer/developerProfile", {
+       pageTitle: "profile Dashboard",
+       path: "dashboard",
+     });
 };

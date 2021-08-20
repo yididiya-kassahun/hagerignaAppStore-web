@@ -86,8 +86,12 @@ exports.deleteApp = (req, res, next) => {
           apkDetail
             .findOne({ where: { appID: deleteAppID } })
             .then((deleteAPK) => {
-              deleteAPK.destroy();
-              console.log("App Deleted Successfully!!!!");
+              if (deleteAPK) {
+                deleteAPK.destroy();
+                console.log("App Deleted Successfully!!!!");
+              } else {
+                console.log("Failed to Deleted App!!");
+              }
             })
             .catch((err) => {
               console.log(err);
@@ -369,13 +373,14 @@ exports.postQuestionary = (req, res, next) => {
     .findAll()
     .then((result) => {
       for (let i = 0; i < result.length; i++) {
-        return answeredQuestionary.create({
+        answeredQuestionary.create({
           appID: appID,
           questionID: questionID[i],
           yesOrno: repliedAnswer[i],
           developerID: 3,
         });
       }
+      return answeredQuestionary;
     })
     .then((answer) => {
       // -------------| Check if all forms are submitted

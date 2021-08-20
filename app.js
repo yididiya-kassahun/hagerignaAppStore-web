@@ -13,8 +13,8 @@ const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const addQuestionary = require("./models/addQuestionary");
 const answeredQuestionary = require("./models/answeredQuestionary");
-const registerDeveloper = require("./models/register-developer");
-const registerReviewer = require("./models/register-reviewer");
+const registerDeveloper = require("./models/developer");
+const registerReviewer = require("./models/reviewer");
 const createApp = require("./models/createApp");
 const apkFileDetail = require("./models/apkDetail");
 const defaultLanguage = require("./models/defaultLanguage");
@@ -75,9 +75,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/img")));
 app.use(express.static(path.join(__dirname, "public/uploads/")));
-//app.use(express.static(path.join(__dirname, "public/uploads/images")));
 
 app.use(fileUpload());
+
+app.use(
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
+
 
 //-----| Set Routing
 app.use(adminRoute);

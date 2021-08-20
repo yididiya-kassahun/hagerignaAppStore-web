@@ -1,0 +1,98 @@
+<%-include('includes/head.ejs') %>
+
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+      </div>
+      <h4 style="color: rgb(0, 38, 255);">Developer Console</h4>
+      <div class="card">
+        <div class="card widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div
+            class="widget-user-header"
+            style="background-color: #3c1e9e"
+          >
+            <h4 style="color: #fff;">ሀገርኛ AppStore</h4>
+          </div>
+
+          <div
+            class="card-footer"
+            style="
+              background: url('img/tilet.jpg');
+              background-size: 100% 100%;
+              background-repeat: no-repeat;
+              object-fit: cover;
+              box-shadow: none;
+            "
+          >
+            <div class="widget-user-image">
+              <img
+                class="img-circle"
+                src="img/avatar.png"
+                alt="User Avatar"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="card-body login-card-body">
+          <br />
+          <p class="login-box-msg">Sign in</p>
+
+          <form action="/developersignIn" method="post">
+            <div class="input-group mb-3">
+              <input type="email" name="email" class="form-control" placeholder="email" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-12">
+                <button type="submit" class="btn btn-info btn-block">
+                  Sign In
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+          <br />
+          <p class="mb-1">
+            <a href="#">Are you new to hagerigna Appstore ?</a>
+          </p>
+          <p class="mb-0">
+            <a href="/register.developer" class="btn btn-primary btn-block"
+              >Register</a
+            >
+          </p>
+          <p class="mb-1">
+            <a href="#">I forgot my password</a>
+          </p>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/adminlte.min.js"></script>
+  </body>
+</html>

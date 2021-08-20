@@ -5,11 +5,11 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const Policy = require("../models/addPolicy");
 const appQuestionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
-const getDevelopers = require("../models/register-developer");
-const reviewer = require("../models/register-reviewer");
+const getDevelopers = require("../models/developer");
+const reviewer = require("../models/reviewer");
 const collectedEmail = require("../models/collectedEmail");
 const androidAPI = require("../models/AndroidAPI");
-const user = require("../models/register-user");
+const user = require("../models/user");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({

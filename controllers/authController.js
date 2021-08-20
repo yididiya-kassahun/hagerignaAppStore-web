@@ -1,6 +1,6 @@
-const developer = require("../models/register-developer");
-const reviewer = require("../models/register-reviewer");
-const user = require("../models/register-user");
+const developer = require("../models/developer");
+const reviewer = require("../models/reviewer");
+const user = require("../models/user");
 const roles = require("../models/roles");
 const bcrypt = require("bcryptjs");
 // **************  Registration Pages ******************
@@ -26,6 +26,8 @@ exports.reviewerRegisterPage = (req, res, next) => {
     email: req.params.email,
   });
 };
+
+// **************** Register Page ***********************
 
 exports.developerSignUp = (req, res, next) => {
   const fullName = req.body.fullName;
@@ -149,6 +151,20 @@ exports.userSignup = (req, res, next) => {
 // **************** Login Pages *******************
 
 exports.loginPage = (req, res, next) => {
+  res.render("Auth/login-user", {
+    pageTitle: "Login Page",
+    path: "login",
+  });
+};
+
+exports.developerloginPage = (req, res, next) => {
+  res.render("Auth/login-developer", {
+    pageTitle: "Login Page",
+    path: "login",
+  });
+};
+
+exports.reviewerloginPage = (req, res, next) => {
   res.render("Auth/login", {
     pageTitle: "Login Page",
     path: "login",
@@ -160,4 +176,48 @@ exports.rolePage = (req, res, next) => {
     pageTitle: "Login Page",
     path: "login",
   });
+};
+
+exports.developerSignIn = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  console.log("email = " + email + " pawword = " + password);
+  developer
+    .findOne({ where: { Email: email } })
+    .then((developer) => {
+      if (!developer) {
+        res.redirect("/login.developer");
+      }
+      bcrypt
+        .compare(password, developer.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            roles
+              .findOne({ where: { id: developer.role } })
+              .then((developerRole) => {
+                if (developerRole) {
+                  req.session.isLoggedIn = true;
+                  req.session.developer = developer;
+                  req.session.save();
+                  res.redirect("/developer");
+                } else {
+                  console.log("Can't find the associated role.");
+                  res.redirect("/login.developer");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            res.redirect("/login.developer");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

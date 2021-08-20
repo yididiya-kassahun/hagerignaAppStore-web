@@ -115,7 +115,8 @@ exports.userSignup = (req, res, next) => {
   const city = req.body.userCity;
   const jobType = req.body.userJobType;
   const age = req.body.userAge;
-  const password = req.body.password;
+  const password = req.body.userPassword;
+  const confrimPass = req.body.confrimPassword;
   roles
     .findOne({ where: { roleName: "user" } })
     .then((role) => {
@@ -134,6 +135,7 @@ exports.userSignup = (req, res, next) => {
             })
             .then((result) => {
               console.log(result);
+              res.redirect("/login");
             })
             .catch((err) => {
               console.log(err);
@@ -211,6 +213,49 @@ exports.developerSignIn = (req, res, next) => {
               });
           } else {
             res.redirect("/login.developer");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.userSignIn = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  user
+    .findOne({ where: { email: email } })
+    .then((user) => {
+      if (!user) {
+        res.redirect("/login.user");
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            roles
+              .findOne({ where: { id: user.role } })
+              .then((userRole) => {
+                if (userRole) {
+                  req.session.isLoggedIn = true;
+                  req.session.user = user;
+                  req.session.save();
+                  res.redirect("/user");
+                } else {
+                  console.log("Can't find the associated role.");
+                  res.redirect("/login.user");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            res.redirect("/login.user");
           }
         })
         .catch((err) => {

@@ -4,7 +4,7 @@
     <div class="login-box">
       <div class="login-logo">
       </div>
-    
+     <h4>User Console</h4>
       <div class="card">
         <div class="card widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -38,9 +38,9 @@
           <br />
           <p class="login-box-msg">Sign in</p>
 
-          <form action="#" method="post">
+          <form action="/usersignIn" method="post">
             <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email" />
+              <input type="email" name="email" class="form-control" placeholder="Email" />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -50,6 +50,7 @@
             <div class="input-group mb-3">
               <input
                 type="password"
+                name="password"
                 class="form-control"
                 placeholder="Password"
               />

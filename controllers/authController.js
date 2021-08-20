@@ -167,7 +167,7 @@ exports.developerloginPage = (req, res, next) => {
 };
 
 exports.reviewerloginPage = (req, res, next) => {
-  res.render("Auth/login", {
+  res.render("Auth/login-reviewer", {
     pageTitle: "Login Page",
     path: "login",
   });
@@ -249,6 +249,49 @@ exports.userSignIn = (req, res, next) => {
               });
           } else {
             res.redirect("/login.user");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.reviewerSignIn = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  reviewer
+    .findOne({ where: { email: email, isPermit: true } })
+    .then((reviewer) => {
+      if (!reviewer) {
+       return res.redirect("/login.reviewer");
+      }
+      bcrypt
+        .compare(password, reviewer.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            roles
+              .findOne({ where: { id: reviewer.role } })
+              .then((reviewerRole) => {
+                if (reviewerRole) {
+                  req.session.isLoggedIn = true;
+                  req.session.reviewerRole = reviewer;
+                  req.session.save();
+                  res.redirect("/reviewer");
+                } else {
+                  console.log("Can't find the associated role.");
+                  res.redirect("/login.reviewer");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            res.redirect("/login.reviewer");
           }
         })
         .catch((err) => {

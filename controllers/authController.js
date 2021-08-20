@@ -37,21 +37,28 @@ exports.developerSignUp = (req, res, next) => {
   const password = req.body.password;
 
   roles
-    .findAll({ where: { roleName: "developer" } })
+    .findOne({ where: { roleName: "developer" } })
     .then((role) => {
-      developer
-        .create({
-          fullName: fullName,
-          Email: email,
-          phoneNumber: phoneNumber,
-          companyName: companyName,
-          city: city,
-          developerType: developerType,
-          role: role[0].id,
-          password: password,
-        })
-        .then((result) => {
-          console.log(result);
+      return bcrypt
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          developer
+            .create({
+              fullName: fullName,
+              Email: email,
+              phoneNumber: phoneNumber,
+              companyName: companyName,
+              city: city,
+              developerType: developerType,
+              role: role.id,
+              password: hashedPassword,
+            })
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -68,32 +75,28 @@ exports.reviewerSignup = (req, res, next) => {
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
   // fetch ID from roles table where rolename = 'reviewer'
-  console.log("reviewer email =======" + email);
+
   roles
-    .create({
-      name: 'yididiya',
-      age : 24
-    })
-    .then(result => {
-      
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  roles
-    .findAll({ where: { roleName: "reviewer" } })
+    .findOne({ where: { roleName: "reviewer" } })
     .then((role) => {
-      reviewer
-        .create({
-          fullName: fullName,
-          Email: email,
-          phoneNumber: phoneNumber,
-          password: password,
-          role: role[0].id,
-        })
-        .then((result) => {
-          console.log(result);
-          res.redirect("/login");
+      return bcrypt
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          reviewer
+            .create({
+              fullName: fullName,
+              Email: email,
+              phoneNumber: phoneNumber,
+              password: hashedPassword,
+              role: role.id,
+            })
+            .then((result) => {
+              console.log(result);
+              res.redirect("/login");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -112,20 +115,27 @@ exports.userSignup = (req, res, next) => {
   const age = req.body.userAge;
   const password = req.body.password;
   roles
-    .findAll({ where: { roleName: "user" } })
+    .findOne({ where: { roleName: "user" } })
     .then((role) => {
-      user
-        .create({
-          fullName: fullName,
-          email: email,
-          city: city,
-          jobType: jobType,
-          age: age,
-          role: role[0].id,
-          password: password,
-        })
-        .then((result) => {
-          console.log(result);
+      return bcrypt
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          user
+            .create({
+              fullName: fullName,
+              email: email,
+              city: city,
+              jobType: jobType,
+              age: age,
+              role: role.id,
+              password: hashedPassword,
+            })
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

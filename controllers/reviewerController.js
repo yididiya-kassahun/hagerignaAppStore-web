@@ -1,3 +1,4 @@
+const getPolicy = require("../models/addPolicy");
 const onReviewApp = require("../models/createApp");
 const appStoreListing = require("../models/appStorelist");
 const appQuestionary = require("../models/addQuestionary");
@@ -92,9 +93,9 @@ exports.downloadAPKFile = (req, res, next) => {
   //console.log(apkPath);
   appAPKFile
     .findOne({ where: { id: apkID } })
-    .then(apk => {
+    .then((apk) => {
       const apkPath = apk.apkFile;
-       res.download(apkPath);
+      res.download(apkPath);
     })
     .catch((err) => {});
 };
@@ -106,10 +107,17 @@ exports.editorsChoicePage = (req, res, next) => {
 };
 
 exports.policyPage = (req, res, next) => {
-  res.render("Reviewer/policies", {
-    pageTitle: "policies Dashboard",
-    path: "dashboard",
-  });
+  getPolicy
+    .findAll()
+    .then((policies) => {
+      res.render("Reviewer/policies", {
+        policyList: policies,
+        pageTitle: "policies Page",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.addToCart = (req, res, next) => {

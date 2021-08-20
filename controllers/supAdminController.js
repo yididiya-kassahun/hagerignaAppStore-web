@@ -10,6 +10,7 @@ const reviewer = require("../models/reviewer");
 const collectedEmail = require("../models/collectedEmail");
 const androidAPI = require("../models/AndroidAPI");
 const user = require("../models/user");
+const reviewApp = require("../models/reviewApp");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -84,12 +85,6 @@ exports.ordinaryUsersPage = (req, res, next) => {
       console.log(err);
     });
 };
-// exports.policyPage = (req, res, next) => {
-//   res.render("SupAdmin/policyPage", {
-//     pageTitle: "Policy & Regulation page",
-//     path: "dashboard",
-//   });
-// };
 
 exports.addPolicies = (req, res, next) => {
   const Title = req.body.title;
@@ -196,7 +191,10 @@ exports.sendRegistrationEmail = (req, res, next) => {
         to: result.email,
         from: "yidu.kassahun.me@gmail.com",
         subject: "Hagerigna AppStore",
-        html: "<h1>Registration Link : http://localhost:3000/register.reviewer/"+result.email+"</h1>",
+        html:
+          "<h1>Registration Link : http://localhost:3000/register.reviewer/" +
+          result.email +
+          "</h1>",
       });
     })
     .catch((err) => {
@@ -237,6 +235,28 @@ exports.addAndroidAPI = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.assignRoleToReviewer = (req, res, next) => {
+  const reviewerID = req.params.reviewerID;
+  const checkRole = req.body.roleCheckbox;
+
+  if (checkRole == "on") {
+    reviewer
+      .findOne({ where: { id: reviewerID } })
+      .then((reviewer) => {
+        if (reviewer) {
+          reviewer.isPermit = true;
+          reviewer.save();
+          res.redirect("/reviewerList");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    
+  }
 };
 
 exports.coutUsers = (req, res, next) => {};

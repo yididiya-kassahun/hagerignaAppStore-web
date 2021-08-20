@@ -202,21 +202,42 @@
                           <td><%= reviewer.fullName %></td>
                           <td><%= reviewer.Email %></td>
                           <td><%= reviewer.phoneNumber %></td>
+                          <form action="/assignRole/<%= reviewer.id %>" method="POST">
                           <td>
+                            <% if(reviewer.isPermit == true) {%>
                             <div class="custom-control custom-switch">
                               <input
                                 type="checkbox"
+                                name="roleCheckbox"
                                 class="custom-control-input"
-                                id="customSwitch1"
+                                id="customSwitch<%= reviewer.id %>"
+                                checked
+                                onchange="document.getElementById('roleBtn<%= reviewer.id %>').disabled = !this.checked;"
                               />
                               <label
                                 class="custom-control-label"
-                                for="customSwitch1"
+                                for="customSwitch<%= reviewer.id %>"
                               ></label>
                             </div>
+                            <% }else{ %>
+                              <div class="custom-control custom-switch">
+                              <input
+                                type="checkbox"
+                                name="roleCheckbox"
+                                class="custom-control-input"
+                                id="customSwitch<%= reviewer.id %>"
+                               onchange="document.getElementById('roleBtn<%= reviewer.id %>').disabled = !this.checked;"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customSwitch<%= reviewer.id %>"
+                              ></label>
+                            </div>
+                            <% } %>
                           </td>
-                          <td><button class="btn btn-primary">Assign Role</td>
-                            <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
+                          <td><button type="submit" id="roleBtn<%= reviewer.id %>" class="btn btn-primary">Assign Role</td>
+                        </form>
+                          <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
                         </tr>
                          <% } %> <% } %>
                       </tbody>

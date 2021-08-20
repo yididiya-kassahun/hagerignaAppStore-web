@@ -94,7 +94,7 @@ exports.reviewerSignup = (req, res, next) => {
             })
             .then((result) => {
               console.log(result);
-              res.redirect("/login");
+              res.redirect("/login.reviewer");
             })
             .catch((err) => {
               console.log(err);
@@ -168,13 +168,6 @@ exports.developerloginPage = (req, res, next) => {
 
 exports.reviewerloginPage = (req, res, next) => {
   res.render("Auth/login", {
-    pageTitle: "Login Page",
-    path: "login",
-  });
-};
-
-exports.rolePage = (req, res, next) => {
-  res.render("Auth/roles", {
     pageTitle: "Login Page",
     path: "login",
   });

@@ -1,6 +1,7 @@
 const developer = require("../models/developer");
 const reviewer = require("../models/reviewer");
 const user = require("../models/user");
+const admin = require("../models/admin");
 const roles = require("../models/roles");
 const bcrypt = require("bcryptjs");
 // **************  Registration Pages ******************
@@ -57,6 +58,7 @@ exports.developerSignUp = (req, res, next) => {
             })
             .then((result) => {
               console.log(result);
+              res.redirect("/login.reviewer");
             })
             .catch((err) => {
               console.log(err);
@@ -279,7 +281,51 @@ exports.reviewerSignIn = (req, res, next) => {
               .then((reviewerRole) => {
                 if (reviewerRole) {
                   req.session.isLoggedIn = true;
-                  req.session.reviewerRole = reviewer;
+                  req.session.reviewer = reviewer;
+                  req.session.save();
+                  res.redirect("/reviewer");
+                } else {
+                  console.log("Can't find the associated role.");
+                  res.redirect("/login.reviewer");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                res.redirect("/login.reviewer");
+              });
+          } else {
+            res.redirect("/login.reviewer");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.adminSignIn = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+   
+  admin
+    .findOne({ where: { email: email, isPermit: true } })
+    .then((reviewer) => {
+      if (!reviewer) {
+        return res.redirect("/login.reviewer");
+      }
+      bcrypt
+        .compare(password, reviewer.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            roles
+              .findOne({ where: { id: reviewer.role } })
+              .then((reviewerRole) => {
+                if (reviewerRole) {
+                  req.session.isLoggedIn = true;
+                  req.session.reviewer = reviewer;
                   req.session.save();
                   res.redirect("/reviewer");
                 } else {

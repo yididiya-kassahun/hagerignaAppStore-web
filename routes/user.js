@@ -13,4 +13,5 @@ router.get("/editors.choices", userController.editorChoicesPage);
 router.get("/appDetail", userController.appDetail);
 router.get("/developer.profile", userController.devProfile);
 router.get("/newReleases", userController.newReleasesPage);
+
 module.exports = router;

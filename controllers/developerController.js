@@ -80,7 +80,9 @@ exports.deleteApp = (req, res, next) => {
     .findByPk(deleteAppID)
     .then((deleteApp) => {
       appstorelist
-        .findOne({ where: { appID: deleteAppID } })
+        .findOne({
+          where: { appID: deleteAppID, developerID: req.session.developer.id },
+        })
         .then((deleteAppStorList) => {
           deleteAppStorList.destroy();
           apkDetail
@@ -121,7 +123,6 @@ exports.appQuestionary = (req, res, next) => {
           res.render("Developer/questionaries", {
             pageTitle: "Questionaries",
             questions: questionList,
-            //storedQuestions: storedQ,
             Apps: createdApps,
             path: req.baseUrl,
           });
@@ -189,7 +190,7 @@ exports.createApp = (req, res, next) => {
       defaultLanguage: defaultLanguage,
       isApporGame: isApporGame,
       isPaidorFree: isFreeorPaid,
-      developerID: 3,
+      developerID: req.session.developer.id,
     })
     .then((result) => {
       res.redirect("/store.listing");
@@ -299,7 +300,7 @@ exports.appStoreList = (req, res, next) => {
         videoURL: videoURL,
         phoneScreeenshootURL: phoneScreeenshootPath2,
         appID: AppID,
-        developerID: 2,
+        developerID: req.session.developer.id,
       })
       .then((result) => {
         console.log(result);
@@ -349,7 +350,7 @@ exports.apkFileDetail = (req, res, next) => {
           appVersion: appVersion,
           API_Req: api,
           appID: appID,
-          developerID: 3,
+          developerID: req.session.developer.id,
         })
         .then((result) => {
           console.log(result);
@@ -372,20 +373,22 @@ exports.postQuestionary = (req, res, next) => {
   questionary
     .findAll()
     .then((result) => {
-      for (let i = 0; i < result.length; i++) {
-        answeredQuestionary.create({
-          appID: appID,
-          questionID: questionID[i],
-          yesOrno: repliedAnswer[i],
-          developerID: 3,
-        });
+
+  for (let i = 0; i < questionID.length; i++) {
+    answeredQuestionary.create({
+      appID: appID,
+      questionID: questionID[i],
+      yesOrno: repliedAnswer[i],
+      developerID: req.session.developer.id,
+    });
       }
-      return answeredQuestionary;
+      return appID;
     })
     .then((answer) => {
-      // -------------| Check if all forms are submitted
+      console.log("************" + answer);
+      // -------------| Check if all forms are submitted 
       createApps
-        .findOne({ where: { appID: answer.appID } })
+        .findOne({ where: { appID: answer } })
         .then((createAppID) => {
           createAppID.appStatus = "Roll out";
           createAppID.save();
@@ -402,7 +405,7 @@ exports.postQuestionary = (req, res, next) => {
                         console.log("success apk file");
                         // ************* set isPublished true
                         createApps
-                          .findByPk(answer.appID)
+                          .findByPk(answer)
                           .then((updatedApp) => {
                             updatedApp.appIcon = appList.appIconURL;
                             updatedApp.isPublished = true;
@@ -434,8 +437,8 @@ exports.postQuestionary = (req, res, next) => {
 };
 
 exports.developerProfile = (req, res, next) => {
-     res.render("Developer/developerProfile", {
-       pageTitle: "profile Dashboard",
-       path: "dashboard",
-     });
+  res.render("Developer/developerProfile", {
+    pageTitle: "profile Dashboard",
+    path: "dashboard",
+  });
 };

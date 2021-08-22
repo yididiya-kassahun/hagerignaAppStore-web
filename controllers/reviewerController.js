@@ -10,7 +10,7 @@ var moment = require("moment");
 exports.reviewerDashboard = (req, res, next) => {
   onReviewApp
     .findAll({
-      where: { isPublished: true, appStatus: "on Review", reviewerID: 3 },
+      where: { isPublished: true, appStatus: "on Review", reviewerID: req.session.reviewer.id },
     })
     .then((apps) => {
       res.render("Reviewer/reviewerDashboard", {
@@ -127,7 +127,7 @@ exports.addToCart = (req, res, next) => {
     .findOne({ where: { appID: appID } })
     .then((App) => {
       App.appStatus = "on Review";
-      App.reviewerID = 3;
+      App.reviewerID = req.session.reviewer.id;
       App.save();
       res.redirect("/publicCart");
     })

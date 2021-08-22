@@ -87,7 +87,7 @@
       <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper Contains page content -->
     <div class="content-wrapper">
       <section class="content-header">
         <div class="container-fluid">
@@ -175,24 +175,33 @@
                     <li class="nav-item">
                       <a class="nav-link">
                         Developer Name
-                        <span class="float-right badge bg-primary">Nadia Carmichael</span>
+                        <span class="float-right badge bg-primary"
+                          >Nadia Carmichael</span
+                        >
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                        Email <span class="float-right badge bg-info">test@test.com</span>
+                        Email
+                        <span class="float-right badge bg-info"
+                          >test@test.com</span
+                        >
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
-                       Developer type
-                        <span class="float-right badge bg-success">VR Developer</span>
+                        Developer type
+                        <span class="float-right badge bg-success"
+                          >VR Developer</span
+                        >
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link">
                         Company Name
-                        <span class="float-right badge bg-warning">Destiny Apps</span>
+                        <span class="float-right badge bg-warning"
+                          >Destiny Apps</span
+                        >
                       </a>
                     </li>
                     <div class="card-footer"></div>
@@ -256,7 +265,10 @@
                       </div>
                       <label for="package">API Requirement</label>
                       <h6><%= apkFile.API_Req %></h6>
-                      <a href="/downloadAPK/<%= apkFile.id %>" class="btn btn-dark col-12">
+                      <a
+                        href="/downloadAPK/<%= apkFile.id %>"
+                        class="btn btn-dark col-12"
+                      >
                         Download APK File
                       </a>
                     </div>
@@ -291,7 +303,7 @@
                   <div class="col">
                     <label for="package">App Icon</label>
                   </div>
-                  <div class="col"> 
+                  <div class="col">
                     <img
                       src="<%= storeList.appIconURL %>"
                       alt="app icon"
@@ -313,45 +325,95 @@
                     />
                   </div>
                 </div>
-                  <div class="col-4">
-                <br />
-                <hr />
-                <div class="col">
-                  <label for="package">App phone Screenshot</label>
-                </div>
-                <div class="col">
-                  <img
-                    src="<%= storeList.phoneScreeenshootURL %>"
-                    alt="app icon"
-                    width="120"
-                    height="200px"
-                  />
+                <div class="col-4">
+                  <br />
+                  <hr />
+                  <div class="col">
+                    <label for="package">App phone Screenshot</label>
+                  </div>
+                  <div class="col">
+                    <img
+                      src="<%= storeList.phoneScreeenshootURL %>"
+                      alt="app icon"
+                      width="120"
+                      height="200px"
+                    />
                   </div>
                 </div>
               </div>
-              </div>
             </div>
+          </div>
 
-           <div class="card">
-                <div class="card-body">
-                  <h2>Answered Questionary</h2>
-                  <hr>
-         <% if(questionary.length > 0) { %> <% for(let quest of questionary ) { %>
-         <% if(answeredQ.length > 0) { %> <% for(let ans of answeredQ ) { %>
-                     <% if(quest.id == ans.questionID) {%>
-             <h5><%= quest.question %></h5>
-             <h5>Answer: <%= ans.yesOrno %></h5>
-             <hr>
-             <% } %>
-          <% } %><% } %>
-           <% } %><% } %>
-                </div>
-           </div>
-
+          <div class="card">
+            <div class="card-body">
+              <h2>Answered Questionary</h2>
+              <hr />
+              <% if(questionary.length > 0) { %> <% for(let quest of questionary
+              ) { %> <% if(answeredQ.length > 0) { %> <% for(let ans of
+              answeredQ ) { %> <% if(quest.id == ans.questionID) {%>
+              <h5><%= quest.question %></h5>
+              <h5>Answer: <%= ans.yesOrno %></h5>
+              <hr />
+              <% } %> <% } %><% } %> <% } %><% } %>
+            </div>
+          </div>
+          <div style="margin-left: 40%">
+            <button class="btn btn-dark">Approve</button> |
+            <button
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#modal-lg">
+              Disapprove
+            </button>
           </div>
         </div>
+        <!-- </div> -->
       </section>
-      <!-- /.content -->
+    </div>
+    <!-- /.content -->
+
+    
+    <div class="modal fade" id="modal-lg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title">Tell us why </h6>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="POST">
+              <textarea
+                type="text"
+                rows="7"
+                class="form-control"
+                placeholder="Write here ..."
+              ></textarea><br />
+
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Send
+                </button>
+              </div>
+            </form>
+           <!-- /.modal-content -->
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-dialog -->    
     </div>
     <!-- /.content-wrapper -->
     <%- include('includes/footer.ejs') %>

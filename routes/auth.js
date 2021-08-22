@@ -18,5 +18,6 @@ router.post("/signup.user", authController.userSignup);
 router.post("/developersignIn", authController.developerSignIn);
 router.post("/usersignIn", authController.userSignIn);
 router.post("/reviewersignIn", authController.reviewerSignIn);
+router.post("/adminsignIn", authController.adminSignIn);
 
 module.exports = router;

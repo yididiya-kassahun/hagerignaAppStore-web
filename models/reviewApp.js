@@ -25,6 +25,11 @@ const reviewApp = sequelize.define("reviewApp", {
     required: true,
     defaultValue: false,
   },
+  summery: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
   reviewerID: {
     type: Sequelize.INTEGER,
     allowNull: false,

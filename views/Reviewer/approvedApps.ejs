@@ -79,7 +79,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="#" class="brand-link">
-        <span class="brand-text font-weight-light">ሀገርኛ Appstore | Reviewer</span>
+        <span class="brand-text font-weight-light"
+          >ሀገርኛ Appstore | Reviewer</span
+        >
       </a>
 
       <!-- Sidebar -->
@@ -93,7 +95,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h3>Policy and Legal Regulation Dashboard</h3>
+              <h5>Approved and published Apps Dashboard</h5>
             </div>
           </div>
         </div>
@@ -103,30 +105,41 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-          <div class="col-12">
-              <!-- Default box -->
-                <% if(policyList.length > 0) { %> <% for(let policy of
-                      policyList ) { %>
-              <div class="card card-warning card-outline">
-                  <div class="card-header">
-                    <h4 class="card-title w-100" style="color: rgb(0, 0, 238);">
-                     <%= policy.policyTitle %>
-                    </h4>
-                  </div>
-                </a>
-                <div
-                  id="collapseOne"
-                  class="collapse show"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                   <%= policy.policyContent %>
+            <div class="col-12">
+              <!-- card -->
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-body p-0">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>App Name</th>
+                          <th>Status</th>
+                          <th>App Language</th>
+                          <th>Reviewed At</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <% if(allApprovedApps.length > 0) { %> <% for(let approvedApp of allApprovedApps ) { %>
+                          <td>1</td>
+                          <td>
+                          <img src="<%= approvedApp.appIcon %>" width="50px" height="50px"/><%= approvedApp.appName %>
+                         </td>
+                          <td><%= approvedApp.appStatus %></td>
+                          <td><%= approvedApp.defaultLanguage %></td>
+                          <td>
+                            <%= moment(approvedApp.createdAt).format('Do MMMM,YYYY'); %>
+                          </td>
+                        </tr>
+                        <% } %><% } %>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-                 <% } %> <% } %>
               <!-- /.card -->
-            
             </div>
           </div>
         </div>

@@ -10,7 +10,11 @@ var moment = require("moment");
 exports.reviewerDashboard = (req, res, next) => {
   onReviewApp
     .findAll({
-      where: { isPublished: true, appStatus: "on Review", reviewerID: req.session.reviewer.id },
+      where: {
+        isPublished: true,
+        appStatus: "on Review",
+        reviewerID: req.session.reviewer.id,
+      },
     })
     .then((apps) => {
       res.render("Reviewer/reviewerDashboard", {
@@ -40,6 +44,29 @@ exports.publicAppCart = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.approvedApps = (req, res, next) => {
+  onReviewApp
+    .findAll({
+      where: {
+        isPublished: true,
+        appStatus: "published",
+        reviewerID: req.session.reviewer.id,
+      },
+    })
+    .then((approvedApps) => {
+      res.render("Reviewer/approvedApps", {
+        pageTitle: "approved apps Dashboard",
+        path: "dashboard",
+        allApprovedApps: approvedApps,
+        moment: moment,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.reviewAppPage = (req, res, next) => {
   const appID = req.params.appID;
   appStoreListing
@@ -130,6 +157,76 @@ exports.addToCart = (req, res, next) => {
       App.reviewerID = req.session.reviewer.id;
       App.save();
       res.redirect("/publicCart");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.approvedReviewResult = (req, res, next) => {
+  const appID = req.body.AppID;
+  const approvmentSummery = req.body.summery;
+
+  reviewApp
+    .create({
+      appID: appID,
+      approved: true,
+      summery: approvmentSummery,
+      reviewerID: req.session.reviewer.id,
+    })
+    .then((result) => {
+      onReviewApp
+        .findOne({
+          where: {
+            appID: result.appID,
+            isPublished: true,
+            reviewerID: req.session.reviewer.id,
+          },
+        })
+        .then((appData) => {
+          appData.appStatus = "published";
+          appData.save();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(result);
+      res.redirect("/reviewer");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.disapprovedReviewResult = (req, res, next) => {
+  const appID = req.body.AppID;
+  const disapprovmentSummery = req.body.summery;
+
+  reviewApp
+    .create({
+      appID: appID,
+      disapproved: true,
+      summery: disapprovmentSummery,
+      reviewerID: req.session.reviewer.id,
+    })
+    .then((result) => {
+      onReviewApp
+        .findOne({
+          where: {
+            appID: result.appID,
+            isPublished: true,
+            reviewerID: req.session.reviewer.id,
+          },
+        })
+        .then((appData) => {
+          appData.appStatus = "rejected";
+          appData.save();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(result);
+      res.redirect("/reviewer");
     })
     .catch((err) => {
       console.log(err);

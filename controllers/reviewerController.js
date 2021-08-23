@@ -5,6 +5,7 @@ const appQuestionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const appAPKFile = require("../models/apkDetail");
 const reviewApp = require("../models/reviewApp");
+const developerProfile = require("../models/developer");
 var moment = require("moment");
 
 exports.reviewerDashboard = (req, res, next) => {
@@ -84,15 +85,25 @@ exports.reviewAppPage = (req, res, next) => {
                   answeredQuestionary
                     .findAll({ where: { appID: appID } })
                     .then((answeredQ) => {
-                      res.render("Reviewer/reviewApp", {
-                        pageTitle: "Review App Dashboard",
-                        path: "dashboard",
-                        reviewApp: reviewApplication,
-                        storeList: storeList,
-                        questionary: questionary,
-                        answeredQ: answeredQ,
-                        apkFile: apkFile,
-                      });
+                      developerProfile
+                        .findOne({
+                          where: { id: reviewApplication.developerID },
+                        })
+                        .then((developerProfile) => {
+                          res.render("Reviewer/reviewApp", {
+                            pageTitle: "Review App Dashboard",
+                            path: "dashboard",
+                            reviewApp: reviewApplication,
+                            storeList: storeList,
+                            questionary: questionary,
+                            developer: developerProfile,
+                            answeredQ: answeredQ,
+                            apkFile: apkFile,
+                          });
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     })
                     .catch((err) => {
                       console.log(err);

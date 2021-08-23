@@ -20,14 +20,53 @@ const transporter = nodemailer.createTransport(
   })
 );
 exports.adminDashboard = (req, res, next) => {
+  // const totalUsers = ;
+  // const totalDevelopers = exports.coutDevelopers();
+  // const totalReviewers = exports.coutReviewers();
+
   androidAPI
     .findAll()
     .then((result) => {
-      res.render("SupAdmin/supAdminDashboard", {
-        androidAPIs: result,
-        pageTitle: "main Dashboard",
-        path: "dashboard",
-      });
+      user
+        .count()
+        .then((totalUsers) => {
+          getDevelopers
+            .count()
+            .then((totalDevelopers) => {
+              reviewer
+                .count()
+                .then((totalReviewers) => {
+                  if (totalUsers && totalDevelopers && totalReviewers) {
+                    res.render("SupAdmin/supAdminDashboard", {
+                      androidAPIs: result,
+                      pageTitle: "main Dashboard",
+                      totalUsers: totalUsers,
+                      totalDevelopers: totalDevelopers,
+                      totalReviewers: totalReviewers,
+                      path: "dashboard",
+                    });
+                  } else {
+                    res.render("SupAdmin/supAdminDashboard", {
+                      androidAPIs: result,
+                      pageTitle: "main Dashboard",
+                      totalUsers: 0,
+                      totalDevelopers: 0,
+                      totalReviewers: 0,
+                      path: "dashboard",
+                    });
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -255,10 +294,20 @@ exports.assignRoleToReviewer = (req, res, next) => {
         console.log(err);
       });
   } else {
-    
   }
 };
 
-exports.coutUsers = (req, res, next) => {};
+exports.coutUsers = (req, res, next) => {
+  return user
+    .count()
+    .then((users) => {
+      console.log(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 exports.coutDevelopers = (req, res, next) => {};
-exports.coutReviewers = (req, res, next) => {};
+exports.coutReviewers = (req, res, next) => {
+  return;
+};

@@ -6,6 +6,7 @@ const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
+//const reviewedApps = require("../models/reviewApp");
 const sizeOf = require("image-size");
 const path = require("path");
 const fs = require("fs");
@@ -16,12 +17,25 @@ exports.developerDashboard = (req, res, next) => {
   createApps
     .findAll()
     .then((createdApps) => {
-      res.render("Developer/devDashboard", {
-        pageTitle: "main Dashboard",
-        appsList: createdApps,
-        path: req.baseUrl,
-        moment: moment,
-      });
+      createApps
+        .count({
+          where: {
+            appStatus: "published",
+            developerID: req.session.developer.id,
+          },
+        })
+        .then(totalPublishedApps => {     
+          res.render("Developer/devDashboard", {
+            pageTitle: "main Dashboard",
+            appsList: createdApps,
+            path: req.baseUrl,
+            totalPublishedApps:totalPublishedApps,
+            moment: moment,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -373,20 +387,19 @@ exports.postQuestionary = (req, res, next) => {
   questionary
     .findAll()
     .then((result) => {
-
-  for (let i = 0; i < questionID.length; i++) {
-    answeredQuestionary.create({
-      appID: appID,
-      questionID: questionID[i],
-      yesOrno: repliedAnswer[i],
-      developerID: req.session.developer.id,
-    });
+      for (let i = 0; i < questionID.length; i++) {
+        answeredQuestionary.create({
+          appID: appID,
+          questionID: questionID[i],
+          yesOrno: repliedAnswer[i],
+          developerID: req.session.developer.id,
+        });
       }
       return appID;
     })
     .then((answer) => {
       console.log("************" + answer);
-      // -------------| Check if all forms are submitted 
+      // -------------| Check if all forms are submitted
       createApps
         .findOne({ where: { appID: answer } })
         .then((createAppID) => {

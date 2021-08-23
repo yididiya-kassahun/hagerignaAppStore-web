@@ -10,7 +10,7 @@ const reviewer = require("../models/reviewer");
 const collectedEmail = require("../models/collectedEmail");
 const androidAPI = require("../models/AndroidAPI");
 const user = require("../models/user");
-const reviewApp = require("../models/reviewApp");
+const apps = require("../models/createApp");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -36,25 +36,39 @@ exports.adminDashboard = (req, res, next) => {
               reviewer
                 .count()
                 .then((totalReviewers) => {
-                  if (totalUsers && totalDevelopers && totalReviewers) {
-                    res.render("SupAdmin/supAdminDashboard", {
-                      androidAPIs: result,
-                      pageTitle: "main Dashboard",
-                      totalUsers: totalUsers,
-                      totalDevelopers: totalDevelopers,
-                      totalReviewers: totalReviewers,
-                      path: "dashboard",
+                  apps
+                    .count()
+                    .then((totalapps) => {
+                      if (
+                        totalUsers &&
+                        totalDevelopers &&
+                        totalReviewers &&
+                        totalapps
+                      ) {
+                        res.render("SupAdmin/supAdminDashboard", {
+                          androidAPIs: result,
+                          pageTitle: "main Dashboard",
+                          totalUsers: totalUsers,
+                          totalDevelopers: totalDevelopers,
+                          totalReviewers: totalReviewers,
+                          totalApps: totalapps,
+                          path: "dashboard",
+                        });
+                      } else {
+                        res.render("SupAdmin/supAdminDashboard", {
+                          androidAPIs: result,
+                          pageTitle: "main Dashboard",
+                          totalUsers: 0,
+                          totalDevelopers: 0,
+                          totalReviewers: 0,
+                          totalApps: 0,
+                          path: "dashboard",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
                     });
-                  } else {
-                    res.render("SupAdmin/supAdminDashboard", {
-                      androidAPIs: result,
-                      pageTitle: "main Dashboard",
-                      totalUsers: 0,
-                      totalDevelopers: 0,
-                      totalReviewers: 0,
-                      path: "dashboard",
-                    });
-                  }
                 })
                 .catch((err) => {
                   console.log(err);

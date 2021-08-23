@@ -1,24 +1,25 @@
 const express = require("express");
+const isAuth = require("../middleware/isAuth");
 
 const developerController = require("../controllers/developerController");
 //const isAuth = require("../middleware/is-Auth");
 
 const router = express.Router();
 
-router.get("/developer", developerController.developerDashboard);
-router.get("/report", developerController.reportPage);
-router.get("/policies", developerController.devPolicy);
-router.get("/create.app", developerController.createAppPage);
-router.get("/apk.detail", developerController.apkDetailPage);
-router.get("/store.listing", developerController.storeListing);
-router.get("/app.questionary", developerController.appQuestionary);
-router.get("/app.detail/:appID", developerController.appDetailPage);
-router.get("/devprofile", developerController.developerProfile);
+router.get("/developer", isAuth, developerController.developerDashboard);
+router.get("/report", isAuth, developerController.reportPage);
+router.get("/policies", isAuth, developerController.devPolicy);
+router.get("/create.app", isAuth, developerController.createAppPage);
+router.get("/apk.detail", isAuth, developerController.apkDetailPage);
+router.get("/store.listing", isAuth, developerController.storeListing);
+router.get("/app.questionary", isAuth, developerController.appQuestionary);
+router.get("/app.detail/:appID", isAuth, developerController.appDetailPage);
+router.get("/devprofile", isAuth, developerController.developerProfile);
 //router.get("/create.app/:appID", developerController.appDetailss);
-router.post("/create.app", developerController.createApp);
-router.post("/deleteApp/:appID", developerController.deleteApp);
-router.post("/app.storeList", developerController.appStoreList);
-router.post("/upload.apk",developerController.apkFileDetail);
-router.post("/post.questionary", developerController.postQuestionary);
+router.post("/create.app", isAuth, developerController.createApp);
+router.post("/deleteApp/:appID",isAuth, developerController.deleteApp);
+router.post("/app.storeList", isAuth, developerController.appStoreList);
+router.post("/upload.apk", isAuth, developerController.apkFileDetail);
+router.post("/post.questionary", isAuth, developerController.postQuestionary);
 
 module.exports = router;

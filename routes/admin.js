@@ -1,6 +1,7 @@
 const express = require("express");
 
 const supAdminController = require("../controllers/supAdminController");
+
 //const isAuth = require("../middleware/is-Auth");
 
 const router = express.Router();

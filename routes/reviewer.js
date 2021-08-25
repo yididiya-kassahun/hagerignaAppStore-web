@@ -14,7 +14,6 @@ router.get("/publicCart", isAuth, reviewerController.publicAppCart);
 router.get("/downloadAPK/:apkFile", isAuth, reviewerController.downloadAPKFile);
 router.get("/approvedApps", isAuth, reviewerController.approvedApps);
 
-
 router.post("/addToCart/:reviewAppID", isAuth, reviewerController.addToCart);
 router.post(
   "/approvedReviewResult",

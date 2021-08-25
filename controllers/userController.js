@@ -1,8 +1,20 @@
+const publishedApps = require("../models/createApp");
+const publishedAPK = require("../models/apkDetail");
+const storeList = require("../models/appStorelist");
+
 exports.userDashboard = (req, res, next) => {
-  res.render("User/homeDashboard", {
-    pageTitle: "main Dashboard",
-    path: "dashboard",
-  });
+  publishedApps
+    .findAll({ where: { isPublished: true, appStatus: "published" } })
+    .then((allPublishedApps) => {
+      res.render("User/homeDashboard", {
+        pageTitle: "main Dashboard",
+        path: "dashboard",
+        publishedApps: allPublishedApps,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.gamesPage = (req, res, next) => {
   res.render("User/games", {
@@ -23,10 +35,63 @@ exports.appCartPage = (req, res, next) => {
   });
 };
 exports.appDetail = (req, res, next) => {
-  res.render("User/appDetail", {
-    pageTitle: "App Detail",
-    path: "Detail Dashboard",
-  });
+  const applicationID = req.params.appID;
+
+  publishedApps
+    .findOne({
+      where: {
+        appID: applicationID,
+        isPublished: true,
+        appStatus: "published",
+      },
+    })
+    .then((publishedApp) => {
+      publishedAPK
+        .findOne({ where: { appID: applicationID } })
+        .then((publishedApk) => {
+          storeList
+            .findOne({ where: { appID: applicationID } })
+            .then((storeListing) => {
+              // publishedApps
+              //   .findAll({
+              //     limit: 4,
+              //     include:[storeList],
+              //     where: { appStatus: "published" },
+              //   })
+              //   .then((apps) => {
+              res.render("User/appDetail", {
+                pageTitle: "App Detail",
+                path: "Detail Dashboard",
+                publishedAPP: publishedApp,
+                publishedAPK: publishedApk,
+                storeAPP: storeListing,
+              });
+              // })
+              // .catch((err) => {});
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.downloadAPK = (req, res, next) => {
+  const apkID = req.params.apkFile;
+
+  publishedAPK
+    .findOne({ where: { appID: apkID } })
+    .then((apk) => {
+      const apkPath = apk.apkFile;
+      res.download(apkPath);
+    })
+    .catch((err) => {});
 };
 
 exports.editorChoicesPage = (req, res, next) => {

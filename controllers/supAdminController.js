@@ -12,6 +12,8 @@ const androidAPI = require("../models/AndroidAPI");
 const user = require("../models/user");
 const apps = require("../models/createApp");
 
+const countUserss = require("../counters/userCounter");
+
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
@@ -88,18 +90,69 @@ exports.adminDashboard = (req, res, next) => {
 };
 
 exports.developersListPage = (req, res, next) => {
-  getDevelopers
-    .findAll()
-    .then((developerLists) => {
-      res.render("SupAdmin/developers", {
-        developers: developerLists,
-        pageTitle: "DEvelopers Dashboard",
-        path: "dashboard",
+
+    getDevelopers
+      .findAll()
+      .then((developerLists) => {
+          user
+            .count()
+            .then((totalUsers) => {
+              getDevelopers
+                .count()
+                .then((totalDevelopers) => {
+                  reviewer
+                    .count()
+                    .then((totalReviewers) => {
+                      apps
+                        .count()
+                        .then((totalapps) => {
+                          if (
+                            totalUsers &&
+                            totalDevelopers &&
+                            totalReviewers &&
+                            totalapps
+                          ) {
+                            res.render("SupAdmin/developers", {
+                              developers: developerLists,
+                              pageTitle: "main Dashboard",
+                              totalUsers: totalUsers,
+                              totalDevelopers: totalDevelopers,
+                              totalReviewers: totalReviewers,
+                              totalApps: totalapps,
+                              path: "dashboard",
+                            });
+                          } else {
+                            res.render("SupAdmin/developers", {
+                              developers: developerLists,
+                              pageTitle: "main Dashboard",
+                              totalUsers: 0,
+                              totalDevelopers: 0,
+                              totalReviewers: 0,
+                              totalApps: 0,
+                              path: "dashboard",
+                            });
+                          }
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+      }) 
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
 };
 
 exports.reviewerList = (req, res, next) => {
@@ -109,12 +162,62 @@ exports.reviewerList = (req, res, next) => {
       collectedEmail
         .findAll()
         .then((emails) => {
-          res.render("SupAdmin/reviewers", {
-            reviewers: reviewerList,
-            emails: emails,
-            pageTitle: "Reviewer Dashboard",
-            path: "dashboard",
-          });
+           user
+             .count()
+             .then((totalUsers) => {
+               getDevelopers
+                 .count()
+                 .then((totalDevelopers) => {
+                   reviewer
+                     .count()
+                     .then((totalReviewers) => {
+                       apps
+                         .count()
+                         .then((totalapps) => {
+                           if (
+                             totalUsers &&
+                             totalDevelopers &&
+                             totalReviewers &&
+                             totalapps
+                           ) {
+                             res.render("SupAdmin/reviewers", {
+                               reviewers: reviewerList,
+                               emails: emails,
+                               pageTitle: "main Dashboard",
+                               totalUsers: totalUsers,
+                               totalDevelopers: totalDevelopers,
+                               totalReviewers: totalReviewers,
+                               totalApps: totalapps,
+                               path: "dashboard",
+                             });
+                           } else {
+                             res.render("SupAdmin/reviewers", {
+                               reviewers: reviewerList,
+                               emails: emails,
+                               pageTitle: "main Dashboard",
+                               totalUsers: 0,
+                               totalDevelopers: 0,
+                               totalReviewers: 0,
+                               totalApps: 0,
+                               path: "dashboard",
+                             });
+                           }
+                         })
+                         .catch((err) => {
+                           console.log(err);
+                         });
+                     })
+                     .catch((err) => {
+                       console.log(err);
+                     });
+                 })
+                 .catch((err) => {
+                   console.log(err);
+                 });
+             })
+             .catch((err) => {
+               console.log(err);
+             });
         })
         .catch((err) => {
           console.log(err);
@@ -128,11 +231,60 @@ exports.ordinaryUsersPage = (req, res, next) => {
   user
     .findAll()
     .then((userList) => {
-      res.render("SupAdmin/usersListPage", {
-        users: userList,
-        pageTitle: "User Dashboard",
-        path: "dashboard",
-      });
+       user
+         .count()
+         .then((totalUsers) => {
+           getDevelopers
+             .count()
+             .then((totalDevelopers) => {
+               reviewer
+                 .count()
+                 .then((totalReviewers) => {
+                   apps
+                     .count()
+                     .then((totalapps) => {
+                       if (
+                         totalUsers &&
+                         totalDevelopers &&
+                         totalReviewers &&
+                         totalapps
+                       ) {
+                         res.render("SupAdmin/usersListPage", {
+                           users: userList,
+                           pageTitle: "main Dashboard",
+                           totalUsers: totalUsers,
+                           totalDevelopers: totalDevelopers,
+                           totalReviewers: totalReviewers,
+                           totalApps: totalapps,
+                           path: "dashboard",
+                         });
+                       } else {
+                         res.render("SupAdmin/usersListPage", {
+                           users: userList,
+                           pageTitle: "main Dashboard",
+                           totalUsers: 0,
+                           totalDevelopers: 0,
+                           totalReviewers: 0,
+                           totalApps: 0,
+                           path: "dashboard",
+                         });
+                       }
+                     })
+                     .catch((err) => {
+                       console.log(err);
+                     });
+                 })
+                 .catch((err) => {
+                   console.log(err);
+                 });
+             })
+             .catch((err) => {
+               console.log(err);
+             });
+         })
+         .catch((err) => {
+           console.log(err);
+         });
     })
     .catch((err) => {
       console.log(err);
@@ -311,17 +463,35 @@ exports.assignRoleToReviewer = (req, res, next) => {
   }
 };
 
-exports.coutUsers = (req, res, next) => {
-  return user
+module.exports.countUsers = function coutUsers() {
+  const count = user
+     .count()
+     .then((users) => {       
+       console.log(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return count;
+};
+
+exports.coutDevelopers = (req, res, next) => {
+  return getDevelopers
     .count()
-    .then((users) => {
-      console.log(users);
+    .then((developers) => {
+      console.log(developers);
     })
     .catch((err) => {
       console.log(err);
     });
 };
-exports.coutDevelopers = (req, res, next) => {};
 exports.coutReviewers = (req, res, next) => {
-  return;
+   return reviewer
+     .count()
+     .then((reviewer) => {
+       console.log(reviewer);
+     })
+     .catch((err) => {
+       console.log(err);
+     });
 };

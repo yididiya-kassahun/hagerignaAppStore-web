@@ -16,6 +16,7 @@ const answeredQuestionary = require("./models/answeredQuestionary");
 const registerDeveloper = require("./models/developer");
 const registerReviewer = require("./models/reviewer");
 const createApp = require("./models/createApp");
+const storeListing = require("./models/appStorelist");
 const apkFileDetail = require("./models/apkDetail");
 const defaultLanguage = require("./models/defaultLanguage");
 const collectedEmail = require("./models/collectedEmail");
@@ -87,13 +88,14 @@ app.use(
   })
 );
 
-
 //-----| Set Routing
 app.use(adminRoute);
 app.use(userRoute);
 app.use(devRoute);
 app.use(reveiwerRoute);
 app.use(authRoute);
+
+//storeListing.belongsTo(createApp,{primarykey:'appID'});
 
 // Using sequelizer for ORM database - mysql
 sequelize

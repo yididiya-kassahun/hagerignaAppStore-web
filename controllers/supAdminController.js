@@ -90,10 +90,76 @@ exports.adminDashboard = (req, res, next) => {
 };
 
 exports.developersListPage = (req, res, next) => {
+  getDevelopers
+    .findAll()
+    .then((developerLists) => {
+      user
+        .count()
+        .then((totalUsers) => {
+          getDevelopers
+            .count()
+            .then((totalDevelopers) => {
+              reviewer
+                .count()
+                .then((totalReviewers) => {
+                  apps
+                    .count()
+                    .then((totalapps) => {
+                      if (
+                        totalUsers &&
+                        totalDevelopers &&
+                        totalReviewers &&
+                        totalapps
+                      ) {
+                        res.render("SupAdmin/developers", {
+                          developers: developerLists,
+                          pageTitle: "main Dashboard",
+                          totalUsers: totalUsers,
+                          totalDevelopers: totalDevelopers,
+                          totalReviewers: totalReviewers,
+                          totalApps: totalapps,
+                          path: "dashboard",
+                        });
+                      } else {
+                        res.render("SupAdmin/developers", {
+                          developers: developerLists,
+                          pageTitle: "main Dashboard",
+                          totalUsers: 0,
+                          totalDevelopers: 0,
+                          totalReviewers: 0,
+                          totalApps: 0,
+                          path: "dashboard",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-    getDevelopers
-      .findAll()
-      .then((developerLists) => {
+exports.reviewerList = (req, res, next) => {
+  reviewer
+    .findAll()
+    .then((reviewerList) => {
+      collectedEmail
+        .findAll()
+        .then((emails) => {
           user
             .count()
             .then((totalUsers) => {
@@ -112,8 +178,9 @@ exports.developersListPage = (req, res, next) => {
                             totalReviewers &&
                             totalapps
                           ) {
-                            res.render("SupAdmin/developers", {
-                              developers: developerLists,
+                            res.render("SupAdmin/reviewers", {
+                              reviewers: reviewerList,
+                              emails: emails,
                               pageTitle: "main Dashboard",
                               totalUsers: totalUsers,
                               totalDevelopers: totalDevelopers,
@@ -122,8 +189,9 @@ exports.developersListPage = (req, res, next) => {
                               path: "dashboard",
                             });
                           } else {
-                            res.render("SupAdmin/developers", {
-                              developers: developerLists,
+                            res.render("SupAdmin/reviewers", {
+                              reviewers: reviewerList,
+                              emails: emails,
                               pageTitle: "main Dashboard",
                               totalUsers: 0,
                               totalDevelopers: 0,
@@ -148,76 +216,6 @@ exports.developersListPage = (req, res, next) => {
             .catch((err) => {
               console.log(err);
             });
-      }) 
-      .catch((err) => {
-        console.log(err);
-      });
-
-};
-
-exports.reviewerList = (req, res, next) => {
-  reviewer
-    .findAll()
-    .then((reviewerList) => {
-      collectedEmail
-        .findAll()
-        .then((emails) => {
-           user
-             .count()
-             .then((totalUsers) => {
-               getDevelopers
-                 .count()
-                 .then((totalDevelopers) => {
-                   reviewer
-                     .count()
-                     .then((totalReviewers) => {
-                       apps
-                         .count()
-                         .then((totalapps) => {
-                           if (
-                             totalUsers &&
-                             totalDevelopers &&
-                             totalReviewers &&
-                             totalapps
-                           ) {
-                             res.render("SupAdmin/reviewers", {
-                               reviewers: reviewerList,
-                               emails: emails,
-                               pageTitle: "main Dashboard",
-                               totalUsers: totalUsers,
-                               totalDevelopers: totalDevelopers,
-                               totalReviewers: totalReviewers,
-                               totalApps: totalapps,
-                               path: "dashboard",
-                             });
-                           } else {
-                             res.render("SupAdmin/reviewers", {
-                               reviewers: reviewerList,
-                               emails: emails,
-                               pageTitle: "main Dashboard",
-                               totalUsers: 0,
-                               totalDevelopers: 0,
-                               totalReviewers: 0,
-                               totalApps: 0,
-                               path: "dashboard",
-                             });
-                           }
-                         })
-                         .catch((err) => {
-                           console.log(err);
-                         });
-                     })
-                     .catch((err) => {
-                       console.log(err);
-                     });
-                 })
-                 .catch((err) => {
-                   console.log(err);
-                 });
-             })
-             .catch((err) => {
-               console.log(err);
-             });
         })
         .catch((err) => {
           console.log(err);
@@ -231,60 +229,60 @@ exports.ordinaryUsersPage = (req, res, next) => {
   user
     .findAll()
     .then((userList) => {
-       user
-         .count()
-         .then((totalUsers) => {
-           getDevelopers
-             .count()
-             .then((totalDevelopers) => {
-               reviewer
-                 .count()
-                 .then((totalReviewers) => {
-                   apps
-                     .count()
-                     .then((totalapps) => {
-                       if (
-                         totalUsers &&
-                         totalDevelopers &&
-                         totalReviewers &&
-                         totalapps
-                       ) {
-                         res.render("SupAdmin/usersListPage", {
-                           users: userList,
-                           pageTitle: "main Dashboard",
-                           totalUsers: totalUsers,
-                           totalDevelopers: totalDevelopers,
-                           totalReviewers: totalReviewers,
-                           totalApps: totalapps,
-                           path: "dashboard",
-                         });
-                       } else {
-                         res.render("SupAdmin/usersListPage", {
-                           users: userList,
-                           pageTitle: "main Dashboard",
-                           totalUsers: 0,
-                           totalDevelopers: 0,
-                           totalReviewers: 0,
-                           totalApps: 0,
-                           path: "dashboard",
-                         });
-                       }
-                     })
-                     .catch((err) => {
-                       console.log(err);
-                     });
-                 })
-                 .catch((err) => {
-                   console.log(err);
-                 });
-             })
-             .catch((err) => {
-               console.log(err);
-             });
-         })
-         .catch((err) => {
-           console.log(err);
-         });
+      user
+        .count()
+        .then((totalUsers) => {
+          getDevelopers
+            .count()
+            .then((totalDevelopers) => {
+              reviewer
+                .count()
+                .then((totalReviewers) => {
+                  apps
+                    .count()
+                    .then((totalapps) => {
+                      if (
+                        totalUsers &&
+                        totalDevelopers &&
+                        totalReviewers &&
+                        totalapps
+                      ) {
+                        res.render("SupAdmin/usersListPage", {
+                          users: userList,
+                          pageTitle: "main Dashboard",
+                          totalUsers: totalUsers,
+                          totalDevelopers: totalDevelopers,
+                          totalReviewers: totalReviewers,
+                          totalApps: totalapps,
+                          path: "dashboard",
+                        });
+                      } else {
+                        res.render("SupAdmin/usersListPage", {
+                          users: userList,
+                          pageTitle: "main Dashboard",
+                          totalUsers: 0,
+                          totalDevelopers: 0,
+                          totalReviewers: 0,
+                          totalApps: 0,
+                          path: "dashboard",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -312,10 +310,60 @@ exports.addPolicies = (req, res, next) => {
 exports.policyPage = (req, res, next) => {
   Policy.findAll()
     .then((policies) => {
-      res.render("SupAdmin/policyPage", {
-        policyList: policies,
-        pageTitle: "Add Policy Page",
-      });
+      user
+        .count()
+        .then((totalUsers) => {
+          getDevelopers
+            .count()
+            .then((totalDevelopers) => {
+              reviewer
+                .count()
+                .then((totalReviewers) => {
+                  apps
+                    .count()
+                    .then((totalapps) => {
+                      if (
+                        totalUsers &&
+                        totalDevelopers &&
+                        totalReviewers &&
+                        totalapps
+                      ) {
+                        res.render("SupAdmin/policyPage", {
+                          policyList: policies,
+                          pageTitle: "main Dashboard",
+                          totalUsers: totalUsers,
+                          totalDevelopers: totalDevelopers,
+                          totalReviewers: totalReviewers,
+                          totalApps: totalapps,
+                          path: "dashboard",
+                        });
+                      } else {
+                        res.render("SupAdmin/policyPage", {
+                          policyList: policies,
+                          pageTitle: "main Dashboard",
+                          totalUsers: 0,
+                          totalDevelopers: 0,
+                          totalReviewers: 0,
+                          totalApps: 0,
+                          path: "dashboard",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -340,11 +388,60 @@ exports.questionaryPage = (req, res, next) => {
   appQuestionary
     .findAll()
     .then((questionary) => {
-      res.render("SupAdmin/addQuestionary", {
-        pageTitle: "main Dashboard",
-        questionaries: questionary,
-        path: "dashboard",
-      });
+      user
+        .count()
+        .then((totalUsers) => {
+          getDevelopers
+            .count()
+            .then((totalDevelopers) => {
+              reviewer
+                .count()
+                .then((totalReviewers) => {
+                  apps
+                    .count()
+                    .then((totalapps) => {
+                      if (
+                        totalUsers &&
+                        totalDevelopers &&
+                        totalReviewers &&
+                        totalapps
+                      ) {
+                        res.render("SupAdmin/addQuestionary", {
+                          questionaries: questionary,
+                          pageTitle: "main Dashboard",
+                          totalUsers: totalUsers,
+                          totalDevelopers: totalDevelopers,
+                          totalReviewers: totalReviewers,
+                          totalApps: totalapps,
+                          path: "dashboard",
+                        });
+                      } else {
+                        res.render("SupAdmin/addQuestionary", {
+                          questionaries: questionary,
+                          pageTitle: "main Dashboard",
+                          totalUsers: 0,
+                          totalDevelopers: 0,
+                          totalReviewers: 0,
+                          totalApps: 0,
+                          path: "dashboard",
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => console.log(err));
 };
@@ -442,6 +539,21 @@ exports.addAndroidAPI = (req, res, next) => {
     });
 };
 
+exports.deleteAndroidAPI = (req, res, next) => {
+  const apiID = req.params.androidID;
+
+  androidAPI
+    .findByPk(apiID)
+    .then((fetchedAPI) => {
+      fetchedAPI.destroy();
+      console.log("Android API deleted Successfully");
+      res.redirect("/admin");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.assignRoleToReviewer = (req, res, next) => {
   const reviewerID = req.params.reviewerID;
   const checkRole = req.body.roleCheckbox;
@@ -465,9 +577,9 @@ exports.assignRoleToReviewer = (req, res, next) => {
 
 module.exports.countUsers = function coutUsers() {
   const count = user
-     .count()
-     .then((users) => {       
-       console.log(users);
+    .count()
+    .then((users) => {
+      console.log(users);
     })
     .catch((err) => {
       console.log(err);
@@ -486,12 +598,12 @@ exports.coutDevelopers = (req, res, next) => {
     });
 };
 exports.coutReviewers = (req, res, next) => {
-   return reviewer
-     .count()
-     .then((reviewer) => {
-       console.log(reviewer);
-     })
-     .catch((err) => {
-       console.log(err);
-     });
+  return reviewer
+    .count()
+    .then((reviewer) => {
+      console.log(reviewer);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

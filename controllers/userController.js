@@ -53,7 +53,7 @@ exports.appDetail = (req, res, next) => {
             .findOne({ where: { appID: applicationID } })
             .then((storeListing) => {
               // publishedApps
-              //   .findAll({
+              //   .findAll({ 
               //     limit: 4,
               //     include:[storeList],
               //     where: { appStatus: "published" },

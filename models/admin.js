@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
+const bcrypt = require("bcryptjs");
 
 const admin = sequelize.define("Admin", {
   id: {
@@ -31,12 +32,19 @@ const admin = sequelize.define("Admin", {
 });
 
 // admin.sync().then(() => {
-//   admin.create({
-//     fullName: "yididiya",
-//     Email: "yididiya@gmail.com",
-//     role: 1,
-//     password: "12345",
-//   });
+//   bcrypt
+//     .hash("1234", 12)
+//     .then((hashedPassword) => {
+//       admin.create({
+//         fullName: "yididiya",
+//         Email: "admin@gmail.com",
+//         role: 1,
+//         password: hashedPassword,
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 // });
 
 module.exports = admin;

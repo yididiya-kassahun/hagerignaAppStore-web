@@ -28,6 +28,11 @@ const apkFileDetail = sequelize.define("apkFileDetail", {
     allowNull: false,
     required: true,
   },
+  apkSize: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    required: true,
+  },
   appID: {
     type: Sequelize.INTEGER,
     allowNull: false,

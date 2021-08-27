@@ -1,10 +1,103 @@
 <%-include('includes/head.ejs') %>
 
-  <body class="login-page">
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
 
-    <div class="row" >
-      <div class="col">
-        <img src="img/hagerignaLogo.jpg" alt="hagerignaLogo" width="500px" height="400px">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <img src="/img/avatar2.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">ሀገርኛ Appstore</span>
+      </a>
+
+      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Login as</a>
+            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+              <li><a href="/login.developer" class="dropdown-item">Developer</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a href="/login.reviewer" class="dropdown-item">Reviewer</a></li>
+              <!-- Level two dropdown-->
+           
+              <!-- End Level two -->
+            </ul>
+          </li>
+            <li class="nav-item dropdown">
+            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Register</a>
+            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+              <li><a href="/register.developer" class="dropdown-item">Developer</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a href="/register.user" class="dropdown-item">User</a></li>
+
+              <!-- Level two dropdown-->
+           
+              <!-- End Level two -->
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+
+      <!-- Right navbar links -->
+      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+        <!-- Messages Dropdown Menu -->
+        
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-header">15 Notifications</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-envelope mr-2"></i> 4 new messages
+              <span class="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <div class="dropdown-divider"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"> Wellcome to ሀገርኛ </h1><small>where all Ethiopic AR Found.</small>
+          </div><!-- /.col -->
+         
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container">
+        <div class="row">
+       
+         <div class="col" style="margin-right: 300px;margin-top: 100px;">
+        <img src="img/hagerigna.png" alt="hagerignaLogo" width="450px" height="300px">
       </div>
     <div class="login-box" style="padding: 0px;">
       <div class="login-logo">
@@ -91,8 +184,35 @@
         <!-- /.login-card-body -->
       </div>
     </div>
+         
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
-    <!-- /.login-box -->
-  <%- include('includes/footer.ejs') %>
-  </body>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+ <%- include('includes/footer.ejs') %>
+</body>
 </html>

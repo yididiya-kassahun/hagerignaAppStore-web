@@ -38,7 +38,17 @@ const storeList = sequelize.define("appstorelist", {
     allowNull: false,
     required: true,
   },
-  phoneScreeenshootURL: {
+  phoneScreeenshootURL1: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  phoneScreeenshootURL2: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
+  phoneScreeenshootURL3: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
@@ -47,6 +57,12 @@ const storeList = sequelize.define("appstorelist", {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
+  },
+  isPublished: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    required: true,
+    defaultValue: false,
   },
   developerID: {
     type: Sequelize.INTEGER,

@@ -24,12 +24,12 @@ exports.developerDashboard = (req, res, next) => {
             developerID: req.session.developer.id,
           },
         })
-        .then(totalPublishedApps => {     
+        .then((totalPublishedApps) => {
           res.render("Developer/devDashboard", {
             pageTitle: "main Dashboard",
             appsList: createdApps,
             path: req.baseUrl,
-            totalPublishedApps:totalPublishedApps,
+            totalPublishedApps: totalPublishedApps,
             moment: moment,
           });
         })
@@ -332,6 +332,7 @@ exports.apkFileDetail = (req, res, next) => {
   const packageName = req.body.packageName;
   const appVersion = req.body.appVersion;
   const api = req.body.api;
+  const apkFileSize = req.files.apkFile.size * 1024;
 
   if (!apkFileURL) {
     const error = new Error("please upload valid apk file");
@@ -363,6 +364,7 @@ exports.apkFileDetail = (req, res, next) => {
           packageName: packageName,
           appVersion: appVersion,
           API_Req: api,
+          apkSize: apkFileSize,
           appID: appID,
           developerID: req.session.developer.id,
         })
@@ -409,6 +411,8 @@ exports.postQuestionary = (req, res, next) => {
             appstorelist
               .findOne({ where: { appID: createAppID.appID } })
               .then((appList) => {
+                appList.isPublished = true;
+                appList.save();
                 if (appList) {
                   console.log("succeed app store list");
                   apkDetail

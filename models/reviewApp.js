@@ -30,6 +30,11 @@ const reviewApp = sequelize.define("reviewApp", {
     allowNull: false,
     required: true,
   },
+  editorChoice: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    required: true,
+  },
   reviewerID: {
     type: Sequelize.INTEGER,
     allowNull: false,

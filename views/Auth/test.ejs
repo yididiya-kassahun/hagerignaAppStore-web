@@ -1,0 +1,119 @@
+<%-include('includes/head.ejs') %>
+
+  <body>
+  <div class="wrapper">
+      <!-- Navbar -->
+     <%- include('includes/navbar.ejs') %>
+    <!-- /.navbar -->
+      <div class="content-wrapper">
+         <!-- <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>ሀገርኛ AppStore</h1>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+    <div class="row" >
+      <div class="col" style="margin-right: 300px;margin-top: 100px;">
+        <img src="img/hagerigna.png" alt="hagerignaLogo" width="450px" height="300px">
+      </div>
+    <div class="login-box" style="padding: 0px;">
+      <div class="login-logo">
+      </div>
+  
+      <div class="card">
+        <div class="card widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <div
+            class="widget-user-header"
+            style="background-color: #3c1e9e"
+          >
+            <h4 style="color: #fff;">ሀገርኛ AppStore</h4>
+          </div>
+
+          <div
+            class="card-footer"
+            style="
+              background: url('img/tilet.jpg');
+              background-size: 100% 100%;
+              background-repeat: no-repeat;
+              object-fit: cover;
+              box-shadow: none;
+            "
+          >
+            <div class="widget-user-image">
+              <img
+                class="img-circle"
+                src="img/avatar3.png"
+                alt="User Avatar"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="card-body login-card-body">
+          <br />
+          <p class="login-box-msg">Sign in</p>
+
+          <form action="/usersignIn" method="post">
+            <div class="input-group mb-3">
+              <input type="email" name="email" class="form-control" placeholder="Email" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-12">
+                <button type="submit" class="btn btn-info btn-block">
+                  Sign In
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+          <br />
+          <p class="mb-1">
+            <a href="#">Are you new to hagerigna Appstore ?</a>
+          </p>
+          <p class="mb-0">
+            <a href="register.html" class="btn btn-primary btn-block"
+              >Register</a
+            >
+          </p>
+          <p class="mb-1">
+            <a href="#">I forgot my password</a>
+          </p>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
+    </div>
+    </div>
+      </div>
+        </div>
+      </div>
+    <!-- /.login-box -->
+  <%- include('includes/footer.ejs') %>
+  </div>
+  </body>
+</html>

@@ -22,6 +22,8 @@ const defaultLanguage = require("./models/defaultLanguage");
 const collectedEmail = require("./models/collectedEmail");
 const androidAPI = require("./models/AndroidAPI");
 const roles = require("./models/roles");
+const appComments = require("./models/appComment");
+
 //------| routes
 const adminRoute = require("./routes/admin");
 const userRoute = require("./routes/user");
@@ -95,7 +97,7 @@ app.use(devRoute);
 app.use(reveiwerRoute);
 app.use(authRoute);
 
-//storeListing.belongsTo(createApp,{primarykey:'appID'});
+//storeListing.belongsTo(createApp, { primarykey: "appID" });
 
 // Using sequelizer for ORM database - mysql
 sequelize

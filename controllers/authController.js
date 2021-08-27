@@ -58,7 +58,7 @@ exports.developerSignUp = (req, res, next) => {
             })
             .then((result) => {
               console.log(result);
-              res.redirect("/login.reviewer");
+              res.redirect("/login.developer");
             })
             .catch((err) => {
               console.log(err);
@@ -156,6 +156,14 @@ exports.userSignup = (req, res, next) => {
 
 exports.loginPage = (req, res, next) => {
   res.render("Auth/login-user", {
+    pageTitle: "Login Page",
+    path: "login",
+  });
+};
+
+
+exports.adminloginPage = (req, res, next) => {
+  res.render("Auth/login-admin", {
     pageTitle: "Login Page",
     path: "login",
   });
@@ -312,25 +320,25 @@ exports.adminSignIn = (req, res, next) => {
    
   admin
     .findOne({ where: { email: email, isPermit: true } })
-    .then((reviewer) => {
-      if (!reviewer) {
-        return res.redirect("/login.reviewer");
+    .then((admin) => {
+      if (!admin) {
+        return res.redirect("/login.admin");
       }
       bcrypt
-        .compare(password, reviewer.password)
+        .compare(password, admin.password)
         .then((doMatch) => {
           if (doMatch) {
             roles
-              .findOne({ where: { id: reviewer.role } })
-              .then((reviewerRole) => {
-                if (reviewerRole) {
+              .findOne({ where: { id: admin.role } })
+              .then((adminRole) => {
+                if (adminRole) {
                   req.session.isLoggedIn = true;
-                  req.session.reviewer = reviewer;
+                  req.session.admin = admin;
                   req.session.save();
-                  res.redirect("/reviewer");
+                  res.redirect("/admin");
                 } else {
                   console.log("Can't find the associated role.");
-                  res.redirect("/login.reviewer");
+                  res.redirect("/login.admin");
                 }
               })
               .catch((err) => {

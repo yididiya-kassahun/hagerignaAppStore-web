@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/login", authController.loginPage);
 router.get("/login.developer", authController.developerloginPage);
 router.get("/login.reviewer", authController.reviewerloginPage);
+router.get("/login.admin", authController.adminloginPage);
 
 router.get("/register.user", authController.userRegisterPage);
 router.get("/register.developer", authController.developerRegisterPage);

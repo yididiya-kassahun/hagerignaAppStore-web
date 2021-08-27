@@ -4,7 +4,7 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-   <%- include('includes/navbar.ejs') %>
+    <%- include('includes/navbar.ejs') %>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -12,7 +12,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="#" class="brand-link">
-        <span class="brand-text font-weight-light">ሀገርኛ Appstore | Reviewer</span>
+        <span class="brand-text font-weight-light"
+          >ሀገርኛ Appstore | Reviewer</span
+        >
       </a>
 
       <!-- Sidebar -->
@@ -94,7 +96,7 @@
                     class="widget-user-username"
                     style="color: rgb(255, 255, 255)"
                   >
-                  <%= developer.fullName %>
+                    <%= developer.fullName %>
                   </h3>
                   <h5
                     class="widget-user-desc"
@@ -143,7 +145,6 @@
               </div>
               <!-- /.widget-user -->
             </div>
-            <div class="col-12"></div>
           </div>
 
           <div class="row">
@@ -155,7 +156,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Android APK</span>
-                  <span class="info-box-number">92,050</span>
+                  <span class="info-box-number">92</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -167,8 +168,8 @@
                 ></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Virtual Reality</span>
-                  <span class="info-box-number">92,050</span>
+                  <span class="info-box-text">App Type</span>
+                  <span class="info-box-number">Virtual Reality</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -291,14 +292,19 @@
             </div>
           </div>
           <div style="margin-left: 40%">
-            <button class="btn btn-dark"
-                    data-toggle="modal"
-                    data-target="#modal-lg2"> 
-                    Approve</button> |
+            <button
+              class="btn btn-dark"
+              data-toggle="modal"
+              data-target="#modal-lg2"
+            >
+              Approve
+            </button>
+            |
             <button
               class="btn btn-danger"
               data-toggle="modal"
-              data-target="#modal-lg">
+              data-target="#modal-lg"
+            >
               Disapprove
             </button>
           </div>
@@ -308,12 +314,11 @@
     </div>
     <!-- /.content -->
 
-    
     <div class="modal fade" id="modal-lg">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h6 class="modal-title">Tell us why </h6>
+            <h6 class="modal-title">Tell us why</h6>
             <button
               type="button"
               class="close"
@@ -325,14 +330,19 @@
           </div>
           <div class="modal-body">
             <form action="/disapprovedReviewResult" method="POST">
-              <input type="hidden" name="AppID" value="<%= reviewApp.appID %>">
+              <input
+                type="hidden"
+                name="AppID"
+                value="<%= reviewApp.appID %>"
+              />
               <textarea
                 type="text"
                 rows="7"
                 name="summery"
                 class="form-control"
                 placeholder="Write here ..."
-              ></textarea><br />
+              ></textarea
+              ><br />
 
               <div class="modal-footer justify-content-between">
                 <button
@@ -342,23 +352,21 @@
                 >
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">
-                  Send
-                </button>
+                <button type="submit" class="btn btn-primary">Send</button>
               </div>
             </form>
-           <!-- /.modal-content -->
+            <!-- /.modal-content -->
           </div>
         </div>
       </div>
     </div>
-    <!-- /.modal-dialog -->    
+    <!-- /.modal-dialog -->
 
-      <div class="modal fade" id="modal-lg2">
+    <div class="modal fade" id="modal-lg2">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h6 class="modal-title"> Approved Summery</h6>
+            <h6 class="modal-title">Approved Summery</h6>
             <button
               type="button"
               class="close"
@@ -370,13 +378,19 @@
           </div>
           <div class="modal-body">
             <form action="/approvedReviewResult" method="POST">
-              <input type="hidden" name="AppID" value="<%= reviewApp.appID %>">
+              <input
+                type="hidden"
+                name="AppID"
+                value="<%= reviewApp.appID %>"
+              />
               <textarea
                 type="text"
                 rows="7"
                 name="summery"
                 class="form-control"
-                > Your App is published and live on ሀገርኛ AR AppStore. </textarea><br />
+              >
+ Your App is published and live on ሀገርኛ AR AppStore. </textarea
+              ><br />
 
               <div class="modal-footer justify-content-between">
                 <button
@@ -386,12 +400,10 @@
                 >
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">
-                  Send
-                </button>
+                <button type="submit" class="btn btn-primary">Send</button>
               </div>
             </form>
-           <!-- /.modal-content -->
+            <!-- /.modal-content -->
           </div>
         </div>
       </div>

@@ -34,6 +34,7 @@ const reviewApp = sequelize.define("reviewApp", {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     required: true,
+    defaultValue: false,
   },
   reviewerID: {
     type: Sequelize.INTEGER,

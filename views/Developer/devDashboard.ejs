@@ -83,7 +83,7 @@
                   <span class="info-box-text">Downloads</span>
                   <span class="info-box-number">21</span>
                 </div>
-                 <span class="info-box-icon"><img src="img/sefed4.jpg" /></span>
+                <span class="info-box-icon"><img src="img/sefed4.jpg" /></span>
                 <!-- /.info-box-content -->
               </div>
               <!-- /.info-box -->
@@ -104,7 +104,6 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">App List Dashboard</h3>
-
                   <div class="card-tools">
                     <div class="row">
                       <small style="margin-right: 10px; font-style: inherit">
@@ -190,10 +189,39 @@
                               >
                                 <i class="fa fa-trash"></i>
                               </button>
+                              <a
+                                class="btn btn-info"
+                                href="javascript:void(0)"
+                                style="cursor: default"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </a>
+                              <a
+                                href="javascript:void(0)"
+                                class="btn btn-warning"
+                                title="APK Editing"
+                                style="cursor: default"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </a>
                               <% } else{ %>
                               <button type="submit" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                               </button>
+                              <a
+                                href="/edit.storeListing/<%= app.appID %>?edit=true"
+                                class="addMore btn btn-info"
+                                title="App Store Editing"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </a>
+                              <a
+                                href="/edit.apkDetail/<%= app.appID %>?edit=true"
+                                class="addMore btn btn-warning"
+                                title="APK Detail Editing"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </a>
                               <% } %>
                             </form>
                           </td>
@@ -212,6 +240,7 @@
       </section>
       <!-- /.content -->
     </div>
+
     <!-- /.modal -->
 
     <div class="modal fade" id="modal-lg">

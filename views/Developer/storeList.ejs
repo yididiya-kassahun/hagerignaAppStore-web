@@ -41,7 +41,7 @@
             <div class="col-md-12">
               <form
                 method="post"
-                action="/app.storeList"
+                action="/<% if(editing) {%>edit.createApp <% }else{ %>app.storeList <% } %>"
                 class="form-horizontal"
                 enctype="multipart/form-data"
               >
@@ -53,18 +53,17 @@
                       style="width: 100%"
                       name="Application"
                     >
-                      <% if(Apps.length > 0) { %> <% for(let App of Apps ) { %>
-                      <option value="<%= App.appID %>">
-                        <div>
-                          <img
-                            src="<%= path %><%= App.appIcon %>"
-                            width="5px"
-                            height="5px"
-                          />
-                        </div>
-                        <%= App.appName %>
-                      </option>
-                      <% } %><% } %>
+                      <form action="/edit.storeListing" method="POST">
+                        <% if(Apps.length > 0) { %> <% for(let App of Apps ) {
+                        %>
+                        <option
+                          value="<% if (editing) { %><%= editApp.appID %><% }else {%> <%= App.appID %> <% } %>"
+                        >
+                          <% if (editing) { %><%= editApp.appName %><% }else {%>
+                          <%= App.appName %> <% } %>
+                        </option>
+                        <% } %><% } %>
+                      </form>
                     </select>
                   </div>
                 </div>
@@ -87,8 +86,11 @@
                         >
                           <% if(Apps.length > 0) { %> <% for(let App of Apps ) {
                           %>
-                          <option value="<%= App.appName %>">
-                            <%= App.appName %>
+                          <option
+                            value="<% if (editing) { %><%= editApp.appID %><% }else {%> <%= App.appID %> <% } %>"
+                          >
+                            <% if (editing) { %><%= editApp.appName %><% }else
+                            {%> <%= App.appName %> <% } %>
                           </option>
                           <% } %><% } %>
                         </select>
@@ -107,7 +109,9 @@
                           class="form-control"
                           rows="3"
                           id="shortDescription"
-                        ></textarea>
+                        >
+<% if (editing) { %><%= editApp.shortDescription %> <% } %></textarea
+                        >
                         <small for="appname"
                           >Here write precise short description of your app
                           maximum word allowed is 200.
@@ -127,7 +131,9 @@
                           class="form-control"
                           rows="5"
                           id="longDescription"
-                        ></textarea>
+                        >
+<% if (editing) { %><%= editApp.longDescription %> <% } %> </textarea
+                        >
                         <small for="appname"
                           >Here write full description of your app maximum word
                           allowed is 200.
@@ -143,11 +149,12 @@
                       <div class="col-sm-8">
                         <div class="form-control custom-file">
                           <input
-                            type="file"
+                            type="text"
                             name="appIcon"
                             accept="image/*"
                             class="custom-file-input"
                             id="appIcon"
+                            value="<% if(editing) { %><%= editApp.appIconURL %> <% } %>"
                           />
                           <label class="custom-file-label" for="customFile"
                             >Choose file</label
@@ -161,7 +168,23 @@
                         </div>
                       </div>
                     </div>
-
+                    <!-- <div class="form-group row">
+                      <label class="col-sm-2 col-form-label"
+                        >Feature Graphics</label
+                      >
+                      <div class="col-sm-8">
+                        <div class="form-control file-upload-wrapper">
+                          <input
+                            type="file"
+                            name="appFeatureGraphics"
+                            id="input-file-now-custom-1"
+                            class="file-upload"
+                            accept="image/*"
+                            data-default-file="https://mdbootstrap.com/img/Photos/Others/images/89.jpg"
+                          />
+                        </div>
+                      </div>
+                    </div> -->
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label"
                         >Feature Graphics</label
@@ -199,6 +222,7 @@
                           size="50"
                           class="form-control"
                           id="videoURL"
+                          value="<% if(editing) { %><%= editApp.videoURL %> <% } %>"
                         />
                         <small for="videoURL"
                           >Short video Description of your app.
@@ -213,10 +237,11 @@
                         <div class="form-control custom-file">
                           <input
                             type="file"
-                            name="phoneScreeenshoots"
+                            name="phoneScreenshoot1"
                             class="custom-file-input"
                             id="phoneScreenshots"
                             accept="image/*"
+                            multiple
                           />
                           <label
                             class="custom-file-label"
@@ -227,6 +252,42 @@
                             >Upload a phone Screenshots of the app
                           </small>
                         </div>
+                        <!-- <div class="form-control custom-file">
+                          <input
+                            type="file"
+                            name="phoneScreenshoot2"
+                            class="custom-file-input"
+                            id="phoneScreenshots"
+                            accept="image/*"
+                            multiple
+                          />
+                          <label
+                            class="custom-file-label"
+                            for="phoneScreenshot2"
+                            >Choose file</label
+                          >
+                          <small for="phoneScreenshots"
+                            >Upload a phone Screenshots of the app
+                          </small>
+                        </div> -->
+                        <!-- <div class="form-control custom-file">
+                          <input
+                            type="file"
+                            name="phoneScreenshoot3"
+                            class="custom-file-input"
+                            id="phoneScreenshots"
+                            accept="image/*"
+                            multiple
+                          />
+                          <label
+                            class="custom-file-label"
+                            for="phoneScreenshot3"
+                            >Choose file</label
+                          >
+                          <small for="phoneScreenshot3"
+                            >Upload a phone Screenshots of the app
+                          </small>
+                        </div> -->
                       </div>
                     </div>
                     <div class="float-right">

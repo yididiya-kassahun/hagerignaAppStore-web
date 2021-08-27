@@ -103,7 +103,7 @@
               <div class="card-widget widget-user embed-responsive-item">
                 <img
                   src="<%= appData.featureGraphicsURL %>"
-                  class="card-img"
+                  class="card-img elevation-2"
                   alt="feature graphics"
                   width="100%"
                   height="200px"
@@ -161,7 +161,7 @@
                         <input
                           type="text"
                           class="knob"
-                          value="30"
+                          value="<%= appAPK.apkSize %>"
                           data-width="80"
                           data-height="80"
                           data-fgColor="#3c8dbc"
@@ -171,7 +171,7 @@
                       <span
                         ><div class="knob-label">Android APK Size</div></span
                       >
-                      <span class="info-box-number">9 MB</span>
+                      <span class="info-box-number" style="color: rgb(50, 50, 238);"><%= appAPK.apkSize %> MB</span>
                     </div>
                   </div>
                 </div>
@@ -184,7 +184,7 @@
                 ></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Total Rating</span>
+                  <span class="info-box-text">Total Application Rating</span>
                   <span class="info-box-number">92</span>
                 </div>
               </div>

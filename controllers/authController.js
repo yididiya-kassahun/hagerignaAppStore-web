@@ -161,7 +161,6 @@ exports.loginPage = (req, res, next) => {
   });
 };
 
-
 exports.adminloginPage = (req, res, next) => {
   res.render("Auth/login-admin", {
     pageTitle: "Login Page",
@@ -278,7 +277,7 @@ exports.reviewerSignIn = (req, res, next) => {
     .findOne({ where: { email: email, isPermit: true } })
     .then((reviewer) => {
       if (!reviewer) {
-       return res.redirect("/login.reviewer");
+        return res.redirect("/login.reviewer");
       }
       bcrypt
         .compare(password, reviewer.password)
@@ -317,9 +316,9 @@ exports.reviewerSignIn = (req, res, next) => {
 exports.adminSignIn = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-   
+
   admin
-    .findOne({ where: { email: email, isPermit: true } })
+    .findOne({ where: { email: email } })
     .then((admin) => {
       if (!admin) {
         return res.redirect("/login.admin");
@@ -358,8 +357,8 @@ exports.adminSignIn = (req, res, next) => {
 };
 
 exports.logout = (req, res, next) => {
-    req.session.destroy((err) => {
-      console.log(err);
-      res.redirect("/login");
-    });
+  req.session.destroy((err) => {
+    console.log(err);
+    res.redirect("/login");
+  });
 };

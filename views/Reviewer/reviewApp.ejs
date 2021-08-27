@@ -87,7 +87,7 @@
                   <div class="widget-user-image">
                     <img
                       class="img-circle elevation-2"
-                      src="/img/user7-128x128.jpg"
+                      src="/img/avatar3.png"
                       alt="User Avatar"
                     />
                   </div>
@@ -155,8 +155,8 @@
                 ></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Android APK</span>
-                  <span class="info-box-number">92</span>
+                  <span class="info-box-text">Android APK Size</span>
+                  <span class="info-box-number"><%= apkFile.apkSize %> MB</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -267,7 +267,7 @@
                   </div>
                   <div class="col">
                     <img
-                      src="<%= storeList.phoneScreeenshootURL %>"
+                      src="<%= storeList.phoneScreeenshootURL1 %>"
                       alt="app icon"
                       width="120"
                       height="200px"
@@ -378,6 +378,13 @@
           </div>
           <div class="modal-body">
             <form action="/approvedReviewResult" method="POST">
+              <div class="form-group">
+                <label for="editorChoice"><i class="fa fa-star" style="color: orange;"></i> Editor choice</label>
+                <div>
+                  <input type="checkbox" id="editorChoice" name="editorChoice" /> Select app as
+                  editor choice
+                </div>
+                </div>
               <input
                 type="hidden"
                 name="AppID"

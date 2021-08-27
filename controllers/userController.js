@@ -52,22 +52,24 @@ exports.appDetail = (req, res, next) => {
           storeList
             .findOne({ where: { appID: applicationID } })
             .then((storeListing) => {
-              // publishedApps
-              //   .findAll({ 
-              //     limit: 4,
-              //     include:[storeList],
-              //     where: { appStatus: "published" },
-              //   })
-              //   .then((apps) => {
-              res.render("User/appDetail", {
-                pageTitle: "App Detail",
-                path: "Detail Dashboard",
-                publishedAPP: publishedApp,
-                publishedAPK: publishedApk,
-                storeAPP: storeListing,
-              });
-              // })
-              // .catch((err) => {});
+              storeList
+                .findAll({
+                  where: { isPublished: true },
+                  order: [["createdAt", "DESC"]],
+                })
+                .then((apps) => {
+                  res.render("User/appDetail", {
+                    pageTitle: "App Detail",
+                    path: "Detail Dashboard",
+                    publishedAPP: publishedApp,
+                    publishedAPK: publishedApk,
+                    storedAPP: storeListing,
+                    otherApps: apps,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
               console.log(err);

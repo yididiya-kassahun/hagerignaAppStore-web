@@ -43,16 +43,16 @@ const storeList = sequelize.define("appstorelist", {
     allowNull: false,
     required: true,
   },
-  phoneScreeenshootURL2: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    required: true,
-  },
-  phoneScreeenshootURL3: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    required: true,
-  },
+  // phoneScreeenshootURL2: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   required: true,
+  // },
+  // phoneScreeenshootURL3: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   required: true,
+  // },
   appID: {
     type: Sequelize.INTEGER,
     allowNull: false,

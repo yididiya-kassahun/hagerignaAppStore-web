@@ -27,7 +27,7 @@
           <div class="row mb-2">
                <div class="col-12">
             <div class="callout callout-info">
-              <h3><i class="fas fa-info"></i> Create New App</h3>
+              <h3><i class="fab fa-android"></i> Create New App</h3>
               Below Create New Amazing Apps and Publish it to Our App Market Place! Have a Nice Journey
             </div>
             </div>
@@ -92,8 +92,8 @@
                   <hr>
                    <div class="row">
                     <label for="policies" class="col-sm-2 col-form-label">Developer program policies</label>
-                     <div class="col-sm-5 row">
-                     <input type="checkbox" class="row" id="policies"> <p>Confrim that your app meets the Developer
+                     <div class="col-sm-7 row">
+                     <input type="checkbox" id="check1"/> <p>Confrim that your app meets the Developer
                        program and policies. please read the developer program policies. if your app store listing is eligible 
                        to appear on playstore you can contact review team.
                      </p>
@@ -101,15 +101,15 @@
                   </div>
                       <div class="row">
                     <label for="Regulation" class="col-sm-2 col-form-label">Ethiopian Tax Regulation</label>
-                     <div class="col-sm-5 row">
-                     <input type="checkbox" id="Regulation"> <p>Confrim that your app meets the Developer
+                     <div class="col-sm-7 row">
+                     <input type="checkbox" id="check2"> <p>Confrim that your app meets the Developer
                        program and policies. please read the developer program policies. if your app store listing is eligible 
                        to appear on playstore you can contact review team.
                      </p>
                     </div>
                   </div>
                   <div class="float-right">
-                  <button type="submit" class="btn btn-info">Create</button> | 
+                  <button type="submit" id="submitBtnID" class="btn btn-info">Create</button>
                   <!-- <button class="btn btn-primary">Next</button> -->
                 </div>
                 </form>
@@ -131,4 +131,10 @@
     <!-- /.content-wrapper -->
     <%- include('includes/footer.ejs') %>
   </div>
+  <script>
+   $('#submitBtnID').attr("disabled",true);  //Initially disabled button when document loaded.
+    $('#check2').click(function(){
+      $('#submitBtnID').attr("disabled",!$(this).is(":checked"));   
+    })
+  </script>
 </body>

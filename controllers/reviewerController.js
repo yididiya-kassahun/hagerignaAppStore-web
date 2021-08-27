@@ -177,12 +177,15 @@ exports.addToCart = (req, res, next) => {
 exports.approvedReviewResult = (req, res, next) => {
   const appID = req.body.AppID;
   const approvmentSummery = req.body.summery;
+  const editorChoice = Boolean(req.body.editorChoice);
 
+  console.log("============ " + editorChoice);
   reviewApp
     .create({
       appID: appID,
       approved: true,
       summery: approvmentSummery,
+      editorChoice: editorChoice,
       reviewerID: req.session.reviewer.id,
     })
     .then((result) => {
@@ -197,6 +200,15 @@ exports.approvedReviewResult = (req, res, next) => {
         .then((appData) => {
           appData.appStatus = "published";
           appData.save();
+          appStoreListing
+            .findOne({ where: { appID: result.appID } })
+            .then((appList) => {
+              appList.isPublished = true;
+              appList.save();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

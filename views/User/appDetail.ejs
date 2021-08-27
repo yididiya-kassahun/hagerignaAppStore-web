@@ -53,12 +53,12 @@
             <h6>Screenshoots</h6>
             <div class="row" style="margin-top: 20px;">
                     <div style="float: left;">
-                      <img src="<%= storeAPP.phoneScreeenshootURL %>" alt="phone screenshots" width="200px" height="400px">
+                      <img src="<%= storedAPP.phoneScreeenshootURL1 %>" alt="phone screenshots" width="200px" height="400px">
                     </div>
             </div> 
             <hr>
             <div style="margin-top: 20px;">
-              <%= storeAPP.longDescription %>
+              <%= storedAPP.longDescription %>
             </div>
             <div style="margin-top: 100px;">
               <h3>Comments</h3>
@@ -87,21 +87,20 @@
           </div>
         
         <div class="col" style="margin-top: 100px;">
-    
-            <div class="row col-md-8 col-sm-7 col-12" style="margin-left: 40px;margin-top: 10px;">
-              <h3>See More Apps</h3>
+          <div class="row col-md-8 col-sm-7 col-12" style="margin-left: 40px;margin-top: 10px;">
+            <h3>See More Apps</h3>
+            <% if(otherApps.length > 0) { %> <% for(let app of otherApps ) { %>
               <div class="info-box">
-            <img src="img/app3.png" width="110px" height="110px" alt="app logo" />
+            <img src="<%= app.appIconURL %>" width="110px" height="110px" alt="app logo" />
                 <div class="info-box-content">
-                  <span class="info-box-text"><b>app.appName</b></span>
-                  <small>This is interactive AR Educational game for every one its 
-                    amazing try it you will love it!!</small>
+                  <span class="info-box-text"><b><%= app.appName %></b></span>
+                  <small><%= app.shortDescription %></small>
                 </div>
                 <!-- /.info-box-content -->
               </div>
+              <% } %><% } %>
               <!-- /.info-box -->
             </div>
-         
             </div>
           </div>
         </div>

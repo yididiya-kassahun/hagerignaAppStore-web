@@ -48,11 +48,19 @@ exports.appDetailPage = (req, res, next) => {
   appstorelist
     .findOne({ where: { appID: applicationID } })
     .then((appDetailData) => {
-      res.render("Developer/applicationDetail", {
-        pageTitle: "Application Dashboard",
-        path: "dashboard",
-        appData: appDetailData,
-      });
+      apkDetail
+        .findOne({ where: { appID: applicationID } })
+        .then((appAPK) => {
+          res.render("Developer/applicationDetail", {
+            pageTitle: "Application Dashboard",
+            path: "dashboard",
+            appData: appDetailData,
+            appAPK: appAPK,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -65,13 +73,15 @@ exports.createAppPage = (req, res, next) => {
       res.render("Developer/createApp", {
         pageTitle: "Create App Page",
         languages: language,
-        path: "dashboard",
+        path: "/create.app",
+        editing: false,
       });
     })
     .catch((err) => {
       console.log(err);
     });
 };
+
 exports.storeListing = (req, res, next) => {
   createApps
     .findAll()
@@ -81,11 +91,40 @@ exports.storeListing = (req, res, next) => {
         Apps: createdApps,
         androidAPIs: androidAPI,
         path: req.baseUrl,
+        editing: false,
       });
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.editStoreListing = (req, res, next) => {
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect("/");
+  }
+  const appID = req.params.appID;
+  appstorelist.findByPk(appID).then((listedApp) => {
+    if (!listedApp) {
+      return res.redirect("/store.listing");
+    }
+    createApps
+      .findAll()
+      .then((createdApps) => {
+        res.render("Developer/storeList", {
+          pageTitle: "main app store listing Page",
+          Apps: createdApps,
+          androidAPIs: androidAPI,
+          path: req.baseUrl,
+          editing: true,
+          editApp: listedApp,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 };
 
 exports.deleteApp = (req, res, next) => {
@@ -174,6 +213,7 @@ exports.apkDetailPage = (req, res, next) => {
             Apps: createdApps,
             androidAPIs: androidAPI,
             path: req.baseUrl,
+            editing: false,
           });
         })
         .catch((err) => {
@@ -184,6 +224,42 @@ exports.apkDetailPage = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.editApkDetailPage = (req, res, next) => {
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect("/apk.detail");
+  }
+  const appID = req.params.appID;
+  apkDetail.findOne({ where: { appID: appID } }).then((apkDetail) => {
+    if (!apkDetail) {
+      return res.redirect("/apk.detail");
+    }
+    createApps
+      .findAll()
+      .then((createdApps) => {
+        androidAPI
+          .findAll()
+          .then((androidAPI) => {
+            res.render("Developer/apkDetail", {
+              pageTitle: "App APK Detail Page",
+              Apps: createdApps,
+              androidAPIs: androidAPI,
+              path: req.baseUrl,
+              editing: true,
+              editApp: apkDetail,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+};
+
 exports.reportPage = (req, res, next) => {
   res.render("Developer/generalReport", {
     pageTitle: "Policy Page",
@@ -223,11 +299,17 @@ exports.appStoreList = (req, res, next) => {
 
   const appIcon = req.files.appIcon;
   const featureGraphics = req.files.appFeatureGraphics;
-  const phoneScreeenshoot = req.files.phoneScreeenshoots;
+  const phoneScreenshoot1 = req.files.phoneScreenshoot1;
+  // const phoneScreenshoot2 = req.files.phoneScreenshoot2;
+  // const phoneScreenshoot3 = req.files.phoneScreenshoot3;
+
+  //console.log("here is phone screenshot2 " + phoneScreenshoot[0]);
 
   const extensionName1 = path.extname(appIcon.name); // fetch the file extension
-  const extensionName2 = path.extname(featureGraphics.name); // fetch the file extension
-  const extensionName3 = path.extname(phoneScreeenshoot.name); // fetch the file extension
+  const extensionName2 = path.extname(featureGraphics.name);
+  const extensionName3 = path.extname(phoneScreenshoot1.name);
+  // const extensionName4 = path.extname(phoneScreenshoot2.name);
+  // const extensionName5 = path.extname(phoneScreenshoot3.name);
   const allowedExtension = [".png", "jpg", "jpeg"];
 
   if (
@@ -248,13 +330,13 @@ exports.appStoreList = (req, res, next) => {
       "/uploads/images/",
       featureGraphics.name
     );
-    const phoneScreeenshootPath = path.join(
+    const phoneScreenshootPath = path.join(
       "public/uploads/images/",
-      phoneScreeenshoot.name
+      phoneScreenshoot1.name
     );
-    const phoneScreeenshootPath2 = path.join(
+    const phoneScreenshootPath_2 = path.join(
       "/uploads/images/",
-      phoneScreeenshoot.name
+      phoneScreenshoot1.name
     );
 
     appIcon.mv(appIconPath, (err) => {
@@ -298,12 +380,13 @@ exports.appStoreList = (req, res, next) => {
       });
     });
 
-    phoneScreeenshoot.mv(phoneScreeenshootPath, (err) => {
+    phoneScreenshoot1.mv(phoneScreenshootPath, (err) => {
       if (err) {
         console.log(err);
       }
       console.log("success! file moved ");
     });
+
     appstorelist
       .create({
         appName: appName,
@@ -312,7 +395,9 @@ exports.appStoreList = (req, res, next) => {
         appIconURL: appIconPath2,
         featureGraphicsURL: featureGraphicsPath2,
         videoURL: videoURL,
-        phoneScreeenshootURL: phoneScreeenshootPath2,
+        phoneScreeenshootURL1: phoneScreenshootPath_2,
+        // phoneScreeenshootURL2: phoneScreenshootPath22,
+        // phoneScreeenshootURL3: phoneScreenshootPath33,
         appID: AppID,
         developerID: req.session.developer.id,
       })
@@ -332,7 +417,9 @@ exports.apkFileDetail = (req, res, next) => {
   const packageName = req.body.packageName;
   const appVersion = req.body.appVersion;
   const api = req.body.api;
-  const apkFileSize = req.files.apkFile.size * 1024;
+  const apkFileSize = parseFloat(
+    (req.files.apkFile.size / 1024) * 1024
+  ).toFixed(2);
 
   if (!apkFileURL) {
     const error = new Error("please upload valid apk file");
@@ -411,8 +498,6 @@ exports.postQuestionary = (req, res, next) => {
             appstorelist
               .findOne({ where: { appID: createAppID.appID } })
               .then((appList) => {
-                appList.isPublished = true;
-                appList.save();
                 if (appList) {
                   console.log("succeed app store list");
                   apkDetail

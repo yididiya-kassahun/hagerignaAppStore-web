@@ -13,7 +13,7 @@ const adminModel = require("./models/admin");
 const addPolicy = require("./models/addPolicy");
 const addQuestionary = require("./models/addQuestionary");
 const answeredQuestionary = require("./models/answeredQuestionary");
-const registerDeveloper = require("./models/developer");
+const developer = require("./models/developer");
 const registerReviewer = require("./models/reviewer");
 const createApp = require("./models/createApp");
 const storeListing = require("./models/appStorelist");
@@ -39,34 +39,6 @@ const store = new MysqlStore({
   password: "",
   database: "hagerignaDB",
 });
-
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "public/uploads/images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname);
-//   }, // add developer ID for Uniqueness of uploaded image
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   if (
-//     file.mimetype === "image/png" ||
-//     file.mimetype === "image/jpg" ||
-//     file.mimetype === "image/jpeg"
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-
-// app.use(
-//   multer({ storage: fileStorage, fileFilter: fileFilter }).array(
-//     "uploadedImage",
-//     3
-//   )
-// );
 
 // Setup View template engine
 app.set("view engine", "ejs");
@@ -98,6 +70,9 @@ app.use(reveiwerRoute);
 app.use(authRoute);
 
 //storeListing.belongsTo(createApp, { primarykey: "appID" });
+createApp.belongsTo(developer, { primarykey: "id" });
+storeListing.belongsTo(developer, { primarykey: "id" });
+apkFileDetail.belongsTo(developer, { primarykey: "id" });
 
 // Using sequelizer for ORM database - mysql
 sequelize

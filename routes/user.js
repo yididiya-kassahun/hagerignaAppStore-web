@@ -15,4 +15,5 @@ router.get("/userDownloadAPK/:apkFile", userController.downloadAPK);
 router.get("/developer.profile", userController.devProfile);
 router.get("/newReleases", userController.newReleasesPage);
 
+router.post("/add.comment/:appID", userController.addComment);
 module.exports = router;

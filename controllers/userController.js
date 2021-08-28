@@ -1,6 +1,7 @@
 const publishedApps = require("../models/createApp");
 const publishedAPK = require("../models/apkDetail");
 const storeList = require("../models/appStorelist");
+const appcomment = require("../models/appComment");
 
 exports.userDashboard = (req, res, next) => {
   publishedApps
@@ -58,14 +59,22 @@ exports.appDetail = (req, res, next) => {
                   order: [["createdAt", "DESC"]],
                 })
                 .then((apps) => {
-                  res.render("User/appDetail", {
-                    pageTitle: "App Detail",
-                    path: "Detail Dashboard",
-                    publishedAPP: publishedApp,
-                    publishedAPK: publishedApk,
-                    storedAPP: storeListing,
-                    otherApps: apps,
-                  });
+                  appcomment
+                    .findAll({ where: { appID: applicationID } })
+                    .then((commentList) => {
+                      res.render("User/appDetail", {
+                        pageTitle: "App Detail",
+                        path: "Detail Dashboard",
+                        publishedAPP: publishedApp,
+                        publishedAPK: publishedApk,
+                        storedAPP: storeListing,
+                        otherApps: apps,
+                        comments:commentList
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 })
                 .catch((err) => {
                   console.log(err);
@@ -113,4 +122,23 @@ exports.newReleasesPage = (req, res, next) => {
     pageTitle: "New Releases",
     path: "Profile Dashboard",
   });
+};
+
+exports.addComment = (req, res, next) => {
+  const appID = req.params.appID;
+  const addcomment = req.body.comment;
+
+  appcomment
+    .create({
+      comment: addcomment,
+      appID: appID,
+      userID: 4,
+    })
+    .then((comment) => {
+      console.log(comment);
+      res.redirect("/user");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

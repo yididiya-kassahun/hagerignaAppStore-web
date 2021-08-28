@@ -172,6 +172,7 @@
                             class="form-control"
                             id="appVersion"
                             placeholder="V1.0"
+                            value="<% if (editing) { %><%= editApp.appVersion %> <% } %>"
                           />
                         </div>
                       </div>
@@ -187,7 +188,9 @@
                           >
                             <% if(androidAPIs.length > 0) { %> <% for(let
                             androidAPI of androidAPIs ) { %>
-                            <option value="<%= androidAPI.codeName %>">
+                            <option
+                              value="<% if (editing) { %><%= editApp.API_Req %> <% } %>"
+                            >
                               <%= androidAPI.codeName %> <%=
                               androidAPI.API_Level %>
                             </option>

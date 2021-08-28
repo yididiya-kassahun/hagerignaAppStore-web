@@ -4,10 +4,19 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+// >>>>>>>>>>>> -| SignIn |- <<<<<<<<<<<<<<<<<<<
+
 router.get("/login", authController.loginPage);
 router.get("/login.developer", authController.developerloginPage);
 router.get("/login.reviewer", authController.reviewerloginPage);
 router.get("/login.admin", authController.adminloginPage);
+
+// >>>>>>>>>>>> -| Recover Password |- <<<<<<<<<<<<<<<<<<<
+
+router.get("/forgottenPass", authController.forgottenPassword);
+router.post("/resetPassword", authController.resetPassword);
+
+// >>>>>>>>>>>> -| SignUp |- <<<<<<<<<<<<<<<<<<<
 
 router.get("/register.user", authController.userRegisterPage);
 router.get("/register.developer", authController.developerRegisterPage);

@@ -132,6 +132,7 @@ exports.addComment = (req, res, next) => {
     .create({
       comment: addcomment,
       appID: appID,
+     // fullName:req.session.user.fullName
       userID: 4,
     })
     .then((comment) => {

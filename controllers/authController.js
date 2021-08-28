@@ -1,9 +1,21 @@
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
 const developer = require("../models/developer");
 const reviewer = require("../models/reviewer");
 const user = require("../models/user");
 const admin = require("../models/admin");
 const roles = require("../models/roles");
 const bcrypt = require("bcryptjs");
+
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: "",
+    },
+  })
+);
+
 // **************  Registration Pages ******************
 
 exports.userRegisterPage = (req, res, next) => {
@@ -26,6 +38,40 @@ exports.reviewerRegisterPage = (req, res, next) => {
     path: "Register",
     email: req.params.email,
   });
+};
+
+// ************ | Reset Password | ************************
+
+exports.forgottenPassword = (req, res, next) => {
+  res.render("Auth/forgottenPassword", {
+    pageTitle: "Forgotten password Page",
+    path: "forgottenPass",
+  });
+};
+
+exports.resetPassword = (req, res, next) => {
+  const email = req.body.email;
+
+  user
+    .findOne({ where: { email: email } })
+    .then((userEmail) => {
+      if (userEmail) {
+        return transporter.sendMail({
+          to: result.email,
+          from: "yidu.kassahun.me@gmail.com",
+          subject: "Hagerigna AppStore",
+          html:
+            "<h1>Recover password Link : http://localhost:3000/recoverPass" +
+            result.email +
+            "</h1>",
+        });
+      } else {
+        res.redirect("/forgottenPass");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 // **************** Register Page ***********************

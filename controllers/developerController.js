@@ -6,7 +6,7 @@ const questionary = require("../models/addQuestionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
-//const reviewedApps = require("../models/reviewApp");
+const appComment = require("../models/appComment");
 const sizeOf = require("image-size");
 const path = require("path");
 const fs = require("fs");
@@ -51,12 +51,29 @@ exports.appDetailPage = (req, res, next) => {
       apkDetail
         .findOne({ where: { appID: applicationID } })
         .then((appAPK) => {
-          res.render("Developer/applicationDetail", {
-            pageTitle: "Application Dashboard",
-            path: "dashboard",
-            appData: appDetailData,
-            appAPK: appAPK,
-          });
+          appComment
+            .findAll({ where: { appID: applicationID } })
+            .then((commentList) => {
+              appComment
+                .count({ where: { appID: applicationID } })
+                .then(totalComment => {     
+                  res.render("Developer/applicationDetail", {
+                    pageTitle: "Application Dashboard",
+                    path: "dashboard",
+                    appData: appDetailData,
+                    appAPK: appAPK,
+                    appComments: commentList,
+                    totalComment:totalComment,
+                    moment: moment,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

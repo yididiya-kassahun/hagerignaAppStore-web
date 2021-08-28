@@ -135,7 +135,7 @@
 
           <!-- LINE CHART -->
           <div class="row">
-            <div class="col-6">
+            <div class="col-7">
               <div class="card" style="margin-left: 50px">
                 <div class="card-header">
                   <h3 class="card-title">Total Download</h3>
@@ -171,7 +171,11 @@
                       <span
                         ><div class="knob-label">Android APK Size</div></span
                       >
-                      <span class="info-box-number" style="color: rgb(50, 50, 238);"><%= appAPK.apkSize %> MB</span>
+                      <span
+                        class="info-box-number"
+                        style="color: rgb(50, 50, 238)"
+                        ><%= appAPK.apkSize %> MB</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -180,12 +184,25 @@
               <!-- <div class="col-5"> -->
               <div class="info-box col-12 bg-default">
                 <span class="info-box-icon"
-                  ><i class="fas fa-star" style="color: orange;"></i
+                  ><i class="fas fa-star" style="color: orange"></i
                 ></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">Total Application Rating</span>
                   <span class="info-box-number">92</span>
+                </div>
+              </div>
+              <hr />
+              <div class="info-box col-12 bg-default">
+                <span class="info-box-icon"
+                  ><i
+                    class="fas fa-comment"
+                    style="color: rgb(54, 40, 255)"
+                  ></i
+                ></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Application Comments</span>
+                  <span class="info-box-number"><%= totalComment %></span>
                 </div>
               </div>
             </div>
@@ -194,37 +211,37 @@
       </section>
 
       <!-- Main content -->
-      <section class="content" style="margin-left: 50px;">
+      <section class="content" style="margin-left: 50px">
         <div class="container-fluid">
           <div class="row">
-              <div class="col-md-10">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                 List of comments in App
-                </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body clearfix">
-                <blockquote class="quote-secondary">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                  <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                </blockquote>
-
-                <blockquote class="quote-secondary">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                </blockquote>
-
+            <div class="col-md-10">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">List of comments in App</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body clearfix">
+                  <% if(appComments.length > 0) { %> <% for(let appComment of
+                  appComments ) { %>
                   <blockquote class="quote-secondary">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                </blockquote>
+                    <p><%= appComment.comment %></p>
+                    <small
+                      ><cite title="Source Title"
+                        >Commented At: <%=
+                        moment(appComment.createdAt).format('DD MMMM, YYYY'); %>
+                        EC.
+                      </cite></small
+                    ><br />
+                    <small
+                      >By: <cite title="Source Title">yididiya</cite></small
+                    >
+                  </blockquote>
+                  <% } %><% } %>
+                </div>
+                <!-- /.card-body -->
               </div>
-              <!-- /.card-body -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
-          </div>
           </div>
         </div>
       </section>

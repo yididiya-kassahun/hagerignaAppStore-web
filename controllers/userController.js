@@ -2,6 +2,7 @@ const publishedApps = require("../models/createApp");
 const publishedAPK = require("../models/apkDetail");
 const storeList = require("../models/appStorelist");
 const appcomment = require("../models/appComment");
+const appDownload = require("../models/appDownload");
 
 exports.userDashboard = (req, res, next) => {
   publishedApps
@@ -69,7 +70,7 @@ exports.appDetail = (req, res, next) => {
                         publishedAPK: publishedApk,
                         storedAPP: storeListing,
                         otherApps: apps,
-                        comments:commentList
+                        comments: commentList,
                       });
                     })
                     .catch((err) => {
@@ -99,8 +100,19 @@ exports.downloadAPK = (req, res, next) => {
   publishedAPK
     .findOne({ where: { appID: apkID } })
     .then((apk) => {
-      const apkPath = apk.apkFile;
-      res.download(apkPath);
+      appDownload
+        .create({
+          appDownloaded: true,
+          appID: apkID,
+          userID: req.session.user.id,
+        })
+        .then((app) => {
+          const apkPath = apk.apkFile;
+          res.download(apkPath);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {});
 };
@@ -132,7 +144,7 @@ exports.addComment = (req, res, next) => {
     .create({
       comment: addcomment,
       appID: appID,
-     // fullName:req.session.user.fullName
+      fullName: req.session.user.fullName,
       userID: 4,
     })
     .then((comment) => {

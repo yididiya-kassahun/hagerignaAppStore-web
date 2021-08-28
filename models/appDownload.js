@@ -1,28 +1,28 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
 
-const addPolicy = sequelize.define("addPolicy", {
+const appDownload = sequelize.define("appDownload", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  policyTitle: {
-    type: Sequelize.STRING,
+  appDownloaded: {
+    type: Sequelize.BOOLEAN,
     allowNull: false,
     required: true,
   },
-  policyContent: {
-    type: Sequelize.STRING,
+  appID: {
+    type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
   },
-  adminID: {
+  userID: {
     type: Sequelize.INTEGER,
     allowNull: false,
     required: true,
   },
 });
 
-module.exports = addPolicy;
+module.exports = appDownload;

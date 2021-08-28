@@ -390,7 +390,7 @@ exports.adminSignIn = (req, res, next) => {
                 console.log(err);
               });
           } else {
-            res.redirect("/login.reviewer");
+            res.redirect("/login.admin");
           }
         })
         .catch((err) => {

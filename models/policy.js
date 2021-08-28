@@ -1,33 +1,28 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
 
-const appComment = sequelize.define("appComment", {
+const policy = sequelize.define("policy", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  comment: {
+  policyTitle: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  appID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
-  fullName: {
+  policyContent: {
     type: Sequelize.STRING,
     allowNull: false,
     required: true,
   },
-  // userID: {
+  // adminID: {
   //   type: Sequelize.INTEGER,
   //   allowNull: false,
   //   required: true,
   // },
 });
 
-module.exports = appComment;
+module.exports = policy;

@@ -1,7 +1,7 @@
-const getPolicy = require("../models/addPolicy");
+const getPolicy = require("../models/policy");
 const onReviewApp = require("../models/createApp");
 const appStoreListing = require("../models/appStorelist");
-const appQuestionary = require("../models/addQuestionary");
+const appQuestionary = require("../models/questionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const appAPKFile = require("../models/apkDetail");
 const reviewApp = require("../models/reviewApp");
@@ -138,10 +138,36 @@ exports.downloadAPKFile = (req, res, next) => {
     .catch((err) => {});
 };
 exports.editorsChoicePage = (req, res, next) => {
+  // reviewApp
+  //   .findAll({
+  //     where: {
+  //       approved: true,
+  //       editorChoice: true,
+  //       reviewerID: req.session.reviewer.id,
+  //     },
+  //   })
+  //   .then((editorChoicedApp) => {
+  //     appStoreListing
+  //       .findAll({ where: { appID: editorChoicedApp.appID } })
+  //       .then((choosedApp) => {
+  //         developerProfile
+  //           .findOne({ where: { id: choosedApp.developerID } })
+  //           .then(developer => {
   res.render("Reviewer/editorChoices", {
     pageTitle: "Editor Choices Dashboard",
     path: "dashboard",
   });
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
 };
 
 exports.policyPage = (req, res, next) => {

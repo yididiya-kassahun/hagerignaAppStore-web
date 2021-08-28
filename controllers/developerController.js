@@ -1,8 +1,8 @@
-const getPolicy = require("../models/addPolicy");
+const getPolicy = require("../models/policy");
 const createApps = require("../models/createApp");
 const appstorelist = require("../models/appStorelist");
 const apkDetail = require("../models/apkDetail");
-const questionary = require("../models/addQuestionary");
+const questionary = require("../models/questionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
@@ -56,14 +56,14 @@ exports.appDetailPage = (req, res, next) => {
             .then((commentList) => {
               appComment
                 .count({ where: { appID: applicationID } })
-                .then(totalComment => {     
+                .then((totalComment) => {
                   res.render("Developer/applicationDetail", {
                     pageTitle: "Application Dashboard",
                     path: "dashboard",
                     appData: appDetailData,
                     appAPK: appAPK,
                     appComments: commentList,
-                    totalComment:totalComment,
+                    totalComment: totalComment,
                     moment: moment,
                   });
                 })
@@ -435,7 +435,7 @@ exports.apkFileDetail = (req, res, next) => {
   const appVersion = req.body.appVersion;
   const api = req.body.api;
   const apkFileSize = parseFloat(
-    (req.files.apkFile.size / 1024) * 1024
+    (req.files.apkFile.size / 1024) / 1024
   ).toFixed(2);
 
   if (!apkFileURL) {
@@ -529,6 +529,7 @@ exports.postQuestionary = (req, res, next) => {
                             updatedApp.appIcon = appList.appIconURL;
                             updatedApp.isPublished = true;
                             updatedApp.save();
+                            res.redirect("/developer");
                           })
                           .catch((err) => {
                             console.log(err);

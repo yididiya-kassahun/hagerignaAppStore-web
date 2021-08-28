@@ -2,8 +2,8 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 
-const Policy = require("../models/addPolicy");
-const appQuestionary = require("../models/addQuestionary");
+const Policy = require("../models/policy");
+const appQuestionary = require("../models/questionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
 const getDevelopers = require("../models/developer");
 const reviewer = require("../models/reviewer");

@@ -38,11 +38,11 @@ const apkFileDetail = sequelize.define("apkFileDetail", {
     allowNull: false,
     required: true,
   },
-  developerID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
+  // developerID: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   required: true,
+  // },
 });
 
 module.exports = apkFileDetail;

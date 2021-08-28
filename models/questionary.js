@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
 
-const addQuestionary = sequelize.define("addQuestionary", {
+const questionary = sequelize.define("questionary", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -13,11 +13,11 @@ const addQuestionary = sequelize.define("addQuestionary", {
     allowNull: false,
     required: true,
   },
-  adminID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
+  // adminID: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   required: true,
+  // },
 });
 
-module.exports = addQuestionary;
+module.exports = questionary;

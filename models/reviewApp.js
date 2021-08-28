@@ -36,11 +36,11 @@ const reviewApp = sequelize.define("reviewApp", {
     required: true,
     defaultValue: false,
   },
-  reviewerID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
+  // reviewerID: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   required: true,
+  // },
 });
 
 module.exports = reviewApp;

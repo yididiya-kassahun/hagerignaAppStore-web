@@ -57,11 +57,11 @@ const createApp = sequelize.define("createApp", {
     required: true,
     defaultValue: 0,
   },
-  developerID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    required: true,
-  },
+  // developerID: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   required: true,
+  // },
 });
 
 module.exports = createApp;

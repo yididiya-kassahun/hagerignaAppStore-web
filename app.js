@@ -10,19 +10,21 @@ const multer = require("multer");
 const fileUpload = require("express-fileupload");
 // -----| models
 const adminModel = require("./models/admin");
-const addPolicy = require("./models/addPolicy");
-const addQuestionary = require("./models/addQuestionary");
+const policy = require("./models/policy");
+const questionary = require("./models/questionary");
 const answeredQuestionary = require("./models/answeredQuestionary");
 const developer = require("./models/developer");
-const registerReviewer = require("./models/reviewer");
 const createApp = require("./models/createApp");
 const storeListing = require("./models/appStorelist");
 const apkFileDetail = require("./models/apkDetail");
+const reviewApp = require("./models/reviewApp");
 const defaultLanguage = require("./models/defaultLanguage");
 const collectedEmail = require("./models/collectedEmail");
 const androidAPI = require("./models/AndroidAPI");
 const roles = require("./models/roles");
 const appComments = require("./models/appComment");
+const reviewer = require("./models/reviewer");
+const admin = require("./models/admin");
 
 //------| routes
 const adminRoute = require("./routes/admin");
@@ -30,6 +32,8 @@ const userRoute = require("./routes/user");
 const devRoute = require("./routes/developer");
 const reveiwerRoute = require("./routes/reviewer");
 const authRoute = require("./routes/auth");
+const user = require("./models/user");
+const appComment = require("./models/appComment");
 
 const app = express();
 const store = new MysqlStore({
@@ -69,11 +73,20 @@ app.use(devRoute);
 app.use(reveiwerRoute);
 app.use(authRoute);
 
-//storeListing.belongsTo(createApp, { primarykey: "appID" });
-createApp.belongsTo(developer, { primarykey: "id" });
-storeListing.belongsTo(developer, { primarykey: "id" });
-apkFileDetail.belongsTo(developer, { primarykey: "id" });
+// createApp.belongsTo(developer, { primarykey: "id" });
+// storeListing.belongsTo(developer, { primarykey: "id" });
+// apkFileDetail.belongsTo(developer, { primarykey: "id" });
 
+developer.hasMany(createApp, { foreignKey: "developerID" });
+developer.hasMany(storeListing, { foreignKey: "developerID" });
+developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
+
+reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
+
+admin.hasMany(policy, { foreignKey: "adminID" });
+admin.hasMany(questionary, { foreignKey: "adminID" });
+
+user.hasMany(appComment,{foreignKey:"userID"})
 // Using sequelizer for ORM database - mysql
 sequelize
   //.sync({ force: true }) //override the existing table

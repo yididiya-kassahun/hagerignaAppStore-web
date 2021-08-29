@@ -11,8 +11,11 @@ const collectedEmail = require("../models/collectedEmail");
 const androidAPI = require("../models/AndroidAPI");
 const user = require("../models/user");
 const apps = require("../models/createApp");
-
+const reviewApps = require("../models/reviewApp");
+const Sequelize = require("sequelize");
 const countUserss = require("../counters/userCounter");
+
+var moment = require("moment");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -573,6 +576,35 @@ exports.assignRoleToReviewer = (req, res, next) => {
       });
   } else {
   }
+};
+
+exports.approvedApps = (req, res, next) => {
+  reviewApps
+    .count({
+      attributes: ["createdAt"],
+      group: "createdAt",
+      where: { approved: true },
+    })
+    .then((approvedapp) => {
+      reviewApps
+        .findAll({ where: { approved: true } })
+        .then((dateData) => {
+          //  approvedapp.forEach(element => {
+          console.log(approvedapp[0].createdAt);
+          //  });
+          res.json({
+            approvedapps: approvedapp,
+            // dateData: dateData,
+            moment: moment,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 module.exports.countUsers = function coutUsers() {

@@ -109,7 +109,7 @@
                     <div class="card-body">
                       <div class="chart">
                         <canvas
-                          id="barChart"
+                          id="barChart11"
                           style="
                             min-height: 250px;
                             height: 250px;
@@ -303,17 +303,9 @@
   <%- include('includes/footer.ejs') %>
   <script>
     $(function () {
-      /* ChartJS
-       * -------
-       * Here we will create a few charts using ChartJS
-       */
-
-      //--------------
-      //- AREA CHART -
-      //--------------
-
-      // Get context with jQuery - using jQuery's .get() method.
-      var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+      var areaChartCanvas = document
+        .getElementById("areaChart")
+        .getContext("2d");
 
       var areaChartData = {
         labels: [
@@ -327,7 +319,7 @@
         ],
         datasets: [
           {
-            label: "Digital Goods",
+            label: "Total VR Apps",
             backgroundColor: "rgba(60,141,188,0.9)",
             borderColor: "rgba(60,141,188,0.8)",
             pointRadius: false,
@@ -338,7 +330,7 @@
             data: [28, 48, 40, 19, 86, 27, 90],
           },
           {
-            label: "Electronics",
+            label: "Total AR Apps",
             backgroundColor: "rgba(210, 214, 222, 1)",
             borderColor: "rgba(210, 214, 222, 1)",
             pointRadius: false,
@@ -385,7 +377,9 @@
       //-------------
       //- LINE CHART -
       //--------------
-      var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+      var lineChartCanvas = document
+        .getElementById("lineChart")
+        .getContext("2d");
       var lineChartOptions = $.extend(true, {}, areaChartOptions);
       var lineChartData = $.extend(true, {}, areaChartData);
       lineChartData.datasets[0].fill = false;
@@ -397,56 +391,12 @@
         data: lineChartData,
         options: lineChartOptions,
       });
-
-      //-------------
-      //- BAR CHART -
-      //-------------
-      var barChartCanvas = $("#barChart").get(0).getContext("2d");
-      var barChartData = $.extend(true, {}, areaChartData);
-      var temp0 = areaChartData.datasets[0];
-      var temp1 = areaChartData.datasets[1];
-      barChartData.datasets[0] = temp1;
-      barChartData.datasets[1] = temp0;
-
-      var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false,
-      };
-
-      new Chart(barChartCanvas, {
-        type: "bar",
-        data: barChartData,
-        options: barChartOptions,
-      });
-
-      //---------------------
-      //- STACKED BAR CHART -
-      //---------------------
-      var stackedBarChartCanvas = $("#stackedBarChart").get(0).getContext("2d");
-      var stackedBarChartData = $.extend(true, {}, barChartData);
-
-      var stackedBarChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [
-            {
-              stacked: true,
-            },
-          ],
-          yAxes: [
-            {
-              stacked: true,
-            },
-          ],
-        },
-      };
-      new Chart(stackedBarChartCanvas, {
-        type: "bar",
-        data: stackedBarChartData,
-        options: stackedBarChartOptions,
-      });
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"
+    type="text/javascript"
+    defer
+  ></script>
 </body>

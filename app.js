@@ -86,7 +86,7 @@ reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 admin.hasMany(policy, { foreignKey: "adminID" });
 admin.hasMany(questionary, { foreignKey: "adminID" });
 
-user.hasMany(appComment,{foreignKey:"userID"})
+// user.hasMany(appComment,{foreignKey:"userID"})
 // Using sequelizer for ORM database - mysql
 sequelize
   //.sync({ force: true }) //override the existing table

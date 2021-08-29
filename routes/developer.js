@@ -25,6 +25,7 @@ router.get(
   developerController.editStoreListing
 );
 
+router.get("/chartDownloadData", isAuth, developerController.appDataChart);
 router.get("/app.questionary", isAuth, developerController.appQuestionary);
 router.get("/app.detail/:appID", isAuth, developerController.appDetailPage);
 router.get("/devprofile", isAuth, developerController.developerProfile);

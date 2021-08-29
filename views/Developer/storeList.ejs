@@ -87,7 +87,7 @@
                           <% if(Apps.length > 0) { %> <% for(let App of Apps ) {
                           %>
                           <option
-                            value="<% if (editing) { %><%= editApp.appID %><% }else {%> <%= App.appID %> <% } %>"
+                            value="<% if (editing) { %><%= editApp.appName %><% }else {%> <%= App.appName %> <% } %>"
                           >
                             <% if (editing) { %><%= editApp.appName %><% }else
                             {%> <%= App.appName %> <% } %>

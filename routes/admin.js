@@ -13,6 +13,8 @@ router.get("/ordinaryUsers", supAdminController.ordinaryUsersPage);
 router.get("/admin.policy", supAdminController.policyPage);
 router.get("/admin.questionary", supAdminController.questionaryPage);
 
+router.get("/approvedAppStat", supAdminController.approvedApps);
+
 router.post("/admin.addPolicy", supAdminController.addPolicies);
 router.post("/deletePolicy/:policyID", supAdminController.deletePolicy);
 router.post("/deleteQuestions/:questionID", supAdminController.deleteQuestionary);

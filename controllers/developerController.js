@@ -7,6 +7,7 @@ const answeredQuestionary = require("../models/answeredQuestionary");
 const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
 const appComment = require("../models/appComment");
+const appDownload = require("../models/appDownload");
 const sizeOf = require("image-size");
 const path = require("path");
 const fs = require("fs");
@@ -561,4 +562,23 @@ exports.developerProfile = (req, res, next) => {
     pageTitle: "profile Dashboard",
     path: "dashboard",
   });
+};
+
+exports.appDataChart = (req, res, next) => {
+   appDownload
+     .findAll()
+     .then((appStat) => {
+       appDownload
+         .count()
+         .then((countDownload) => {
+           res.json({
+        //     data: appStat,
+             allApps:appStat,
+             moment:moment
+           });
+         }).catch(err => { console.log(err);});
+     })
+     .catch((err) => {
+       console.log(err);
+     });
 };

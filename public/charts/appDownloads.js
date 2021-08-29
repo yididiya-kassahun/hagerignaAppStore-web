@@ -107,65 +107,78 @@
 
 // ---------------------------------------------------------
 
-$(function () {
-  var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    fetch("/chartDownloadData")
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            const allDatas = data.data;
+            console.log(allDatas[0].sleepDuration);
+            let datas = [];
+            for (let i = 0; i < allDatas.length; i++) {
+                datas.push(allDatas[i].sleepDuration);
+            }
+            console.log(datas[0]);
 
-  var barChartCanvas = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "Digital Goods",
-        backgroundColor: "rgba(60,141,188,0.9)",
-        borderColor: "rgba(60,141,188,0.8)",
-        pointRadius: false,
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: [28, 48, 40, 19, 86, 27, 90],
-      },
-      {
-        label: "Electronics",
-        backgroundColor: "rgba(210, 214, 222, 1)",
-        borderColor: "rgba(210, 214, 222, 1)",
-        pointRadius: false,
-        pointColor: "rgba(210, 214, 222, 1)",
-        pointStrokeColor: "#c1c7d1",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: [65, 59, 80, 81, 56, 55, 40],
-      },
-    ],
-  };
+            var barChartCanvas = document.getElementById("barChart").getContext("2d");
 
-  var areaChartOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
-    legend: {
-      display: false,
-    },
-    scales: {
-      xAxes: [
-        {
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-      yAxes: [
-        {
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-    },
-  };
+            var barChartCanvas = {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "Digital Goods",
+                        backgroundColor: "rgba(60,141,188,0.9)",
+                        borderColor: "rgba(60,141,188,0.8)",
+                        pointRadius: false,
+                        pointColor: "#3b8bba",
+                        pointStrokeColor: "rgba(60,141,188,1)",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(60,141,188,1)",
+                        data: [28, 48, 40, 19, 86, 27, 90],
+                    },
+                    {
+                        label: "Electronics",
+                        backgroundColor: "rgba(210, 214, 222, 1)",
+                        borderColor: "rgba(210, 214, 222, 1)",
+                        pointRadius: false,
+                        pointColor: "rgba(210, 214, 222, 1)",
+                        pointStrokeColor: "#c1c7d1",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                    },
+                ],
+            };
 
-  // This will get the first returned node in the jQuery collection.
-  new Chart(barChartCanvas, {
-    type: "line",
-    data: areaChartData,
-    options: areaChartOptions,
-  });
-});
+            var areaChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            gridLines: {
+                                display: false,
+                            },
+                        },
+                    ],
+                    yAxes: [
+                        {
+                            gridLines: {
+                                display: false,
+                            },
+                        },
+                    ],
+                },
+            };
+
+            // This will get the first returned node in the jQuery collection.
+            new Chart(barChartCanvas, {
+                type: "line",
+                data: areaChartData,
+                options: areaChartOptions,
+            });
+        });
+

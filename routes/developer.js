@@ -25,11 +25,13 @@ router.get(
   developerController.editStoreListing
 );
 
-router.get("/chartDownloadData", isAuth, developerController.appDataChart);
+router.get("/chartDownloadData/:appID", isAuth, developerController.appDataChart);
+
 router.get("/app.questionary", isAuth, developerController.appQuestionary);
 router.get("/app.detail/:appID", isAuth, developerController.appDetailPage);
 router.get("/devprofile", isAuth, developerController.developerProfile);
 //router.get("/create.app/:appID", developerController.appDetailss);
+
 router.post("/create.app", isAuth, developerController.createApp);
 router.post("/deleteApp/:appID", isAuth, developerController.deleteApp);
 router.post("/app.storeList", isAuth, developerController.appStoreList);

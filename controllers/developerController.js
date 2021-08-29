@@ -565,6 +565,8 @@ exports.developerProfile = (req, res, next) => {
 };
 
 exports.appDataChart = (req, res, next) => {
+  const appID = req.params.appID;
+  console.log(appID);
    appDownload
      .findAll()
      .then((appStat) => {

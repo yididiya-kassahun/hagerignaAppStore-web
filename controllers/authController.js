@@ -7,6 +7,7 @@ const user = require("../models/user");
 const admin = require("../models/admin");
 const roles = require("../models/roles");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator/check");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -19,24 +20,51 @@ const transporter = nodemailer.createTransport(
 // **************  Registration Pages ******************
 
 exports.userRegisterPage = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+    req.toastr.error(message);
+  } else {
+    message = null;
+    req.toastr.success("Successfull");
+  }
   res.render("Auth/register-user", {
     pageTitle: "User Register Page",
     path: "Register",
+    errorMessage: message,
   });
 };
 exports.developerRegisterPage = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+    req.toastr.error(message);
+  } else {
+    message = null;
+    req.toastr.success("Successfull");
+  }
   res.render("Auth/register-developer", {
     pageTitle: "Developer Register Page",
     path: "Register",
+    errorMessage: message,
   });
 };
 
 exports.reviewerRegisterPage = (req, res, next) => {
   //console.log("Email Address ===== " + emailAddress);
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+    req.toastr.error(message);
+  } else {
+    message = null;
+    req.toastr.success("Successfull");
+  }
   return res.render("Auth/register-reviewer", {
     pageTitle: "Reviewer Register Page",
     path: "Register",
     email: req.params.email,
+    errorMessage:message
   });
 };
 
@@ -84,6 +112,17 @@ exports.developerSignUp = (req, res, next) => {
   const city = req.body.city;
   const developerType = req.body.developerType;
   const password = req.body.password;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    req.toastr.error("failed", "You're not in!");
+    return res.status(422).render("auth/register-developer", {
+      path: "/signup.developer",
+      pageTitle: "Signup",
+      errorMessage: errors.array()[0].msg,
+    });
+  }
 
   roles
     .findOne({ where: { roleName: "developer" } })
@@ -125,7 +164,17 @@ exports.reviewerSignup = (req, res, next) => {
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
   // fetch ID from roles table where rolename = 'reviewer'
+  const errors = validationResult(req);
 
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    req.toastr.error("failed", "You're not in!");
+    return res.status(422).render("auth/register-developer", {
+      path: "/signup.developer",
+      pageTitle: "Signup",
+      errorMessage: errors.array()[0].msg,
+    });
+  }
   roles
     .findOne({ where: { roleName: "reviewer" } })
     .then((role) => {
@@ -165,25 +214,51 @@ exports.userSignup = (req, res, next) => {
   const age = req.body.userAge;
   const password = req.body.userPassword;
   const confrimPass = req.body.confrimPassword;
-  roles
-    .findOne({ where: { roleName: "user" } })
-    .then((role) => {
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          user
-            .create({
-              fullName: fullName,
-              email: email,
-              city: city,
-              jobType: jobType,
-              age: age,
-              role: role.id,
-              password: hashedPassword,
-            })
-            .then((result) => {
-              console.log(result);
-              res.redirect("/login");
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    req.toastr.error("failed", "You're not in!");
+    return res.status(422).render("auth/register-user", {
+      path: "/signup.user",
+      pageTitle: "Signup",
+      errorMessage: errors.array()[0].msg,
+    });
+  }
+
+  user
+    .findOne({ email: email })
+    .then((userEmail) => {
+      if (userEmail) {
+        req.flash(
+          "error",
+          "E-Mail exists already, please pick a different one."
+        );
+        return res.redirect("/signup.user");
+      }
+      roles
+        .findOne({ where: { roleName: "user" } })
+        .then((role) => {
+          return bcrypt
+            .hash(password, 12)
+            .then((hashedPassword) => {
+              user
+                .create({
+                  fullName: fullName,
+                  email: email,
+                  city: city,
+                  jobType: jobType,
+                  age: age,
+                  role: role.id,
+                  password: hashedPassword,
+                })
+                .then((result) => {
+                  console.log(result);
+                  res.redirect("/login");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
               console.log(err);
@@ -201,9 +276,16 @@ exports.userSignup = (req, res, next) => {
 // **************** Login Pages *******************
 
 exports.loginPage = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render("Auth/login-user", {
     pageTitle: "Login Page",
     path: "login",
+    errorMessage: message,
   });
 };
 

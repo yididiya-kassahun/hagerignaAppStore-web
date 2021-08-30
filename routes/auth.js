@@ -1,5 +1,5 @@
 const express = require("express");
-const { check } = require("express-validator/check");
+const { check, body } = require("express-validator/check");
 
 const authController = require("../controllers/authController");
 
@@ -21,11 +21,51 @@ router.post("/resetPassword", authController.resetPassword);
 
 router.get("/register.user", authController.userRegisterPage);
 router.get("/register.developer", authController.developerRegisterPage);
-router.get("/register.reviewer/:email", authController.reviewerRegisterPage);
+router.get(
+  "/register.reviewer/:email",
+  [
+    body("phoneNumber", "Invalid phone number!! please try again").isLength({
+      min: 9,
+      max: 14,
+    }),
+    body("password")
+      .isLength({ min: 5 })
+      .withMessage("password Minimum 5 character"),
+  ],
+  authController.reviewerRegisterPage
+);
 
-router.post("/signup.developer", authController.developerSignUp);
+router.post(
+  "/signup.developer",
+  [
+    body("phoneNumber", "Invalid phone number!! please try again").isLength({
+      min: 9,
+      max: 14,
+    }),
+    body("password")
+      .isLength({ min: 5 })
+      .withMessage("password Minimum 5 character"),
+  ],
+  authController.developerSignUp
+);
 router.post("/signup.reviewer", authController.reviewerSignup);
-router.post("/signup.user", authController.userSignup);
+
+router.post(
+  "/signup.user",
+  [
+    body("userAge").custom((value, { req }) => {
+      if (value < 14) {
+        throw new Error("Not Allowed !! Age must be greater than 14.");
+      }
+      return true;
+    }),
+    body("userPassword")
+      .isLength({ min: 5 })
+      .withMessage("password Minimum 5 character"),
+  ],
+  authController.userSignup
+);
+
 router.post("/developersignIn", authController.developerSignIn);
 router.post("/usersignIn", authController.userSignIn);
 router.post("/reviewersignIn", authController.reviewerSignIn);

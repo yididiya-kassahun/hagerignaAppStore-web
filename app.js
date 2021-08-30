@@ -2,12 +2,15 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-//const expressHbs = require("express-handlebars");
+
 const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
 const multer = require("multer");
 const fileUpload = require("express-fileupload");
+const toastr = require("express-toastr");
+const cookieParser = require("cookie-parser");
+
 // -----| models
 const adminModel = require("./models/admin");
 const policy = require("./models/policy");
@@ -25,6 +28,8 @@ const roles = require("./models/roles");
 const appComments = require("./models/appComment");
 const reviewer = require("./models/reviewer");
 const admin = require("./models/admin");
+
+const flash = require("connect-flash");
 
 const errorController = require("./controllers/errorController");
 
@@ -46,6 +51,25 @@ const store = new MysqlStore({
   database: "hagerignaDB",
 });
 
+app.use(cookieParser("secret"));
+app.use(
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
+
+app.use(flash());
+
+app.use(toastr());
+
+app.use(function (req, res, next) {
+  res.locals.toasts = req.toastr.render();
+  next();
+});
+
 // Setup View template engine
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -58,15 +82,6 @@ app.use(express.static(path.join(__dirname, "public/img")));
 app.use(express.static(path.join(__dirname, "public/uploads/")));
 
 app.use(fileUpload());
-
-app.use(
-  session({
-    secret: "my secret",
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-  })
-);
 
 //-----| Set Routing
 app.use(adminRoute);

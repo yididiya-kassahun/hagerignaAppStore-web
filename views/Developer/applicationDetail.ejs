@@ -252,16 +252,26 @@
         })
         .then((data) => {
           const allDatas = data.allApps;
-          //  const moment = data.moment;
-          console.log("===============" + allDatas);
-          //   const allDays = data.data;
-          // console.log(allDatas[0].id);
+
           let datas = [];
           let days = [];
+
           for (let i = 0; i < allDatas.length; i++) {
-            datas.push(i + 1);
-            days.push(moment(allDatas[i].createdAt).format("dddd"));
+            //console.log(moment(allDatas[i].createdAt).format("Do dddd"));
+            days.push(moment(allDatas[i].createdAt).format("Do dddd"));
+            datas.push(allDatas[i].count);
+            if (
+              moment(allDatas[i].createdAt).format("Do dddd") ==
+              moment(allDatas[i++].createdAt).format("Do dddd")
+            ) {
+              days.push(moment(allDatas[i].createdAt).format("Do dddd"));
+              datas.push(allDatas[i].count + allDatas[i++].count);
+            } else {
+              days.push(moment(allDatas[i].createdAt).format("Do dddd"));
+              datas.push(allDatas[i].count);
+            }
           }
+          console.log("***************" + days);
 
           var ctx = document.getElementById("myChart").getContext("2d");
           var myChart = new Chart(ctx, {

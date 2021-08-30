@@ -435,9 +435,9 @@ exports.apkFileDetail = (req, res, next) => {
   const packageName = req.body.packageName;
   const appVersion = req.body.appVersion;
   const api = req.body.api;
-  const apkFileSize = parseFloat(
-    (req.files.apkFile.size / 1024) / 1024
-  ).toFixed(2);
+  const apkFileSize = parseFloat(req.files.apkFile.size / 1024 / 1024).toFixed(
+    2
+  );
 
   if (!apkFileURL) {
     const error = new Error("please upload valid apk file");
@@ -566,21 +566,21 @@ exports.developerProfile = (req, res, next) => {
 
 exports.appDataChart = (req, res, next) => {
   const appID = req.params.appID;
-  console.log(appID);
-   appDownload
-     .findAll()
-     .then((appStat) => {
-       appDownload
-         .count()
-         .then((countDownload) => {
-           res.json({
-        //     data: appStat,
-             allApps:appStat,
-             moment:moment
-           });
-         }).catch(err => { console.log(err);});
-     })
-     .catch((err) => {
-       console.log(err);
-     });
+
+  appDownload
+    .count({
+      attributes: ["createdAt"],
+      group: "createdAt",
+      where: { appID: appID },
+    })
+    .then((appStat) => {
+      console.log(appStat);
+      res.json({
+        allApps: appStat,
+        moment: moment,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

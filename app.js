@@ -26,6 +26,8 @@ const appComments = require("./models/appComment");
 const reviewer = require("./models/reviewer");
 const admin = require("./models/admin");
 
+const errorController = require("./controllers/errorController");
+
 //------| routes
 const adminRoute = require("./routes/admin");
 const userRoute = require("./routes/user");
@@ -85,6 +87,8 @@ reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 
 admin.hasMany(policy, { foreignKey: "adminID" });
 admin.hasMany(questionary, { foreignKey: "adminID" });
+
+app.use(errorController.get404);
 
 // user.hasMany(appComment,{foreignKey:"userID"})
 // Using sequelizer for ORM database - mysql

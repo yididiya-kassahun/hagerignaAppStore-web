@@ -586,21 +586,30 @@ exports.approvedApps = (req, res, next) => {
       where: { approved: true },
     })
     .then((approvedapp) => {
-      reviewApps
-        .findAll({ where: { approved: true } })
-        .then((dateData) => {
-          //  approvedapp.forEach(element => {
-          console.log(approvedapp[0].createdAt);
-          //  });
-          res.json({
-            approvedapps: approvedapp,
-            // dateData: dateData,
-            moment: moment,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      console.log(approvedapp[0].createdAt);
+      res.json({
+        approvedapps: approvedapp,
+        moment: moment,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.disapprovedApps = (req, res, next) => {
+  reviewApps
+    .count({
+      attributes: ["createdAt"],
+      group: "createdAt",
+      where: { disapproved: true, approved: false },
+    })
+    .then((disapprovedapp) => {
+      console.log(disapprovedapp[0].createdAt);
+      res.json({
+        disapprovedapps: disapprovedapp,
+        moment: moment,
+      });
     })
     .catch((err) => {
       console.log(err);

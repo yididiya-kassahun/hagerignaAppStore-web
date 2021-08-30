@@ -14,6 +14,7 @@ router.get("/admin.policy", supAdminController.policyPage);
 router.get("/admin.questionary", supAdminController.questionaryPage);
 
 router.get("/approvedAppStat", supAdminController.approvedApps);
+router.get("/disapprovedAppStat", supAdminController.disapprovedApps);
 
 router.post("/admin.addPolicy", supAdminController.addPolicies);
 router.post("/deletePolicy/:policyID", supAdminController.deletePolicy);

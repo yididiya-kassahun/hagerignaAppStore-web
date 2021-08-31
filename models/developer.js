@@ -49,6 +49,12 @@ const developer = sequelize.define("developer", {
     type: Sequelize.STRING,
     required: true,
   },
+  isDeactivated: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    required: true,
+    defaultValue: false,
+  },
 });
 
 module.exports = developer;

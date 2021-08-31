@@ -43,6 +43,12 @@ const user = sequelize.define("user", {
     type: Sequelize.STRING,
     required: true,
   },
+  isDeactivated: {
+    type: Sequelize.BOOLEAN,
+    allowNull:false,
+    required: true,
+    defaultValue:false
+  }
 });
 
 module.exports = user;

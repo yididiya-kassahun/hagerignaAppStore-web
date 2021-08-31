@@ -26,6 +26,7 @@ const collectedEmail = require("./models/collectedEmail");
 const androidAPI = require("./models/AndroidAPI");
 const roles = require("./models/roles");
 const appComments = require("./models/appComment");
+const appWishList = require("./models/appWishList");
 const reviewer = require("./models/reviewer");
 const admin = require("./models/admin");
 
@@ -41,6 +42,7 @@ const reveiwerRoute = require("./routes/reviewer");
 const authRoute = require("./routes/auth");
 const user = require("./models/user");
 const appComment = require("./models/appComment");
+const appDownload = require("./models/appDownload");
 
 const app = express();
 const store = new MysqlStore({
@@ -93,10 +95,17 @@ app.use(authRoute);
 // createApp.belongsTo(developer, { primarykey: "id" });
 // storeListing.belongsTo(developer, { primarykey: "id" });
 // apkFileDetail.belongsTo(developer, { primarykey: "id" });
-
+// .........................................
 developer.hasMany(createApp, { foreignKey: "developerID" });
 developer.hasMany(storeListing, { foreignKey: "developerID" });
 developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
+
+user.hasMany(appWishList, { foreignKey: "userID" });
+appWishList.belongsTo(user);
+user.hasMany(appDownload, { foreignKey: "userID" });
+appDownload.belongsTo(user);
+
+createApp.belongsTo(developer);
 
 reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 
@@ -105,7 +114,6 @@ admin.hasMany(questionary, { foreignKey: "adminID" });
 
 app.use(errorController.get404);
 
-// user.hasMany(appComment,{foreignKey:"userID"})
 // Using sequelizer for ORM database - mysql
 sequelize
   //.sync({ force: true }) //override the existing table

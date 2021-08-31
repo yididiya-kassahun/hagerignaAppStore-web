@@ -4,7 +4,7 @@
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-   <%- include('includes/navbar.ejs') %>
+    <%- include('includes/navbar.ejs') %>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -64,9 +64,39 @@
                         <td><%= user.jobType %></td>
                         <td><%= user.age %></td>
                         <td>
-                          <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
+                          <% if(user.isDeactivated === false) {%>
+                          <div>
+                            <form
+                              action="/userAccount/<%= user.id %>?deactivated=true"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Activate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user"></i>
+                              </button>
+                            </form>
+
+                            <% }else{ %>
+                            <form
+                              action="/userAccount/<%= user.id %>?deactivated=false"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Deactivate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user-alt-slash"></i>
+                              </button>
+                            </form>
+                            <% } %>
+                            <button class="btn btn-danger">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                       <% } %> <% } %>

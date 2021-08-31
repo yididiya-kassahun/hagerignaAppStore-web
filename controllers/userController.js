@@ -3,11 +3,23 @@ const publishedAPK = require("../models/apkDetail");
 const storeList = require("../models/appStorelist");
 const appcomment = require("../models/appComment");
 const appDownload = require("../models/appDownload");
+const developer = require("../models/developer");
+const appWishList = require("../models/appWishList");
 
 exports.userDashboard = (req, res, next) => {
   publishedApps
-    .findAll({ where: { isPublished: true, appStatus: "published" } })
+    .findAll({
+      include: [
+        {
+          model: developer,
+        },
+      ],
+      where: { isPublished: true, appStatus: "published" },
+    })
     .then((allPublishedApps) => {
+      // allPublishedApps.forEach((element) => {
+      //   console.log(element.developer.fullName);
+      // });
       res.render("User/homeDashboard", {
         pageTitle: "main Dashboard",
         path: "dashboard",
@@ -149,6 +161,21 @@ exports.addComment = (req, res, next) => {
     })
     .then((comment) => {
       console.log(comment);
+      res.redirect("/user");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.addToWishList = (req, res, next) => {
+  const appID = req.params.appID;
+
+  appWishList
+    .create({
+      appID:appID
+    })
+    .then(result => {
       res.redirect("/user");
     })
     .catch((err) => {

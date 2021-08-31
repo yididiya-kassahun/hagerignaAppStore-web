@@ -170,7 +170,41 @@
                           </td>
                           <td><button type="submit" id="roleBtn<%= reviewer.id %>" class="btn btn-primary">Assign Role</td>
                         </form>
-                          <td><button class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
+                          <td>
+                          <% if(reviewer.isDeactivated === false) {%>
+                          <div>
+                            <form
+                              action="/reviewerAccount/<%= reviewer.id %>?deactivated=true"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Activate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user"></i>
+                              </button>
+                            </form>
+
+                            <% }else{ %>
+                            <form
+                              action="/reviewerAccount/<%= reviewer.id %>?deactivated=false"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Deactivate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user-alt-slash"></i>
+                              </button>
+                            </form>
+                            <% } %>
+                            <button class="btn btn-danger">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </div>
+                        </td>
                         </tr>
                          <% } %> <% } %>
                       </tbody>

@@ -68,9 +68,39 @@
                         <td><%= developer.developerType %></td>
                         <td>10</td>
                         <td>
-                          <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
+                          <% if(developer.isDeactivated === false) {%>
+                          <div>
+                            <form
+                              action="/developerAccount/<%= developer.id %>?deactivated=true"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Activate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user"></i>
+                              </button>
+                            </form>
+
+                            <% }else{ %>
+                            <form
+                              action="/developerAccount/<%= developer.id %>?deactivated=false"
+                              method="POST"
+                            >
+                              <button
+                                class="btn btn-primary"
+                                title="Deactivate user"
+                                type="submit"
+                              >
+                                <i class="fa fa-user-alt-slash"></i>
+                              </button>
+                            </form>
+                            <% } %>
+                            <button class="btn btn-danger">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                       <% } %> <% } %>

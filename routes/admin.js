@@ -18,12 +18,25 @@ router.get("/disapprovedAppStat", supAdminController.disapprovedApps);
 
 router.post("/admin.addPolicy", supAdminController.addPolicies);
 router.post("/deletePolicy/:policyID", supAdminController.deletePolicy);
-router.post("/deleteQuestions/:questionID", supAdminController.deleteQuestionary);
-router.post("/deleteEmail/:emailID",supAdminController.deleteEmail);
+router.post(
+  "/deleteQuestions/:questionID",
+  supAdminController.deleteQuestionary
+);
+router.post("/deleteEmail/:emailID", supAdminController.deleteEmail);
 router.post("/admin.addQuestionary", supAdminController.addQuestionary);
 router.post("/admin.addAndroidAPI", supAdminController.addAndroidAPI);
-router.post("/deleteAndroidAPI/:androidID", supAdminController.deleteAndroidAPI);
+router.post(
+  "/deleteAndroidAPI/:androidID",
+  supAdminController.deleteAndroidAPI
+);
 router.post("/send.email", supAdminController.sendRegistrationEmail);
 router.post("/assignRole/:reviewerID", supAdminController.assignRoleToReviewer);
+
+router.post("/userAccount/:userID", supAdminController.userAccount);
+router.post(
+  "/developerAccount/:developerID",
+  supAdminController.developerAccount
+);
+router.post("/reviewerAccount/:reviewerID", supAdminController.reviewerAccount);
 
 module.exports = router;

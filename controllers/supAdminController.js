@@ -5,7 +5,7 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const Policy = require("../models/policy");
 const appQuestionary = require("../models/questionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
-const getDevelopers = require("../models/developer");
+const developer = require("../models/developer");
 const reviewer = require("../models/reviewer");
 const collectedEmail = require("../models/collectedEmail");
 const androidAPI = require("../models/AndroidAPI");
@@ -35,7 +35,7 @@ exports.adminDashboard = (req, res, next) => {
       user
         .count()
         .then((totalUsers) => {
-          getDevelopers
+          developer
             .count()
             .then((totalDevelopers) => {
               reviewer
@@ -93,13 +93,13 @@ exports.adminDashboard = (req, res, next) => {
 };
 
 exports.developersListPage = (req, res, next) => {
-  getDevelopers
+  developer
     .findAll()
     .then((developerLists) => {
       user
         .count()
         .then((totalUsers) => {
-          getDevelopers
+          developer
             .count()
             .then((totalDevelopers) => {
               reviewer
@@ -166,7 +166,7 @@ exports.reviewerList = (req, res, next) => {
           user
             .count()
             .then((totalUsers) => {
-              getDevelopers
+              developer
                 .count()
                 .then((totalDevelopers) => {
                   reviewer
@@ -235,7 +235,7 @@ exports.ordinaryUsersPage = (req, res, next) => {
       user
         .count()
         .then((totalUsers) => {
-          getDevelopers
+          developer
             .count()
             .then((totalDevelopers) => {
               reviewer
@@ -299,7 +299,7 @@ exports.addPolicies = (req, res, next) => {
   Policy.create({
     policyTitle: Title,
     policyContent: Content,
-    adminID: 1,
+    adminID: req.session.admin.id,
   })
     .then((result) => {
       console.log(result);
@@ -316,7 +316,7 @@ exports.policyPage = (req, res, next) => {
       user
         .count()
         .then((totalUsers) => {
-          getDevelopers
+          developer
             .count()
             .then((totalDevelopers) => {
               reviewer
@@ -394,7 +394,7 @@ exports.questionaryPage = (req, res, next) => {
       user
         .count()
         .then((totalUsers) => {
-          getDevelopers
+          developer
             .count()
             .then((totalDevelopers) => {
               reviewer
@@ -454,7 +454,7 @@ exports.addQuestionary = (req, res, next) => {
   appQuestionary
     .create({
       question: questionary,
-      adminID: 1,
+      adminID: req.session.admin.id,
     })
     .then((result) => {
       console.log(result.question);
@@ -487,7 +487,7 @@ exports.sendRegistrationEmail = (req, res, next) => {
     .create({
       email: reviewerEmail,
       status: "sent",
-      adminID: 2,
+      adminID: req.session.admin.id,
     })
     .then((result) => {
       console.log(result);
@@ -531,7 +531,7 @@ exports.addAndroidAPI = (req, res, next) => {
       codeName: codeName,
       version: version,
       API_Level: apiLevel,
-      adminID: 1,
+      adminID: req.session.admin.id,
     })
     .then((result) => {
       console.log("Android API Successfully added");
@@ -586,7 +586,7 @@ exports.approvedApps = (req, res, next) => {
       where: { approved: true },
     })
     .then((approvedapp) => {
-      console.log(approvedapp[0].createdAt);
+      // console.log(approvedapp[0].createdAt);
       res.json({
         approvedapps: approvedapp,
         moment: moment,
@@ -629,7 +629,7 @@ module.exports.countUsers = function coutUsers() {
 };
 
 exports.coutDevelopers = (req, res, next) => {
-  return getDevelopers
+  return developer
     .count()
     .then((developers) => {
       console.log(developers);
@@ -643,6 +643,70 @@ exports.coutReviewers = (req, res, next) => {
     .count()
     .then((reviewer) => {
       console.log(reviewer);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.userAccount = (req, res, next) => {
+  const userID = req.params.userID;
+  const accountStatus = req.query.deactivated;
+
+  user
+    .findOne({ where: { id: userID } })
+    .then((userData) => {
+      console.log("------------------" + userData.isDeactivated);
+      if (userData.isDeactivated) {
+        userData.isDeactivated = false;
+        userData.save();
+        res.redirect("/ordinaryUsers");
+      } else {
+        userData.isDeactivated = true;
+        userData.save();
+        res.redirect("/ordinaryUsers");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.developerAccount = (req, res, next) => {
+  const developerID = req.params.developerID;
+
+  developer
+    .findOne({ where: { id: developerID } })
+    .then((devData) => {
+      if (devData.isDeactivated) {
+        devData.isDeactivated = false;
+        devData.save();
+        res.redirect("/developerList");
+      } else {
+        devData.isDeactivated = true;
+        devData.save();
+        res.redirect("/developerList");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+exports.reviewerAccount = (req, res, next) => {
+  const reviewerID = req.params.reviewerID;
+  const accountStatus = req.query.deactivated;
+
+  reviewer
+    .findOne({ where: { id: reviewerID } })
+    .then((revData) => {
+      if (revData.isDeactivated) {
+        revData.isDeactivated = false;
+        revData.save();
+        res.redirect("/reviewerList");
+      } else {
+        revData.isDeactivated = true;
+        revData.save();
+        res.redirect("/reviewerList");
+      }
     })
     .catch((err) => {
       console.log(err);

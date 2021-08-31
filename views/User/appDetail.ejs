@@ -42,9 +42,13 @@
                   <div class="col" >
                    <div class="row"><h3><%= publishedAPP.appName %></h3></div>
                    <div class="row"><h5>Kingsoft Apps</h5></div>
-                   <div class="row">App Size: 20MB</div>
+                   <div class="row"><b>App Size:</b> <%= publishedAPK.apkSize %>MB</div>
                    <div class="row">This app is available for all devices</div>
-                   <div class="row"><b> Add To Wishlist</b></div>
+                   <div class="row"><b>
+                     <!-- <form action="/addToWishList/<%= publishedAPP.appID %>" method="POST"> -->
+                      <a href="/addToWishList/<%= publishedAPP.appID %>"> Add To Wishlist</a>
+                      <!-- </form> -->
+                    </b></div>
                    <!-- <form action="" method="POST"> -->
                    <a type="submit" href="/userDownloadAPK/<%= publishedAPK.appID %>" class="btn btn-primary btn-sm" style="margin-top: 10px;width: 300px;">Download APK</a>
                    <!-- </form> -->

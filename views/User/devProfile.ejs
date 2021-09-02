@@ -24,15 +24,6 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Developer Profile</h1>
-            </div>
-          </div>
-        </div>
-      </section> -->
 
       <!-- Main content -->
       <section class="content">
@@ -44,15 +35,15 @@
             <div class="card widget-user">
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header" 
-                   style="background: url('img/photo1.png') center center;height: 240px;">
+                   style="background: url('/img/profileBack.jpg') center center;height: 240px;">
               </div>
               <div class="widget-user-image" style="margin-top: 100px;">
-                <img class="img-circle elevation-2" src="img/avatar.png" alt="User Avatar">
+                <img class="img-circle elevation-2" src="/img/avatar.png" alt="User Avatar">
               </div>
               <div class="card-footer">
-                <div style="align-content: center; margin-left: 43%;">
-                <h3 class="widget-user-username">Alexander Pierce</h3>
-                <h5 class="widget-user-desc">AR Foundation Ltd.</h5>
+                <div style="align-content: center; margin-left: 45%;">
+                <h3 class="widget-user-username"><%= profile.fullName %></h3>
+                <h5 class="widget-user-desc" style="margin-left: 35px;"><%= profile.companyName %></h5>
                   <!-- /.col -->
                 </div>
                 <!-- /.row -->
@@ -66,21 +57,23 @@
             <!-- /.widget-user -->
           </div>
           <div class="col">
-              <h5 class="row">Other Apps By:</h5><hr>
+              <h5 class="row">Augmented Reality Apps By:</h5><hr>
          
           <div class="row">
+     <% if(developerData.length > 0) { %> <% for(let allApps of
+            developerData ) { %>
                   <div class="card" style="margin-right: 15px">
                 <div class="card-header">
                   <img
-                    src="img/app3.png"
-                    width="120px"
-                    height="120px"
+                    src="<%= allApps.appIconURL %>"
+                    width="212px"
+                    height="212px"
                     alt="app logo"
                   />
                 </div>
                 <div class="card-body">
-                  <p>App Name: Kids Bible</p>
-                  <p>By: yididiya kassahun</p>
+                  <p>App Name: <%= allApps.appName %></p>
+                  <p>By: <%= allApps.developer.fullName %></p>
                   <div class="row" style="color: orange">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -89,21 +82,7 @@
                   </div>
                 </div>
               </div>
-
-              <div class="card" style="margin-right: 15px">
-                <div class="card-header">
-                  <img
-                    src="img/app4.png"
-                    width="120px"
-                    height="120px"
-                    alt="app logo"
-                  />
-                </div>
-                <div class="card-body">
-                  <p>App Name: Kids Bible</p>
-                  <p>By: yididiya kassahun</p>
-                </div>
-              </div>
+             <% } %><% } %>
           </div>
        </div>
             </div>

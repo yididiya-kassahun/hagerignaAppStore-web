@@ -57,8 +57,11 @@
                     >App Name: <%= publishedapp.appName %></a
                   >
                 </p>
-                <p>By: <%= publishedapp.developer.fullName %></p>
-                <div class="row" style="color: orange">
+                <a href="/developer.profile/<%= publishedapp.developer.id %>"
+                  >By: <b></b><%= publishedapp.developer.fullName %></a
+                >
+                <div class="row" style="color: orange; margin-left: 5px">
+                  <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>

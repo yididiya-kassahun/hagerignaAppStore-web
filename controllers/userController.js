@@ -136,10 +136,38 @@ exports.editorChoicesPage = (req, res, next) => {
   });
 };
 exports.devProfile = (req, res, next) => {
-  res.render("User/devProfile", {
-    pageTitle: "Developer Profile",
-    path: "Profile Dashboard",
-  });
+  const developerID = req.params.developerID;
+
+  storeList
+    .findAll({
+      include: [
+        {
+          model: developer,
+        },
+      ],
+      where: { isPublished: true, developerID: developerID },
+    })
+    .then((allApp) => {
+      allApp.forEach((element) => {
+        console.log(element);
+      });
+      developer
+        .findByPk(developerID)
+        .then((developer) => {
+          res.render("User/devProfile", {
+            pageTitle: "Developer Profile",
+            path: "Profile Dashboard",
+            profile: developer,
+            developerData: allApp,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 exports.newReleasesPage = (req, res, next) => {
   res.render("User/newReleases", {
@@ -173,9 +201,9 @@ exports.addToWishList = (req, res, next) => {
 
   appWishList
     .create({
-      appID:appID
+      appID: appID,
     })
-    .then(result => {
+    .then((result) => {
       res.redirect("/user");
     })
     .catch((err) => {

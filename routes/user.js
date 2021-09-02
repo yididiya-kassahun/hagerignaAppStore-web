@@ -12,7 +12,7 @@ router.get("/app.cart", isAuth, userController.appCartPage);
 router.get("/editors.choices", isAuth, userController.editorChoicesPage);
 router.get("/appDetail/:appID", isAuth, userController.appDetail);
 router.get("/userDownloadAPK/:apkFile", isAuth, userController.downloadAPK);
-router.get("/developer.profile", isAuth, userController.devProfile);
+router.get("/developer.profile/:developerID", isAuth, userController.devProfile);
 router.get("/newReleases", isAuth, userController.newReleasesPage);
 
 router.post("/add.comment/:appID", isAuth, userController.addComment);

@@ -25,12 +25,17 @@ router.get(
   developerController.editStoreListing
 );
 
-router.get("/chartDownloadData/:appID", isAuth, developerController.appDataChart);
+router.get(
+  "/chartDownloadData/:appID",
+  isAuth,
+  developerController.appDataChart
+);
 router.get("/generateReport", isAuth, developerController.generateReport);
 
 router.get("/app.questionary", isAuth, developerController.appQuestionary);
 router.get("/app.detail/:appID", isAuth, developerController.appDetailPage);
 router.get("/devprofile", isAuth, developerController.developerProfile);
+//router.get("/editDevprofile/:devID", isAuth, developerController.editDeveloperProfile);
 //router.get("/create.app/:appID", developerController.appDetailss);
 
 router.post("/create.app", isAuth, developerController.createApp);

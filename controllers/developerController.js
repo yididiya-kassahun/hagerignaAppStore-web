@@ -13,6 +13,7 @@ const defaultLanguage = require("../models/defaultLanguage");
 const androidAPI = require("../models/AndroidAPI");
 const appComment = require("../models/appComment");
 const appDownload = require("../models/appDownload");
+const developer = require("../models/developer");
 
 var moment = require("moment");
 
@@ -640,12 +641,26 @@ exports.postQuestionary = (req, res, next) => {
 };
 
 exports.developerProfile = (req, res, next) => {
-  res.render("Developer/developerProfile", {
-    pageTitle: "profile Dashboard",
-    path: "dashboard",
-  });
+  const developerProfile = req.session.developer;
+      res.render("Developer/developerProfile", {
+        pageTitle: "profile Dashboard",
+        path: "dashboard",
+        devProfile: developerProfile,
+      });
 };
 
+// exports.editDeveloperProfile = (req, res, next) => {
+//   const developerID = req.params.devID;
+
+//   developer
+//     .findByPk(developerID)
+//     .then(developerData=>{
+//       return developerData;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 exports.appDataChart = (req, res, next) => {
   const appID = req.params.appID;
 

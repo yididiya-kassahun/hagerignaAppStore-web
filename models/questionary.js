@@ -13,11 +13,11 @@ const questionary = sequelize.define("questionary", {
     allowNull: false,
     required: true,
   },
-  // adminID: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   required: true,
-  // },
+  adminID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+  },
 });
 
 module.exports = questionary;

@@ -1,7 +1,7 @@
 const sizeOf = require("image-size");
 const path = require("path");
 const fs = require("fs");
-const PDFDocumnet = require("pdfkit");
+const PDFDocument = require("pdfkit");
 
 const getPolicy = require("../models/policy");
 const createApps = require("../models/createApp");
@@ -281,10 +281,90 @@ exports.editApkDetailPage = (req, res, next) => {
 };
 
 exports.reportPage = (req, res, next) => {
-  res.render("Developer/generalReport", {
-    pageTitle: "Policy Page",
-    path: "dashboard",
-  });
+  createApps
+    .findAll({
+      where: { isPublished: true, developerID: req.session.developer.id },
+    })
+    .then((allApps) => {
+      apkDetail
+        .findAll({ where: { developerID: req.session.developer.id } })
+        .then((allAPKs) => {
+          res
+            .render("Developer/generalReport", {
+              pageTitle: "Policy Page",
+              path: "dashboard",
+              allApps: allApps,
+              allAPKs: allAPKs,
+              moment: moment,
+            })
+            .catch((err) => console.log(err));
+        });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.generateReport = (req, res, next) => {
+  createApps
+    .findAll({
+      where: { isPublished: true, developerID: req.session.developer.id },
+    })
+    .then((allApps) => {
+      apkDetail
+        .findAll({ where: { developerID: req.session.developer.id } })
+        .then((allAPKs) => {
+          console.log("path =========> " + path.relative);
+          var date = new Date(); // some mock date
+          var milliseconds = date.getTime();
+          const reportName =
+            "appReport-" + req.session.developer.id + milliseconds + ".pdf";
+          const reportPath = path.join("public", "report", reportName);
+
+          const pdfDoc = new PDFDocument();
+          res.setHeader("Content-Type", "application/pdf");
+          res.setHeader(
+            "Content-Disposition",
+            'inline; filename="' + reportName + '"'
+          );
+          pdfDoc.pipe(fs.createWriteStream(reportPath));
+          pdfDoc.pipe(res);
+
+          pdfDoc.image(
+            "C:/Users/User/Desktop/Final Project/project/hagerignAppStore/public/img/avatar3.png"
+          );
+          pdfDoc.fontSize(26).text("Hagerigna  Appstore");
+
+          pdfDoc.fontSize(16).text("Developer General Report");
+          pdfDoc.text("_______________________________________________");
+          pdfDoc.text(" ");
+          pdfDoc.text(" ");
+          pdfDoc.fontSize(15).text("Total Published AR Applications");
+          pdfDoc.text(" ");
+          pdfDoc.text(" ");
+          allApps.forEach((apps) => {
+            pdfDoc.text("App Name ----------" + apps.appName);
+            pdfDoc.text("Default Language ----- " + apps.defaultLanguage);
+            pdfDoc.text(
+              "Published At -------" +
+                moment(apps.createdAt).format("Do MMMM, YYYY")
+            );
+            pdfDoc.text("No of Download ------------" + apps.downloads);
+          });
+
+          pdfDoc.text(" ");
+          pdfDoc.text(" ");
+          pdfDoc.fontSize(15).text("Total Published AR Applications APK Size", {
+            underline: true,
+          });
+          allAPKs.forEach((apks) => {
+            pdfDoc.text("Package Name ----------" + apks.packageName);
+            pdfDoc.text("APK Size ---------- " + apks.apkSize);
+            pdfDoc.text("App Version -----------" + apks.appVersion);
+            pdfDoc.text("API Requirement ------------" + apks.API_Req);
+          });
+          pdfDoc.end();
+        });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.createApp = (req, res, next) => {

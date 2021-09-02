@@ -10,7 +10,9 @@ const multer = require("multer");
 const fileUpload = require("express-fileupload");
 const toastr = require("express-toastr");
 const cookieParser = require("cookie-parser");
-
+// const pdf = require("express-pdf");
+let ejs = require("ejs");
+let pdf = require("html-pdf");
 // -----| models
 const adminModel = require("./models/admin");
 const policy = require("./models/policy");
@@ -64,8 +66,9 @@ app.use(
 );
 
 app.use(flash());
-
 app.use(toastr());
+
+
 
 app.use(function (req, res, next) {
   res.locals.toasts = req.toastr.render();
@@ -92,25 +95,21 @@ app.use(devRoute);
 app.use(reveiwerRoute);
 app.use(authRoute);
 
-// createApp.belongsTo(developer, { primarykey: "id" });
-// storeListing.belongsTo(developer, { primarykey: "id" });
-// apkFileDetail.belongsTo(developer, { primarykey: "id" });
-// .........................................
 developer.hasMany(createApp, { foreignKey: "developerID" });
 developer.hasMany(storeListing, { foreignKey: "developerID" });
 developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
+developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
+
+createApp.belongsTo(developer);
+storeListing.belongsTo(developer);
+apkFileDetail.belongsTo(developer);
 
 user.hasMany(appWishList, { foreignKey: "userID" });
 appWishList.belongsTo(user);
 user.hasMany(appDownload, { foreignKey: "userID" });
 appDownload.belongsTo(user);
 
-createApp.belongsTo(developer);
-
-reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
-
-admin.hasMany(policy, { foreignKey: "adminID" });
-admin.hasMany(questionary, { foreignKey: "adminID" });
+// reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 
 app.use(errorController.get404);
 

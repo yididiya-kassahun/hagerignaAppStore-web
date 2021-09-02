@@ -64,7 +64,7 @@ exports.reviewerRegisterPage = (req, res, next) => {
     pageTitle: "Reviewer Register Page",
     path: "Register",
     email: req.params.email,
-    errorMessage:message
+    errorMessage: message,
   });
 };
 
@@ -316,7 +316,7 @@ exports.developerSignIn = (req, res, next) => {
 
   console.log("email = " + email + " pawword = " + password);
   developer
-    .findOne({ where: { Email: email } })
+    .findOne({ where: { Email: email,isDeactivated:false } })
     .then((developer) => {
       if (!developer) {
         res.redirect("/login.developer");
@@ -359,7 +359,7 @@ exports.userSignIn = (req, res, next) => {
   const password = req.body.password;
 
   user
-    .findOne({ where: { email: email } })
+    .findOne({ where: { email: email, isDeactivated: false } })
     .then((user) => {
       if (!user) {
         res.redirect("/login.user");
@@ -402,12 +402,12 @@ exports.reviewerSignIn = (req, res, next) => {
   const password = req.body.password;
 
   reviewer
-    .findOne({ where: { email: email, isPermit: true } })
+    .findOne({ where: { email: email, isPermit: true,isDeactivated:false } })
     .then((reviewer) => {
       if (!reviewer) {
         return res.redirect("/login.reviewer");
       }
-      bcrypt
+      bcrypt 
         .compare(password, reviewer.password)
         .then((doMatch) => {
           if (doMatch) {

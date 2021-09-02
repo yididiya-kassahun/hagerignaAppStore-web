@@ -26,6 +26,7 @@ router.get(
 );
 
 router.get("/chartDownloadData/:appID", isAuth, developerController.appDataChart);
+router.get("/generateReport", isAuth, developerController.generateReport);
 
 router.get("/app.questionary", isAuth, developerController.appQuestionary);
 router.get("/app.detail/:appID", isAuth, developerController.appDetailPage);

@@ -1,48 +1,130 @@
 <%-include('includes/head.ejs') %>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar -->
-    <%- include('includes/navbar.ejs') %>
-    <!-- /.navbar -->
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+      <!-- Navbar -->
+      <%- include('includes/navbar.ejs') %>
+      <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+          <span class="brand-text font-weight-light"
+            >ሀገርኛ Appstore | Developer</span
+          >
+        </a>
+        <!-- Sidebar -->
+     <%- include('includes/sidenav.ejs') %>
+        <!-- /.sidebar -->
+      </aside>
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <a href="#" class="brand-link">
-        <span class="brand-text font-weight-light">ሀገርኛ Appstore | Developer</span>
-      </a>
-
-      <!-- Sidebar -->
-      <%- include('includes/sidenav.ejs') %>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h3>General Report Dashboard</h3>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h3>General Report Dashboard</h3>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-         
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+             
+              <div
+                class="card"
+                style="margin: 20px; width: 100%; height: max-content"
+              >
+                <div class="card-body">
+                  <img src="/img/avatar3.png" alt="avatoar" />
+                  <h3 style="color: rgb(245, 93, 4)">ሀገርኛ Appstore</h3>
+                  <h5>Developer General Report</h5>
+                  <hr />
+                  <br />
+                  <h5 style="color: rgb(0, 26, 255); text-decoration: dashed">
+                    Total Published AR Applications
+                  </h5>
+                  <br />
+                  <% if(allApps.length > 0) { %> <% for(let allApp of allApps )
+                  { let i = 1; %>
+                  <table style="border: 1" class="table table-striped">
+                    <thead class="thead-dark">
+                      <th>#</th>
+                      <th>App Name</th>
+                      <th>Default language</th>
+                      <th>Published At</th>
+                      <th>Np. of Download</th>
+                    </thead>
+                    <tr>
+                      <td><%= i %></td>
+                      <td><%= allApp.appName %></td>
+                      <td><%= allApp.defaultLanguage %></td>
+                      <td>
+                        <%= moment(allApp.createdAt).format('Do MMMM, YYYY');%>
+                      </td>
+                      <td><%= allApp.downloads %></td>
+                    </tr>
+                  </table>
+                  <% i++ } %><% } %>
+                  <br /><br />
+                  <h5 style="color: rgb(0, 26, 255); text-decoration: dashed">
+                    <i class="fab fa-android"></i> Total Published AR
+                    Applications APK Size
+                  </h5>
+                  <div class="row">
+                    <table class="col-6">
+                      <thead>
+                        <th>#</th>
+                        <th>Package Name</th>
+                        <th>APK Size</th>
+                        <th>App Version</th>
+                      </thead>
+                      <% if(allAPKs.length > 0) { %> <% for(let allApk of
+                      allAPKs ) { let i = 1; %>
+                      <tr>
+                        <td><%= i %></td>
+                        <td><%= allApk.packageName %></td>
+                        <td><%= allApk.apkSize %></td>
+                        <td><%= allApk.appVersion %></td>
+                      </tr>
+                      <% } %><% } %>
+                    </table>
+                    <div class="col">
+                      <h5>Total Download</h5>
+                      <div class="chart">
+                        <canvas id="myChart" style="max-width: 20%"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+               <div
+                class="card"
+                style="margin: 20px; width: 100%; height: max-content"
+              >
+                <div class="card-body">
+                  <a
+                    href="/generateReport"
+                    class="btn btn-danger col-2"
+                    style="margin-left: 35%; color: #fff"
+                  >
+                    <i class="fa fa-file-pdf"></i> Generate PDF
+                </a>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-      <!-- /.content -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
     </div>
-    <!-- /.content-wrapper -->
     <%- include('includes/footer.ejs') %>
-  </div>
-</body>
+  </body>
+</html>

@@ -26,7 +26,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h3>Recent Releases</h3>
+              <h3>Recent Releasesed Apps in past <i class="fa fa-calendar"></i> 7 days </h3>
             </div>
           </div>
         </div>
@@ -36,18 +36,21 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row" style="margin-left: 5px">
+            <% if(newReleaseList.length > 0) { %> <% for(let newRelease of
+            newReleaseList ) { %> 
+              <% if(newRelease.createdAt > moment().subtract(20, "days").toDate()) {%>
             <div class="card" style="margin-right: 15px">
               <div class="card-header">
                 <img
-                  src="img/app2.png"
+                  src="<%= newRelease.appIcon %>"
                   width="212px"
                   height="212px"
                   alt="app logo"
                 />
               </div>
               <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
+                <p>App Name: <%= newRelease.appName %></p>
+                <p>By: <%= newRelease.developer.fullName %></p>
                 <div class="row" style="color: orange">
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
@@ -56,6 +59,10 @@
                 </div>
               </div>
             </div>
+              <% }else{%> 
+                <h4>no new released app!!!!!!!</h4>
+                <% } %>
+            <% } %><% } %>
           </div>
         </div>
       </section>

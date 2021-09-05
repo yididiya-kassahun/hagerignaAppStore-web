@@ -103,15 +103,13 @@ createApp.belongsTo(developer);
 storeListing.belongsTo(developer);
 apkFileDetail.belongsTo(developer);
 
-//createApp.hasOne(storeListing, { foreignKey: "appID" });
 createApp.hasOne(reviewApp, { foreignKey: "appID" });
+createApp.hasOne(appWishList, { foreignKey: "appID" });
 
 user.hasMany(appWishList, { foreignKey: "userID" });
 appWishList.belongsTo(user);
 user.hasMany(appDownload, { foreignKey: "userID" });
 appDownload.belongsTo(user);
-
-//reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 
 app.use(errorController.get404);
 

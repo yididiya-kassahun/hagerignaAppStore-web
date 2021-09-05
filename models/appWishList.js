@@ -13,11 +13,11 @@ const appWishList = sequelize.define("appWishList", {
     allowNull: false,
     required: true,
   },
-//   UserID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     required: true,
-//   },
+  userID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
 });
 
 module.exports = appWishList;

@@ -7,7 +7,9 @@ const developer = require("../models/developer");
 const appWishList = require("../models/appWishList");
 const reviewApp = require("../models/reviewApp");
 const createApp = require("../models/createApp");
-const { storeListing } = require("./developerController");
+const user = require("../models/user");
+
+var moment = require("moment");
 
 exports.userDashboard = (req, res, next) => {
   publishedApps
@@ -20,14 +22,16 @@ exports.userDashboard = (req, res, next) => {
       where: { isPublished: true, appStatus: "published" },
     })
     .then((allPublishedApps) => {
-      // allPublishedApps.forEach((element) => {
-      //   console.log(element.developer.fullName);
-      // });
-      res.render("User/homeDashboard", {
-        pageTitle: "main Dashboard",
-        path: "dashboard",
-        publishedApps: allPublishedApps,
-      });
+      user.findByPk(req.session.user.id)
+        .then(userData => {      
+          res.render("User/homeDashboard", {
+            pageTitle: "main Dashboard",
+            path: "dashboard",
+            publishedApps: allPublishedApps,
+            user:userData
+          });
+        })
+        .catch(err => { console.log(err); })
     })
     .catch((err) => {
       console.log(err);
@@ -44,30 +48,84 @@ exports.gamesPage = (req, res, next) => {
       where: { isPublished: true, appStatus: "published", isApporGame: "Game" },
     })
     .then((gameAR) => {
-      res.render("User/games", {
-        pageTitle: "AR Games Dashboard",
-        path: "dashboard",
-        gameList: gameAR,
-      });
+      user.findByPk(req.session.user.id)
+        .then(userData => {
+          res.render("User/games", {
+            pageTitle: "AR Games Dashboard",
+            path: "dashboard",
+            gameList: gameAR,
+            user:userData
+          });
+        }).catch(err => { });
     });
 };
 exports.childrenPage = (req, res, next) => {
+
   res.render("User/children", {
     pageTitle: "Children Dashboard",
     path: "dashboard",
   });
 };
 exports.appCartPage = (req, res, next) => {
-  res.render("User/appCart", {
-    pageTitle: "App Cart Dashboard",
-    path: "dashboard",
-  });
+  createApp
+    .findAll({
+     include: [
+       {
+         model: appWishList,
+       },
+     ],
+     where: {
+       isPublished: true,
+       appStatus: "published",
+       userID:req.session.user.id
+     },
+    })
+    .then(appCart => {
+      // appCart.forEach(element => {
+      //   console.log(element);
+      // });
+      user
+        .findByPk(req.session.user.id)
+        .then((userData) => {
+          res.render("User/appCart", {
+            pageTitle: "App Cart Dashboard",
+            path: "dashboard",
+            user: userData,
+            cartAppList:appCart
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch(err => { console.log(err); });
 };
 exports.newReleasesPage = (req, res, next) => {
-  res.render("User/newReleases", {
-    pageTitle: "New Releases",
-    path: "Profile Dashboard",
-  });
+  publishedApps
+    .findAll({
+      include: [
+        {
+          model: developer,
+        },
+      ],
+      where: { isPublished: true, appStatus: "published" },
+    })
+    //createdAt: moment().subtract(10, "days").toDate(),
+    .then((newReleasedApp) => {
+      user.findByPk(req.session.user.id)
+        .then(userData => {
+          res.render("User/newReleases", {
+            pageTitle: "New Releases",
+            path: "Profile Dashboard",
+            newReleaseList: newReleasedApp,
+            moment: moment,
+            user:userData
+          });
+        }).catch(err => { });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.editorChoicesPage = (req, res, next) => {
@@ -84,14 +142,17 @@ exports.editorChoicesPage = (req, res, next) => {
       },
     })
     .then((app) => {
-      // app.forEach((element) => {
-      //   console.log("*************"+element.reviewApp.appID);
-      // });
-      res.render("User/editorsChoice", {
-        pageTitle: "Editors Choice Dashboard",
-        path: "Detail Dashboard",
-        editorChoiceAppList:app
-      });
+      user.findByPk(req.session.user.id)
+        .then(userData => {
+          res.render("User/editorsChoice", {
+            pageTitle: "Editors Choice Dashboard",
+            path: "Detail Dashboard",
+            editorChoiceAppList: app,
+            user:userData
+          });
+        }) .catch((err) => {
+      console.log(err);
+    });
     })
     .catch((err) => {
       console.log(err);
@@ -125,16 +186,25 @@ exports.appDetail = (req, res, next) => {
                   appcomment
                     .findAll({ where: { appID: applicationID } })
                     .then((commentList) => {
-                      res.render("User/appDetail", {
-                        pageTitle: "App Detail",
-                        path: "Detail Dashboard",
-                        publishedAPP: publishedApp,
-                        publishedAPK: publishedApk,
-                        storedAPP: storeListing,
-                        otherApps: apps,
-                        comments: commentList,
-                      });
+                      user
+                        .findByPk(req.session.user.id)
+                        .then((userData) => {
+                          res.render("User/appDetail", {
+                            pageTitle: "App Detail",
+                            path: "Detail Dashboard",
+                            publishedAPP: publishedApp,
+                            publishedAPK: publishedApk,
+                            storedAPP: storeListing,
+                            otherApps: apps,
+                            comments: commentList,
+                            user:userData
+                          });
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     })
+
                     .catch((err) => {
                       console.log(err);
                     });
@@ -198,12 +268,16 @@ exports.devProfile = (req, res, next) => {
       developer
         .findByPk(developerID)
         .then((developer) => {
-          res.render("User/devProfile", {
-            pageTitle: "Developer Profile",
-            path: "Profile Dashboard",
-            profile: developer,
-            developerData: allApp,
-          });
+          user.findByPk(req.session.user.id)
+            .then(userData => {
+              res.render("User/devProfile", {
+                pageTitle: "Developer Profile",
+                path: "Profile Dashboard",
+                profile: developer,
+                developerData: allApp,
+                user:userData
+              });
+            }).catch(err => { console.log(err);})
         })
         .catch((err) => {
           console.log(err);
@@ -240,9 +314,10 @@ exports.addToWishList = (req, res, next) => {
   appWishList
     .create({
       appID: appID,
+      userID:req.session.user.id
     })
     .then((result) => {
-      res.redirect("/user");
+      res.redirect("/app.cart");
     })
     .catch((err) => {
       console.log(err);

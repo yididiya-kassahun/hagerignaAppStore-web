@@ -68,6 +68,13 @@ exports.approvedApps = (req, res, next) => {
     });
 };
 
+exports.editorsChoicePage = (req, res, next) => {
+  res.render("Reviewer/editorChoices", {
+    pageTitle: "Editor Choices Dashboard",
+    path: "dashboard",
+  });
+};
+
 exports.reviewAppPage = (req, res, next) => {
   const appID = req.params.appID;
   appStoreListing
@@ -137,38 +144,7 @@ exports.downloadAPKFile = (req, res, next) => {
     })
     .catch((err) => {});
 };
-exports.editorsChoicePage = (req, res, next) => {
-  // reviewApp
-  //   .findAll({
-  //     where: {
-  //       approved: true,
-  //       editorChoice: true,
-  //       reviewerID: req.session.reviewer.id,
-  //     },
-  //   })
-  //   .then((editorChoicedApp) => {
-  //     appStoreListing
-  //       .findAll({ where: { appID: editorChoicedApp.appID } })
-  //       .then((choosedApp) => {
-  //         developerProfile
-  //           .findOne({ where: { id: choosedApp.developerID } })
-  //           .then(developer => {
-  res.render("Reviewer/editorChoices", {
-    pageTitle: "Editor Choices Dashboard",
-    path: "dashboard",
-  });
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // });
-};
+
 
 exports.policyPage = (req, res, next) => {
   getPolicy

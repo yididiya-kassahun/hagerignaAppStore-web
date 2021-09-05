@@ -38,83 +38,26 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row" style="margin-left: 5px">
+           
+   <% if(editorChoiceAppList.length > 0) { %> <% for(let choosedApp of
+            editorChoiceAppList ) { %>
+              <% if(choosedApp.reviewApp.editorChoice === false) {%>
             <div class="card" style="margin-right: 15px">
               <div class="card-header">
                 <img
-                  src="/img/app2.png"
+                  src="<%= choosedApp.appIcon %>"
                   width="212px"
                   height="212px"
                   alt="app logo"
                 />
               </div>
               <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-                <div class="row" style="color: orange">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
+                <p>App Name: <%= choosedApp.appName %></p>
+                <!-- <p>By: yididiya kassahun</p> -->
               </div>
             </div>
-
-            <div class="card" style="margin-right: 15px">
-              <div class="card-header">
-                <img
-                  src="/img/app3.png"
-                  width="212px"
-                  height="212px"
-                  alt="app logo"
-                />
-              </div>
-              <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-                <div class="row" style="color: orange">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-            </div>
-
-            <div class="card" style="margin-right: 15px">
-              <div class="card-header">
-                <img
-                  src="/img/app4.png"
-                  width="212px"
-                  height="212px"
-                  alt="app logo"
-                />
-              </div>
-              <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header">
-                <img
-                  src="/img/app5.png"
-                  width="212px"
-                  height="212px"
-                  alt="app logo"
-                />
-              </div>
-              <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-                <div class="row" style="color: orange">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-            </div>
+            <% } %>
+          <% } %> <% } %>
           </div>
         </div>
       </section>

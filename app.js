@@ -45,6 +45,7 @@ const authRoute = require("./routes/auth");
 const user = require("./models/user");
 const appComment = require("./models/appComment");
 const appDownload = require("./models/appDownload");
+const storeList = require("./models/appStorelist");
 
 const app = express();
 const store = new MysqlStore({
@@ -67,8 +68,6 @@ app.use(
 
 app.use(flash());
 app.use(toastr());
-
-
 
 app.use(function (req, res, next) {
   res.locals.toasts = req.toastr.render();
@@ -104,12 +103,15 @@ createApp.belongsTo(developer);
 storeListing.belongsTo(developer);
 apkFileDetail.belongsTo(developer);
 
+//createApp.hasOne(storeListing, { foreignKey: "appID" });
+createApp.hasOne(reviewApp, { foreignKey: "appID" });
+
 user.hasMany(appWishList, { foreignKey: "userID" });
 appWishList.belongsTo(user);
 user.hasMany(appDownload, { foreignKey: "userID" });
 appDownload.belongsTo(user);
 
-// reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
+//reviewer.hasMany(reviewApp, { foreignKey: "reviewerID" });
 
 app.use(errorController.get404);
 

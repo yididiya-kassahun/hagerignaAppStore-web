@@ -35,7 +35,31 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="row"></div>
+          <div class="row">
+              <% if(gameList.length > 0) { %> <% for(let game of
+            gameList ) { %>
+               <div class="card">
+              <div class="card-header">
+                <img
+                  src="<%= game.appIcon %>"
+                  width="212px"
+                  height="212px"
+                  alt="app logo"
+                />
+              </div>
+              <div class="card-body">
+                <p>App Name: <%= game.appName %></p>
+                <p>By: <%= game.developer.fullName %></p>
+                <div class="row" style="color: orange">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <% } %><% } %>
+          </div>
         </div>
       </section>
       <!-- /.content -->

@@ -5,6 +5,9 @@ const appcomment = require("../models/appComment");
 const appDownload = require("../models/appDownload");
 const developer = require("../models/developer");
 const appWishList = require("../models/appWishList");
+const reviewApp = require("../models/reviewApp");
+const createApp = require("../models/createApp");
+const { storeListing } = require("./developerController");
 
 exports.userDashboard = (req, res, next) => {
   publishedApps
@@ -31,10 +34,22 @@ exports.userDashboard = (req, res, next) => {
     });
 };
 exports.gamesPage = (req, res, next) => {
-  res.render("User/games", {
-    pageTitle: "AR Games Dashboard",
-    path: "dashboard",
-  });
+  createApp
+    .findAll({
+      include: [
+        {
+          model: developer,
+        },
+      ],
+      where: { isPublished: true, appStatus: "published", isApporGame: "Game" },
+    })
+    .then((gameAR) => {
+      res.render("User/games", {
+        pageTitle: "AR Games Dashboard",
+        path: "dashboard",
+        gameList: gameAR,
+      });
+    });
 };
 exports.childrenPage = (req, res, next) => {
   res.render("User/children", {
@@ -48,6 +63,41 @@ exports.appCartPage = (req, res, next) => {
     path: "dashboard",
   });
 };
+exports.newReleasesPage = (req, res, next) => {
+  res.render("User/newReleases", {
+    pageTitle: "New Releases",
+    path: "Profile Dashboard",
+  });
+};
+
+exports.editorChoicesPage = (req, res, next) => {
+  createApp
+    .findAll({
+      include: [
+        {
+          model: reviewApp,
+        },
+      ],
+      where: {
+        isPublished: true,
+        appStatus: "published",
+      },
+    })
+    .then((app) => {
+      // app.forEach((element) => {
+      //   console.log("*************"+element.reviewApp.appID);
+      // });
+      res.render("User/editorsChoice", {
+        pageTitle: "Editors Choice Dashboard",
+        path: "Detail Dashboard",
+        editorChoiceAppList:app
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 exports.appDetail = (req, res, next) => {
   const applicationID = req.params.appID;
 
@@ -129,12 +179,6 @@ exports.downloadAPK = (req, res, next) => {
     .catch((err) => {});
 };
 
-exports.editorChoicesPage = (req, res, next) => {
-  res.render("User/editorsChoice", {
-    pageTitle: "Editors Choice Dashboard",
-    path: "Detail Dashboard",
-  });
-};
 exports.devProfile = (req, res, next) => {
   const developerID = req.params.developerID;
 
@@ -168,12 +212,6 @@ exports.devProfile = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
-};
-exports.newReleasesPage = (req, res, next) => {
-  res.render("User/newReleases", {
-    pageTitle: "New Releases",
-    path: "Profile Dashboard",
-  });
 };
 
 exports.addComment = (req, res, next) => {

@@ -63,6 +63,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
+    cookie: {
+      // Session expires after 24 hours of inactivity.
+      expires: 86400000,
+    },
   })
 );
 

@@ -367,10 +367,10 @@ exports.generateReport = (req, res, next) => {
           pdfDoc.text(" ");
           pdfDoc.text(" ");
           allApps.forEach((apps) => {
-            pdfDoc.text("App Name ----------" + apps.appName);
-            pdfDoc.text("Default Language ----- " + apps.defaultLanguage);
+            pdfDoc.text("App Name ---------------" + apps.appName);
+            pdfDoc.text("Default Language ------- " + apps.defaultLanguage);
             pdfDoc.text(
-              "Published At -------" +
+              "Published At ---------" +
                 moment(apps.createdAt).format("Do MMMM, YYYY")
             );
             pdfDoc.text("No of Download ------------" + apps.downloads);
@@ -382,10 +382,10 @@ exports.generateReport = (req, res, next) => {
             underline: true,
           });
           allAPKs.forEach((apks) => {
-            pdfDoc.text("Package Name ----------" + apks.packageName);
-            pdfDoc.text("APK Size ---------- " + apks.apkSize);
-            pdfDoc.text("App Version -----------" + apks.appVersion);
-            pdfDoc.text("API Requirement ------------" + apks.API_Req);
+            pdfDoc.text("Package Name -----------" + apks.packageName);
+            pdfDoc.text("APK Size --------------- " + apks.apkSize);
+            pdfDoc.text("App Version ------------" + apks.appVersion);
+            pdfDoc.text("API Requirement --------" + apks.API_Req);
           });
           pdfDoc.end();
         });

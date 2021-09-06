@@ -157,7 +157,7 @@ fetch("/approvedAppStat")
   .then((data) => {
     const allDatas = data.approvedapps;
     //  const dateDatas = data.dateData;
-
+   
     let datas = [];
     let days = [];
     for (let i = 0; i < allDatas.length; i++) {
@@ -168,11 +168,11 @@ fetch("/approvedAppStat")
         moment(allDatas[i].createdAt).format("Do dddd") ==
         moment(allDatas[i++].createdAt).format("Do dddd")
       ) {
-        days.push(moment(allDatas[i].createdAt).format("Do dddd"));
-        datas.push(allDatas[i].count + allDatas[i++].count);
+      //  days.push(moment(allDatas[i].createdAt).format("Do dddd"));
+        datas.push(allDatas[i] + allDatas[i++]);
       } else {
         days.push(moment(allDatas[i].createdAt).format("Do dddd"));
-        datas.push(allDatas[i].count);
+        datas.push(allDatas[i]);
       }
     }
     console.log(days);

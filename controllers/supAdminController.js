@@ -20,7 +20,8 @@ var moment = require("moment");
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: "",
+      api_key:
+        "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",
     },
   })
 );
@@ -494,13 +495,13 @@ exports.sendRegistrationEmail = (req, res, next) => {
       res.redirect("/reviewerList");
       return transporter.sendMail({
         to: result.email,
-        from: "yidu.kassahun.me@gmail.com",
+        from: "bereketamlaku@gmail.com",
         subject: "Hagerigna AppStore",
         html:
           "<h1>Registration Link : http://localhost:3000/register.reviewer/" +
           result.email +
           "</h1>",
-      });
+      }); 
     })
     .catch((err) => {
       console.log(err);

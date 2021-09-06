@@ -6,6 +6,7 @@ const answeredQuestionary = require("../models/answeredQuestionary");
 const appAPKFile = require("../models/apkDetail");
 const reviewApp = require("../models/reviewApp");
 const developerProfile = require("../models/developer");
+const createApps = require("../models/createApp");
 var moment = require("moment");
 
 exports.reviewerDashboard = (req, res, next) => {
@@ -18,12 +19,38 @@ exports.reviewerDashboard = (req, res, next) => {
       },
     })
     .then((apps) => {
-      res.render("Reviewer/reviewerDashboard", {
-        pageTitle: "main Dashboard",
-        path: "dashboard",
-        allApps: apps,
-        moment: moment,
-      });
+      createApps
+        .count({
+          where: {
+            appStatus: "published",
+            reviewerID: req.session.reviewer.id,
+          },
+        })
+        .then((totalPublishedApps) => {
+          createApps
+            .count({
+              where: {
+                appStatus: "rejected",
+                reviewerID: req.session.reviewer.id,
+              },
+            })
+            .then((totalRejectedApps) => {
+              res.render("Reviewer/reviewerDashboard", {
+                pageTitle: "main Dashboard",
+                path: "dashboard",
+                allApps: apps,
+                totalPublishedApps: totalPublishedApps,
+                totalRejectedApps:totalRejectedApps,
+                moment: moment,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);

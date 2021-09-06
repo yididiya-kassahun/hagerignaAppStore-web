@@ -19,7 +19,7 @@ var moment = require("moment");
 
 exports.developerDashboard = (req, res, next) => {
   createApps
-    .findAll()
+    .findAll({ where: { developerID: req.session.developer.id } })
     .then((createdApps) => {
       createApps
         .count({
@@ -29,13 +29,38 @@ exports.developerDashboard = (req, res, next) => {
           },
         })
         .then((totalPublishedApps) => {
-          res.render("Developer/devDashboard", {
-            pageTitle: "main Dashboard",
-            appsList: createdApps,
-            path: req.baseUrl,
-            totalPublishedApps: totalPublishedApps,
-            moment: moment,
-          });
+          createApps
+            .count({
+              where: {
+                appStatus: "rejected",
+                developerID: req.session.developer.id,
+              },
+            })
+            .then((totalRejectedApps) => {
+              createApps
+                .count({
+                  where: {
+                    developerID: req.session.developer.id,
+                  },
+                })
+                .then((totalUploads) => {
+                  res.render("Developer/devDashboard", {
+                    pageTitle: "main Dashboard",
+                    appsList: createdApps,
+                    path: req.baseUrl,
+                    totalPublishedApps: totalPublishedApps,
+                    totalRejectedApps: totalRejectedApps,
+                    totalUploads: totalUploads,
+                    moment: moment,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -105,7 +130,7 @@ exports.createAppPage = (req, res, next) => {
 
 exports.storeListing = (req, res, next) => {
   createApps
-    .findAll()
+    .findAll({ where: { developerID: req.session.developer.id } })
     .then((createdApps) => {
       res.render("Developer/storeList", {
         pageTitle: "main app store listing Page",
@@ -188,7 +213,7 @@ exports.deleteApp = (req, res, next) => {
 };
 exports.appQuestionary = (req, res, next) => {
   createApps
-    .findAll()
+    .findAll({ where: { developerID: req.session.developer.id } })
     .then((createdApps) => {
       // Join Two table in normal query then send it to the front end
       questionary
@@ -224,7 +249,7 @@ exports.devPolicy = (req, res, next) => {
 };
 exports.apkDetailPage = (req, res, next) => {
   createApps
-    .findAll()
+    .findAll({ where: { developerID: req.session.developer.id } })
     .then((createdApps) => {
       androidAPI
         .findAll()
@@ -631,7 +656,7 @@ exports.postQuestionary = (req, res, next) => {
           }
         })
         .catch((err) => {});
-      res.redirect("/app.questionary");
+      res.redirect("/developer");
     })
     .catch((err) => {
       console.log(err);
@@ -642,11 +667,11 @@ exports.postQuestionary = (req, res, next) => {
 
 exports.developerProfile = (req, res, next) => {
   const developerProfile = req.session.developer;
-      res.render("Developer/developerProfile", {
-        pageTitle: "profile Dashboard",
-        path: "dashboard",
-        devProfile: developerProfile,
-      });
+  res.render("Developer/developerProfile", {
+    pageTitle: "profile Dashboard",
+    path: "dashboard",
+    devProfile: developerProfile,
+  });
 };
 
 // exports.editDeveloperProfile = (req, res, next) => {

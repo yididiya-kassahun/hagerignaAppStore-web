@@ -81,9 +81,6 @@ exports.appCartPage = (req, res, next) => {
      },
     })
     .then(appCart => {
-      // appCart.forEach(element => {
-      //   console.log(element);
-      // });
       user
         .findByPk(req.session.user.id)
         .then((userData) => {

@@ -40,6 +40,11 @@ const developer = sequelize.define("developer", {
     allowNull: false,
     required: true,
   },
+  profilePic: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    required: true,
+  },
   role: {
     type: Sequelize.INTEGER,
     allowNull: false,

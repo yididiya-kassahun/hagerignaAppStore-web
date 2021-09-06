@@ -17,4 +17,5 @@ router.get("/newReleases", isAuth, userController.newReleasesPage);
 
 router.post("/add.comment/:appID", isAuth, userController.addComment);
 router.post("/addToWishList/:appID", isAuth, userController.addToWishList);
+router.post("/cart.removeApp/:id", isAuth, userController.deleteWishListApp);
 module.exports = router;

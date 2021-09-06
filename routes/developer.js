@@ -43,5 +43,10 @@ router.post("/deleteApp/:appID", isAuth, developerController.deleteApp);
 router.post("/app.storeList", isAuth, developerController.appStoreList);
 router.post("/upload.apk", isAuth, developerController.apkFileDetail);
 router.post("/post.questionary", isAuth, developerController.postQuestionary);
+router.post(
+  "/edit.developerProfile/:devID",
+  isAuth,
+  developerController.editDeveloperProfile
+);
 
 module.exports = router;

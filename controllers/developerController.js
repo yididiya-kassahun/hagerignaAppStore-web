@@ -426,28 +426,31 @@ exports.appStoreList = (req, res, next) => {
   const appIcon = req.files.appIcon;
   const featureGraphics = req.files.appFeatureGraphics;
   const phoneScreenshoot1 = req.files.phoneScreenshoot1;
-  // const phoneScreenshoot2 = req.files.phoneScreenshoot2;
-  // const phoneScreenshoot3 = req.files.phoneScreenshoot3;
+  const phoneScreenshoot2 = req.files.phoneScreenshoot2;
+  const phoneScreenshoot3 = req.files.phoneScreenshoot3;
 
   //console.log("here is phone screenshot2 " + phoneScreenshoot[0]);
 
   const extensionName1 = path.extname(appIcon.name); // fetch the file extension
   const extensionName2 = path.extname(featureGraphics.name);
   const extensionName3 = path.extname(phoneScreenshoot1.name);
-  // const extensionName4 = path.extname(phoneScreenshoot2.name);
-  // const extensionName5 = path.extname(phoneScreenshoot3.name);
+  const extensionName4 = path.extname(phoneScreenshoot2.name);
+  const extensionName5 = path.extname(phoneScreenshoot3.name);
   const allowedExtension = [".png", "jpg", "jpeg"];
 
   if (
     !allowedExtension.includes(extensionName1) &&
     !allowedExtension.includes(extensionName2) &&
-    !allowedExtension.includes(extensionName3)
+    !allowedExtension.includes(extensionName3) &&
+    !allowedExtension.includes(extensionName4) &&
+    !allowedExtension.includes(extensionName5)
   ) {
     console.log("Invalid extension name");
     return res.redirect("/store.listing");
   } else {
     const appIconPath = path.join("public/uploads/images/", appIcon.name);
     const appIconPath2 = path.join("/uploads/images/", appIcon.name);
+
     const featureGraphicsPath = path.join(
       "public/uploads/images/",
       featureGraphics.name
@@ -456,13 +459,29 @@ exports.appStoreList = (req, res, next) => {
       "/uploads/images/",
       featureGraphics.name
     );
-    const phoneScreenshootPath = path.join(
+    const phoneScreenshootPath1 = path.join(
       "public/uploads/images/",
+      phoneScreenshoot1.name
+    );
+    const phoneScreenshootPath2 = path.join(
+      "public/uploads/images/",
+      phoneScreenshoot2.name
+    );
+    const phoneScreenshootPath3 = path.join(
+      "public/uploads/images/",
+      phoneScreenshoot3.name
+    );
+    const phoneScreenshootPath_1 = path.join(
+      "/uploads/images/",
       phoneScreenshoot1.name
     );
     const phoneScreenshootPath_2 = path.join(
       "/uploads/images/",
-      phoneScreenshoot1.name
+      phoneScreenshoot2.name
+    );
+    const phoneScreenshootPath_3 = path.join(
+      "/uploads/images/",
+      phoneScreenshoot3.name
     );
 
     appIcon.mv(appIconPath, (err) => {
@@ -506,13 +525,25 @@ exports.appStoreList = (req, res, next) => {
       });
     });
 
-    phoneScreenshoot1.mv(phoneScreenshootPath, (err) => {
+    phoneScreenshoot1.mv(phoneScreenshootPath1, (err) => {
       if (err) {
         console.log(err);
       }
       console.log("success! file moved ");
     });
 
+    phoneScreenshoot2.mv(phoneScreenshootPath2, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+    });
+    phoneScreenshoot3.mv(phoneScreenshootPath3, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+    });
     appstorelist
       .create({
         appName: appName,
@@ -521,9 +552,9 @@ exports.appStoreList = (req, res, next) => {
         appIconURL: appIconPath2,
         featureGraphicsURL: featureGraphicsPath2,
         videoURL: videoURL,
-        phoneScreeenshootURL1: phoneScreenshootPath_2,
-        // phoneScreeenshootURL2: phoneScreenshootPath22,
-        // phoneScreeenshootURL3: phoneScreenshootPath33,
+        phoneScreeenshootURL1: phoneScreenshootPath_1,
+        phoneScreeenshootURL2: phoneScreenshootPath_2,
+        phoneScreeenshootURL3: phoneScreenshootPath_3,
         appID: AppID,
         developerID: req.session.developer.id,
       })
@@ -661,8 +692,6 @@ exports.postQuestionary = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
-  // .catch((err) => {});
-  //  res.redirect("/app.questionary");
 };
 
 exports.developerProfile = (req, res, next) => {
@@ -674,18 +703,64 @@ exports.developerProfile = (req, res, next) => {
   });
 };
 
-// exports.editDeveloperProfile = (req, res, next) => {
-//   const developerID = req.params.devID;
+exports.editDeveloperProfile = (req, res, next) => {
+  const developerID = req.params.devID;
 
-//   developer
-//     .findByPk(developerID)
-//     .then(developerData=>{
-//       return developerData;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+  const profilImage = req.files.profilePicture;
+
+  const extensionName1 = path.extname(profilImage.name); // fetch the file extension
+  console.log("extenssion name ===============" + extensionName1);
+
+  const allowedExtension = [".png", ".jpg", ".jpeg"];
+
+  if (!allowedExtension.includes(extensionName1)) {
+    console.log("Invalid extension name");
+    return res.redirect("/devprofile");
+  } else {
+    const profilePicturePath = path.join(
+      "public/uploads/profileImage/",
+      profilImage.name
+    );
+
+    const profilePicturePath2 = path.join(
+      "/uploads/profileImage/",
+      profilImage.name
+    );
+
+    profilImage.mv(profilePicturePath, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("success! file moved ");
+
+      // **************** Check Uploaded Image Width and Height
+      sizeOf(profilePicturePath, function (err, dimensions) {
+        if (dimensions.width <= 500 && dimensions.height <= 500) {
+          console.log(
+            "Success image dimension Here" + dimensions.width,
+            dimensions.height
+          );
+        } else {
+          console.log("Failed Unsupported Image width and height");
+          fs.unlinkSync(profilePicturePath);
+          res.redirect("/devprofile");
+        }
+      });
+    });
+    developer
+      .findByPk(developerID)
+      .then((developerData) => {
+        console.log("profile pic ===============" + developerData.profilePic);
+        developerData.profilePic = profilePicturePath2;
+        developerData.save();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    res.redirect("/devprofile");
+  }
+};
+
 exports.appDataChart = (req, res, next) => {
   const appID = req.params.appID;
 

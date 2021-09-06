@@ -38,47 +38,26 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row" style="margin-left: 5px">
+       <% if(cartAppList.length > 0) { %> <% for(let cartApp of
+            cartAppList ) { %>
             <div class="card" style="margin-right: 15px">
               <div class="card-header">
                 <img
-                  src="img/app2.png"
+                  src="<%= cartApp.appIcon %>"
                   width="212px"
                   height="212px"
                   alt="app logo"
                 />
               </div>
               <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-                <div class="row" style="color: orange">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
+                <p>App Name:<%= cartApp.appName %></p>
+                <form action="/cart.removeApp/<%= cartApp.appWishList.id %>" method="POST">
+               <button type="submit" class="btn btn-info col-12"> <i class="fa fa-shopping-cart"></i> Remove from cart </button>
+                </form>
               </div>
             </div>
 
-            <div class="card" style="margin-right: 15px">
-              <div class="card-header">
-                <img
-                  src="img/app3.png"
-                  width="212px"
-                  height="212px"
-                  alt="app logo"
-                />
-              </div>
-              <div class="card-body">
-                <p>App Name: Kids Bible</p>
-                <p>By: yididiya kassahun</p>
-                <div class="row" style="color: orange">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-            </div>
+          <% } %><% } %>
           </div>
         </div>
       </section>

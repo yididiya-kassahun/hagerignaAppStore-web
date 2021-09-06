@@ -18,11 +18,11 @@ const appDownload = sequelize.define("appDownload", {
     allowNull: false,
     required: true,
   },
-  // userID: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   required: true,
-  // },
+  userID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    required: true,
+  },
 });
 
 module.exports = appDownload;

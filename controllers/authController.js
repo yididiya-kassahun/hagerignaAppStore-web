@@ -138,6 +138,7 @@ exports.developerSignUp = (req, res, next) => {
               companyName: companyName,
               city: city,
               developerType: developerType,
+              profilePic: "avatar.png",
               role: role.id,
               password: hashedPassword,
             })
@@ -316,7 +317,7 @@ exports.developerSignIn = (req, res, next) => {
 
   console.log("email = " + email + " pawword = " + password);
   developer
-    .findOne({ where: { Email: email,isDeactivated:false } })
+    .findOne({ where: { Email: email, isDeactivated: false } })
     .then((developer) => {
       if (!developer) {
         res.redirect("/login.developer");
@@ -402,12 +403,12 @@ exports.reviewerSignIn = (req, res, next) => {
   const password = req.body.password;
 
   reviewer
-    .findOne({ where: { email: email, isPermit: true,isDeactivated:false } })
+    .findOne({ where: { email: email, isPermit: true, isDeactivated: false } })
     .then((reviewer) => {
       if (!reviewer) {
         return res.redirect("/login.reviewer");
       }
-      bcrypt 
+      bcrypt
         .compare(password, reviewer.password)
         .then((doMatch) => {
           if (doMatch) {

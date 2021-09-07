@@ -6,13 +6,14 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
-//const multer = require("multer");
 const fileUpload = require("express-fileupload");
 const toastr = require("express-toastr");
 const cookieParser = require("cookie-parser");
-// const pdf = require("express-pdf");
 let ejs = require("ejs");
 let pdf = require("html-pdf");
+// const pdf = require("express-pdf");
+//const multer = require("multer");
+
 // -----| models
 const adminModel = require("./models/admin");
 const policy = require("./models/policy");
@@ -43,8 +44,8 @@ const devRoute = require("./routes/developer");
 const reveiwerRoute = require("./routes/reviewer");
 const authRoute = require("./routes/auth");
 const user = require("./models/user");
-const appComment = require("./models/appComment");
 const appDownload = require("./models/appDownload");
+const appComment = require("./models/appComment");
 const storeList = require("./models/appStorelist");
 
 const app = express();

@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-
+const smtpTransport = require("nodemailer-smtp-transport");
 const Policy = require("../models/policy");
 const appQuestionary = require("../models/questionary");
 const answeredQuestionary = require("../models/answeredQuestionary");
@@ -17,14 +17,6 @@ const countUserss = require("../counters/userCounter");
 
 var moment = require("moment");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        "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",
-    },
-  })
-);
 exports.adminDashboard = (req, res, next) => {
   // const totalUsers = ;
   // const totalDevelopers = exports.coutDevelopers();
@@ -481,9 +473,47 @@ exports.deleteQuestionary = (req, res, next) => {
       console.log(err);
     });
 };
+// exports.sendRegistrationEmail = (req, res, next) => {
+//   const reviewerEmail = req.body.reviewerEmail;
+
+//   collectedEmail
+//     .create({
+//       email: reviewerEmail,
+//       status: "sent",
+//       adminID: req.session.admin.id,
+//     })
+//     .then((result) => {
+//       console.log(result);
+//       res.redirect("/reviewerList");
+//       return transporter.sendMail({
+//         to: result.email,
+//         from: "yidu.kassahun.me@gmail.com",
+//         subject: "Hagerigna AppStore",
+//         html:
+//           "<h1>Registration Link : http://localhost:3000/register.reviewer/" +
+//           result.email +
+//           "</h1>",
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
 exports.sendRegistrationEmail = (req, res, next) => {
   const reviewerEmail = req.body.reviewerEmail;
-
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    secure: false,
+    host: "smtp.gmail.com",
+    auth: {
+      user: "yidu.kassahun.me@gmail.com",
+      pass: "37732850.pwd",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
   collectedEmail
     .create({
       email: reviewerEmail,
@@ -492,21 +522,29 @@ exports.sendRegistrationEmail = (req, res, next) => {
     })
     .then((result) => {
       console.log(result);
-      res.redirect("/reviewerList");
-      return transporter.sendMail({
-        to: result.email,
-        from: "bereketamlaku@gmail.com",
-        subject: "Hagerigna AppStore",
-        html:
-          "<h1>Registration Link : http://localhost:3000/register.reviewer/" +
-          result.email +
-          "</h1>",
-      }); 
+      var mailOptions = {
+        from: "yidu.kassahun.me@gmail.com",
+        to: "yididiya127@gmail.com",
+        subject: "ሀገርኛ Appstore Registration Email",
+        text:
+          "Registration Link : http://localhost:3000/register.reviewer/" +
+          result.email,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+        res.redirect("/reviewerList");
+      });
     })
     .catch((err) => {
       console.log(err);
     });
 };
+
 exports.deleteEmail = (req, res, next) => {
   const emailID = req.params.emailID;
 

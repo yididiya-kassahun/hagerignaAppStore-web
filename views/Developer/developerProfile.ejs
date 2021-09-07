@@ -6,9 +6,7 @@
     <!-- Navbar -->
     <%- include('includes/navbar.ejs') %>
     <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-
+    
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <a href="#" class="brand-link">
@@ -76,7 +74,7 @@
                     />
                   </div>
                   <!-- /.widget-user-image -->
-                  <h3 class="widget-user-username">Yididiya kassahun</h3>
+                  <h3 class="widget-user-username"><%= devProfile.fullName %></h3>
                   <h5 class="widget-user-desc">Lead Developer</h5>
                 </div>
                 <div class="card-body p-1">
@@ -175,6 +173,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+    <!-- /.modal -->
     <%- include('includes/footer.ejs') %>
   </div>
 </body>

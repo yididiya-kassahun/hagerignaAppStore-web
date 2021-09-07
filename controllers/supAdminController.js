@@ -21,7 +21,7 @@ exports.adminDashboard = (req, res, next) => {
   // const totalUsers = ;
   // const totalDevelopers = exports.coutDevelopers();
   // const totalReviewers = exports.coutReviewers();
-
+  
   androidAPI
     .findAll()
     .then((result) => {
@@ -473,32 +473,6 @@ exports.deleteQuestionary = (req, res, next) => {
       console.log(err);
     });
 };
-// exports.sendRegistrationEmail = (req, res, next) => {
-//   const reviewerEmail = req.body.reviewerEmail;
-
-//   collectedEmail
-//     .create({
-//       email: reviewerEmail,
-//       status: "sent",
-//       adminID: req.session.admin.id,
-//     })
-//     .then((result) => {
-//       console.log(result);
-//       res.redirect("/reviewerList");
-//       return transporter.sendMail({
-//         to: result.email,
-//         from: "yidu.kassahun.me@gmail.com",
-//         subject: "Hagerigna AppStore",
-//         html:
-//           "<h1>Registration Link : http://localhost:3000/register.reviewer/" +
-//           result.email +
-//           "</h1>",
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
 exports.sendRegistrationEmail = (req, res, next) => {
   const reviewerEmail = req.body.reviewerEmail;

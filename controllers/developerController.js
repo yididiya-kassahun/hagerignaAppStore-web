@@ -436,7 +436,7 @@ exports.appStoreList = (req, res, next) => {
   const extensionName3 = path.extname(phoneScreenshoot1.name);
   const extensionName4 = path.extname(phoneScreenshoot2.name);
   const extensionName5 = path.extname(phoneScreenshoot3.name);
-  const allowedExtension = [".png", "jpg", "jpeg"];
+  const allowedExtension = [".png", ".jpg", ".jpeg"];
 
   if (
     !allowedExtension.includes(extensionName1) &&

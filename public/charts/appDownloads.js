@@ -113,12 +113,12 @@
         })
         .then((data) => {
             const allDatas = data.data;
-            console.log(allDatas[0].sleepDuration);
+           // console.log(allDatas[0].sleepDuration);
             let datas = [];
             for (let i = 0; i < allDatas.length; i++) {
                 datas.push(allDatas[i].sleepDuration);
             }
-            console.log(datas[0]);
+          //  console.log(datas[0]);
 
             var barChartCanvas = document.getElementById("barChart").getContext("2d");
 

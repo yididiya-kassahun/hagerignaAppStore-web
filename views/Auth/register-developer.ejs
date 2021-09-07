@@ -92,17 +92,14 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Developer Type"
-                name="developerType"
-              />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-tools"></span>
-                </div>
-              </div>
+              <select
+                   class="form-control select2"
+                   style="width: 100%"
+                   name="Language">
+         <% if(developerType.length > 0) { %> <% for(let developer of developerType ) { %>
+              <option value="<%= developer.type %>"><%= developer.type %></option>
+         <% } %><% } %>
+                </select>
             </div>
             <div class="input-group mb-3">
               <input

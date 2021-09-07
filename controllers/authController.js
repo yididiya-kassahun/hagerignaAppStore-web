@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 
 const developer = require("../models/developer");
+const developerType = require("../models/developerType");
 const reviewer = require("../models/reviewer");
 const user = require("../models/user");
 const admin = require("../models/admin");
@@ -43,11 +44,20 @@ exports.developerRegisterPage = (req, res, next) => {
     message = null;
     req.toastr.success("Successfull");
   }
-  res.render("Auth/register-developer", {
-    pageTitle: "Developer Register Page",
-    path: "Register",
-    errorMessage: message,
-  });
+
+  developerType
+    .findAll()
+    .then((devType) => {
+      res.render("Auth/register-developer", {
+        pageTitle: "Developer Register Page",
+        path: "Register",
+        developerType: devType,
+        errorMessage: message,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.reviewerRegisterPage = (req, res, next) => {

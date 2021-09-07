@@ -20,6 +20,7 @@ const policy = require("./models/policy");
 const questionary = require("./models/questionary");
 const answeredQuestionary = require("./models/answeredQuestionary");
 const developer = require("./models/developer");
+const developerType = require("./models/developerType");
 const createApp = require("./models/createApp");
 const storeListing = require("./models/appStorelist");
 const apkFileDetail = require("./models/apkDetail");

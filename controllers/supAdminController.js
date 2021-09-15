@@ -498,7 +498,7 @@ exports.sendRegistrationEmail = (req, res, next) => {
       console.log(result);
       var mailOptions = {
         from: "yidu.kassahun.me@gmail.com",
-        to: "yididiya127@gmail.com",
+        to: reviewerEmail,
         subject: "ሀገርኛ Appstore Registration Email",
         text:
           "Registration Link : http://localhost:3000/register.reviewer/" +

@@ -50,8 +50,7 @@
                     Total Published AR Applications
                   </h5>
                   <br />
-                  <% if(allApps.length > 0) { %> <% for(let allApp of allApps )
-                  { let i = 1; %>
+                 
                   <table style="border: 1" class="table table-striped">
                     <thead class="thead-dark">
                       <th>#</th>
@@ -60,6 +59,8 @@
                       <th>Published At</th>
                       <th>Np. of Download</th>
                     </thead>
+              <% if(allApps.length > 0) { %> <% for(let allApp of allApps )
+                  { let i = 1; %>
                     <tr>
                       <td><%= i %></td>
                       <td><%= allApp.appName %></td>
@@ -69,8 +70,8 @@
                       </td>
                       <td><%= allApp.downloads %></td>
                     </tr>
+                    <% i++ } %><% } %>
                   </table>
-                  <% i++ } %><% } %>
                   <br /><br />
                   <h5 style="color: rgb(0, 26, 255); text-decoration: dashed">
                     <i class="fab fa-android"></i> Total Published AR
@@ -84,7 +85,7 @@
                         <th>APK Size</th>
                         <th>App Version</th>
                       </thead>
-                      <% if(allAPKs.length > 0) { %> <% for(let allApk of
+                   <% if(allAPKs.length > 0) { %> <% for(let allApk of
                       allAPKs ) { let i = 1; %>
                       <tr>
                         <td><%= i %></td>

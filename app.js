@@ -3,6 +3,8 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 
+// ----- | npm module
+
 const session = require("express-session");
 const MysqlStore = require("express-mysql-session")(session);
 const sequelize = require("./utils/database");
@@ -10,7 +12,7 @@ const fileUpload = require("express-fileupload");
 const toastr = require("express-toastr");
 const cookieParser = require("cookie-parser");
 let ejs = require("ejs");
-let pdf = require("html-pdf");
+//let pdf = require("html-pdf"); 
 // const pdf = require("express-pdf");
 //const multer = require("multer");
 
@@ -23,7 +25,7 @@ const developer = require("./models/developer");
 const developerType = require("./models/developerType");
 const createApp = require("./models/createApp");
 const storeListing = require("./models/appStorelist");
-const apkFileDetail = require("./models/apkDetail");
+const apkFileDetail = require("./models/apkDetail"); 
 const reviewApp = require("./models/reviewApp");
 const defaultLanguage = require("./models/defaultLanguage");
 const collectedEmail = require("./models/collectedEmail");
@@ -39,6 +41,7 @@ const flash = require("connect-flash");
 const errorController = require("./controllers/errorController");
 
 //------| routes
+
 const adminRoute = require("./routes/admin");
 const userRoute = require("./routes/user");
 const devRoute = require("./routes/developer");
@@ -88,7 +91,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // join stylesheet with system root path
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "public/img")));
+app.use(express.static(path.join(__dirname, "public/img"))); 
 app.use(express.static(path.join(__dirname, "public/uploads/")));
 
 app.use(fileUpload());
@@ -100,10 +103,12 @@ app.use(devRoute);
 app.use(reveiwerRoute);
 app.use(authRoute);
 
+// ------ | Relationship
+
 developer.hasMany(createApp, { foreignKey: "developerID" });
 developer.hasMany(storeListing, { foreignKey: "developerID" });
 developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
-developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
+//developer.hasMany(apkFileDetail, { foreignKey: "developerID" });
 
 createApp.belongsTo(developer);
 storeListing.belongsTo(developer);
@@ -125,7 +130,7 @@ sequelize
   .sync()
   .then((result) => {
     app.listen(3000);
-    //  return User;
+    //  return User; 
   })
   .catch((err) => {
     console.log(err);

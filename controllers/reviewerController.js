@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 const getPolicy = require("../models/policy");
 const onReviewApp = require("../models/createApp");
 const appStoreListing = require("../models/appStorelist");
@@ -8,6 +10,7 @@ const reviewApp = require("../models/reviewApp");
 const developerProfile = require("../models/developer");
 const createApps = require("../models/createApp");
 var moment = require("moment");
+const developer = require("../models/developer");
 
 exports.reviewerDashboard = (req, res, next) => {
   onReviewApp
@@ -40,7 +43,7 @@ exports.reviewerDashboard = (req, res, next) => {
                 path: "dashboard",
                 allApps: apps,
                 totalPublishedApps: totalPublishedApps,
-                totalRejectedApps:totalRejectedApps,
+                totalRejectedApps: totalRejectedApps,
                 moment: moment,
               });
             })
@@ -172,7 +175,6 @@ exports.downloadAPKFile = (req, res, next) => {
     .catch((err) => {});
 };
 
-
 exports.policyPage = (req, res, next) => {
   getPolicy
     .findAll()
@@ -207,6 +209,20 @@ exports.approvedReviewResult = (req, res, next) => {
   const appID = req.body.AppID;
   const approvmentSummery = req.body.summery;
   const editorChoice = Boolean(req.body.editorChoice);
+  const developerID = req.body.developerID;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    secure: false,
+    host: "smtp.gmail.com",
+    auth: {
+      user: "yidu.kassahun.me@gmail.com",
+      pass: "37732850.pwd",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
   console.log("============ " + editorChoice);
   reviewApp
@@ -234,6 +250,46 @@ exports.approvedReviewResult = (req, res, next) => {
             .then((appList) => {
               appList.isPublished = true;
               appList.save();
+
+              developerProfile
+                .findByPk(developerID)
+                .then((developer) => {
+                  createApps
+                    .findOne({ where: { appID: appID } })
+                    .then((getApp) => {
+                      console.log(
+                        "========= developer Email ========" + developer.Email
+                      );
+                      var mailOptions = {
+                        from: "yidu.kassahun.me@gmail.com",
+                        to: developer.Email,
+                        subject: "ሀገርኛ Appstore Application Approval Email",
+                        text:
+                          "Hello " +
+                          developer.fullName +
+                          " Your Application " +
+                          getApp.appName +
+                          " is Approved on " +
+                          appData.createdAt +
+                          " and Live on ሀገርኛ Appstore ",
+                      };
+
+                      transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                          console.log(error);
+                        } else {
+                          console.log("Email sent: " + info.response);
+                        }
+                        // res.redirect("/reviewerList");
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => {
               console.log(err);
@@ -253,6 +309,19 @@ exports.approvedReviewResult = (req, res, next) => {
 exports.disapprovedReviewResult = (req, res, next) => {
   const appID = req.body.AppID;
   const disapprovmentSummery = req.body.summery;
+  const developerID = req.body.developerID;
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    secure: false,
+    host: "smtp.gmail.com",
+    auth: {
+      user: "yidu.kassahun.me@gmail.com",
+      pass: "37732850.pwd",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
   reviewApp
     .create({
@@ -273,6 +342,44 @@ exports.disapprovedReviewResult = (req, res, next) => {
         .then((appData) => {
           appData.appStatus = "rejected";
           appData.save();
+               
+          developerProfile
+            .findByPk(developerID)
+            .then((developer) => {
+              createApps
+                .findOne({ where: { appID: appID } })
+                .then((getApp) => {
+                  var mailOptions = {
+                    from: "yidu.kassahun.me@gmail.com",
+                    to: developer.Email,
+                    subject: "ሀገርኛ Appstore Application Rejection Email",
+                    text:
+                      "Hello " + 
+                      developer.fullName +
+                      " Your Application " +
+                      getApp.appName +
+                      " is Rejected on " + 
+                      appData.createdAt +
+                      " due to " +
+                      disapprovmentSummery,
+                  };
+
+                  transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log("Email sent: " + info.response);
+                    }
+                    // res.redirect("/reviewerList");
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);

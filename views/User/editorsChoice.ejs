@@ -38,10 +38,9 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row" style="margin-left: 5px">
-           
-   <% if(editorChoiceAppList.length > 0) { %> <% for(let choosedApp of
-            editorChoiceAppList ) { %>
-              <% if(choosedApp.reviewApp.editorChoice === false) {%>
+            <% if(editorChoiceAppList.length > 0) { %> <% for(let choosedApp of
+            editorChoiceAppList ) { %> <% if(choosedApp.reviewApp.editorChoice
+            === true) {%>
             <div class="card" style="margin-right: 15px">
               <div class="card-header">
                 <img
@@ -56,8 +55,7 @@
                 <!-- <p>By: yididiya kassahun</p> -->
               </div>
             </div>
-            <% } %>
-          <% } %> <% } %>
+            <% } %> <% } %> <% } %>
           </div>
         </div>
       </section>

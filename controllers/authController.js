@@ -307,7 +307,7 @@ exports.adminloginPage = (req, res, next) => {
   });
 };
 
-exports.developerloginPage = (req, res, next) => {
+exports.developerloginPage = (req, res, next) => { 
   res.render("Auth/login-developer", {
     pageTitle: "Login Page",
     path: "login",

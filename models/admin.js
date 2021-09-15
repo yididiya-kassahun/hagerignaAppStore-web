@@ -36,7 +36,7 @@ const admin = sequelize.define("Admin", {
 //     .hash("1234", 12)
 //     .then((hashedPassword) => {
 //       admin.create({
-//         fullName: "yididiya",
+//         fullName: "dagmawi",
 //         Email: "admin@gmail.com",
 //         role: 1,
 //         password: hashedPassword,

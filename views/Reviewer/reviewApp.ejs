@@ -335,6 +335,8 @@
                 name="AppID"
                 value="<%= reviewApp.appID %>"
               />
+                <input type="hidden" value="<%= developer.id %>" name="developerID" class="form-control" />
+
               <textarea
                 type="text"
                 rows="7"
@@ -385,6 +387,7 @@
                   editor choice
                 </div>
                 </div>
+                <input type="hidden" value="<%= developer.id %>" name="developerID" class="form-control" />
               <input
                 type="hidden"
                 name="AppID"

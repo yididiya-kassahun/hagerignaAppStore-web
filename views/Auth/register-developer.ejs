@@ -95,7 +95,7 @@
               <select
                    class="form-control select2"
                    style="width: 100%"
-                   name="Language">
+                   name="developerType">
          <% if(developerType.length > 0) { %> <% for(let developer of developerType ) { %>
               <option value="<%= developer.type %>"><%= developer.type %></option>
          <% } %><% } %>
@@ -128,12 +128,12 @@
             </div>
             <div class="row">
               <div class="col-8">
-                <div class="icheck-primary">
+                <div>
                   <input
                     type="checkbox"
-                    id="agreeTerms"
                     name="terms"
                     value="agree"
+                    id="termsBox"
                   />
                   <label for="agreeTerms">
                     I agree to the <a href="#">terms</a>
@@ -142,7 +142,7 @@
               </div>
               <!-- /.col -->
               <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block">
+                <button type="submit" id="registerBtnID" class="btn btn-primary btn-block">
                   Register
                 </button>
               </div>
@@ -155,4 +155,10 @@
     </div>
   <%- include('includes/footer.ejs') %>
   </body>
+    <script>
+   $('#registerBtnID').attr("disabled",true);  //Initially disabled button when document loaded.
+    $('#termsBox').click(function(){
+      $('#registerBtnID').attr("disabled",!$(this).is(":checked"));   
+    })
+  </script>
 </html>
